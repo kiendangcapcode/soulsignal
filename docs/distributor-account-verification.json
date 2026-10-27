@@ -1,0 +1,244 @@
+{
+  "model": "distributor-accounts",
+  "startedAt": "2026-10-27T12:27:09+07:00",
+  "completedAt": "2026-10-27T12:27:12+07:00",
+  "timezone": "Asia/Saigon (UTC+07:00)",
+  "baseUrl": "http://localhost:5023",
+  "summary": {
+    "total": 26,
+    "passed": 26,
+    "failed": 0
+  },
+  "resourcesCreated": {
+    "songIds": [
+      23,
+      24
+    ],
+    "titles": [
+      "Distributor QA DistroKite b6ff2dcdd9a7",
+      "Distributor QA TuneKore b6ff2dcdd9a7"
+    ],
+    "sourceRecordingCode": "DEMO-ACCOUNT-QA-b6ff2dcdd9a7",
+    "testAccountsCreated": [],
+    "existingSongsModified": [],
+    "coverPaths": [
+      "/Songs/Cover/d40079b0a07e405181a37ff573aa72b1.png"
+    ]
+  },
+  "fatalError": null,
+  "limitations": [
+    "Chỉ dùng tài khoản demo có sẵn; không tạo tài khoản và không sửa bài trước lần chạy.",
+    "Hai bản ghi kiểm thử được giữ lại với ID chính xác; script không xóa dữ liệu hay tệp.",
+    "Không gọi nhà phân phối thật, không kiểm tra âm thanh qua loa hoặc bố cục giao diện."
+  ],
+  "tests": [
+    {
+      "id": "DIST-00",
+      "name": "Ứng dụng sẵn sàng",
+      "status": "passed",
+      "detail": "HTTP 200.",
+      "timestamp": "2026-10-27T12:27:09+07:00",
+      "durationMs": 17
+    },
+    {
+      "id": "DIST-01",
+      "name": "Khách chưa đăng nhập không được tải nhạc",
+      "status": "passed",
+      "detail": "Khu vực phân phối yêu cầu đăng nhập.",
+      "timestamp": "2026-10-27T12:27:09+07:00",
+      "durationMs": 3
+    },
+    {
+      "id": "DIST-02",
+      "name": "Đăng nhập Listener",
+      "status": "passed",
+      "detail": "Đăng nhập listener@soulsignal.local; Location=/.",
+      "timestamp": "2026-10-27T12:27:09+07:00",
+      "durationMs": 84
+    },
+    {
+      "id": "DIST-03",
+      "name": "Người nghe không được vào khu vực phân phối và quản trị",
+      "status": "passed",
+      "detail": "Listener không có quyền phân phối hoặc duyệt.",
+      "timestamp": "2026-10-27T12:27:09+07:00",
+      "durationMs": 8
+    },
+    {
+      "id": "DIST-04",
+      "name": "Đăng nhập Admin",
+      "status": "passed",
+      "detail": "Đăng nhập admin@soulsignal.local; Location=/Admin.",
+      "timestamp": "2026-10-27T12:27:09+07:00",
+      "durationMs": 67
+    },
+    {
+      "id": "DIST-05",
+      "name": "Đăng nhập DistroKite đến đúng khu vực",
+      "status": "passed",
+      "detail": "Đăng nhập distrokite@soulsignal.local; Location=/Distributor.",
+      "timestamp": "2026-10-27T12:27:09+07:00",
+      "durationMs": 102
+    },
+    {
+      "id": "DIST-06",
+      "name": "Đăng nhập TuneKore đến đúng khu vực",
+      "status": "passed",
+      "detail": "Đăng nhập tunekore@soulsignal.local; Location=/Distributor.",
+      "timestamp": "2026-10-27T12:27:09+07:00",
+      "durationMs": 116
+    },
+    {
+      "id": "DIST-07",
+      "name": "Form nguồn cố định, có dữ liệu và script tiến độ nội bộ",
+      "status": "passed",
+      "detail": "Nguồn cố định theo tài khoản; GenreId=2; không script.",
+      "timestamp": "2026-10-27T12:27:10+07:00",
+      "durationMs": 33
+    },
+    {
+      "id": "DIST-08",
+      "name": "Phân tách quyền tài khoản nguồn và admin",
+      "status": "passed",
+      "detail": "Nguồn phân phối không có quyền Admin; Admin không giả danh tài khoản nguồn.",
+      "timestamp": "2026-10-27T12:27:10+07:00",
+      "durationMs": 100
+    },
+    {
+      "id": "DIST-09",
+      "name": "POST tải nhạc thiếu CSRF bị chặn",
+      "status": "passed",
+      "detail": "HTTP 400.",
+      "timestamp": "2026-10-27T12:27:10+07:00",
+      "durationMs": 26
+    },
+    {
+      "id": "DIST-10",
+      "name": "Thiếu tệp không tạo bài",
+      "status": "passed",
+      "detail": "Có lỗi validation; danh sách bài của nguồn không tăng.",
+      "timestamp": "2026-10-27T12:27:10+07:00",
+      "durationMs": 51
+    },
+    {
+      "id": "DIST-11",
+      "name": "MP3 đổi đuôi FLAC bị từ chối",
+      "status": "passed",
+      "detail": "Có lỗi validation; danh sách bài của nguồn không tăng.",
+      "timestamp": "2026-10-27T12:27:10+07:00",
+      "durationMs": 46
+    },
+    {
+      "id": "DIST-12",
+      "name": "FLAC giả định dạng bị từ chối",
+      "status": "passed",
+      "detail": "Có lỗi validation; danh sách bài của nguồn không tăng.",
+      "timestamp": "2026-10-27T12:27:10+07:00",
+      "durationMs": 31
+    },
+    {
+      "id": "DIST-13",
+      "name": "Chưa xác nhận quyền sử dụng không tạo bài",
+      "status": "passed",
+      "detail": "Có lỗi validation; danh sách bài của nguồn không tăng.",
+      "timestamp": "2026-10-27T12:27:10+07:00",
+      "durationMs": 49
+    },
+    {
+      "id": "DIST-14",
+      "name": "DistroKite tải bài vào chờ duyệt, bỏ qua giả mạo nguồn/trạng thái",
+      "status": "passed",
+      "detail": "ID=23; Pending; nguồn lấy từ tài khoản bất chấp các trường giả mạo.",
+      "timestamp": "2026-10-27T12:27:10+07:00",
+      "durationMs": 636
+    },
+    {
+      "id": "DIST-15",
+      "name": "Cùng nguồn không gửi trùng mã bản ghi",
+      "status": "passed",
+      "detail": "Có lỗi validation; danh sách bài của nguồn không tăng.",
+      "timestamp": "2026-10-27T12:27:11+07:00",
+      "durationMs": 48
+    },
+    {
+      "id": "DIST-16",
+      "name": "TuneKore tải bài riêng, cùng mã khác nguồn, ảnh tùy chọn",
+      "status": "passed",
+      "detail": "ID=24; nguồn khác được dùng cùng mã nguồn; ảnh bìa không bắt buộc.",
+      "timestamp": "2026-10-27T12:27:11+07:00",
+      "durationMs": 638
+    },
+    {
+      "id": "DIST-17",
+      "name": "Cách ly dữ liệu chưa công khai giữa hai nguồn",
+      "status": "passed",
+      "detail": "Không lộ danh mục, hồ sơ, MP3 hoặc ảnh bìa chưa duyệt của nguồn khác.",
+      "timestamp": "2026-10-27T12:27:11+07:00",
+      "durationMs": 123
+    },
+    {
+      "id": "DIST-18",
+      "name": "Nguồn nghe thử bài đang chờ của mình",
+      "status": "passed",
+      "detail": "Chủ nguồn nghe thử MP3 qua HTTP range, xem ảnh riêng và dùng audio controls.",
+      "timestamp": "2026-10-27T12:27:11+07:00",
+      "durationMs": 19
+    },
+    {
+      "id": "DIST-19",
+      "name": "Người nghe không truy cập bài chờ duyệt",
+      "status": "passed",
+      "detail": "Bài chờ, âm thanh và ảnh riêng chưa công khai cho người nghe.",
+      "timestamp": "2026-10-27T12:27:11+07:00",
+      "durationMs": 64
+    },
+    {
+      "id": "DIST-20",
+      "name": "Admin nghe thử MP3 và FLAC trước khi duyệt",
+      "status": "passed",
+      "detail": "('HTTP 206; audio/mpeg; bytes 0-1023/384983; 1024 byte.', 'HTTP 206; audio/flac; bytes 0-1023/1415803; 1024 byte.')",
+      "timestamp": "2026-10-27T12:27:11+07:00",
+      "durationMs": 8
+    },
+    {
+      "id": "DIST-21",
+      "name": "Từ chối thiếu lý do phải báo lỗi",
+      "status": "passed",
+      "detail": "HTTP 200, form có lỗi validation.",
+      "timestamp": "2026-10-27T12:27:11+07:00",
+      "durationMs": 11
+    },
+    {
+      "id": "DIST-22",
+      "name": "Admin duyệt rồi người nghe mới thấy, nguồn thấy kết quả",
+      "status": "passed",
+      "detail": "HTTP 206; audio/mpeg; bytes 0-1023/384983; 1024 byte.",
+      "timestamp": "2026-10-27T12:27:11+07:00",
+      "durationMs": 111
+    },
+    {
+      "id": "DIST-23",
+      "name": "Nguồn thấy phản hồi từ chối và bài vẫn riêng tư",
+      "status": "passed",
+      "detail": "TuneKore nhận đúng lý do từ chối; bài không công khai.",
+      "timestamp": "2026-10-27T12:27:12+07:00",
+      "durationMs": 49
+    },
+    {
+      "id": "DIST-24",
+      "name": "Không thể gửi lại quyết định để đảo kết quả xét duyệt",
+      "status": "passed",
+      "detail": "Quyết định gửi lặp không đảo trạng thái đã xử lý.",
+      "timestamp": "2026-10-27T12:27:12+07:00",
+      "durationMs": 24
+    },
+    {
+      "id": "DIST-25",
+      "name": "Listener chưa có quyền FLAC kỹ thuật",
+      "status": "passed",
+      "detail": "HTTP 403.",
+      "timestamp": "2026-10-27T12:27:12+07:00",
+      "durationMs": 15
+    }
+  ]
+}

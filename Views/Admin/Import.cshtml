@@ -1,0 +1,122 @@
+@model ImportReleaseViewModel
+@{
+    ViewData["Title"] = "Nhập gói nhạc thủ công";
+}
+<a class="back-link" asp-controller="Admin" asp-action="Index">← Tổng quan quản trị</a>
+<div class="page-heading">
+    <div>
+        <p class="eyebrow">QUẢN TRỊ NGUỒN NHẠC</p>
+        <h1>Nhập gói nhạc thủ công<span class="accent">.</span></h1>
+    </div>
+</div>
+<p class="page-description">Admin nhập FLAC gốc và thông tin bản phát hành. Hệ thống tự tính thời lượng, tạo các bản MP3 rồi lưu bài chờ duyệt.</p>
+<div class="workflow-grid">
+    <section class="auth-card">
+        <h2>Thông tin bản nhạc</h2>
+        <form asp-controller="Admin" asp-action="Import" method="post" enctype="multipart/form-data"
+              data-upload-form data-progress-start="@Url.Action("Start", "UploadProgress")" data-progress-status="@Url.Action("Status", "UploadProgress")">
+            <div asp-validation-summary="ModelOnly" class="validation-summary" role="alert"></div>
+            <div class="upload-errors notice" data-upload-errors role="alert" tabindex="-1" hidden></div>
+            <div class="field">
+                <label asp-for="DistributorId">Nguồn phân phối</label>
+                <select class="form-select" asp-for="DistributorId" required>
+                    <option value="">Chọn nguồn phân phối</option>
+                    @foreach (var distributor in Model.Distributors)
+                    {
+                        <option value="@distributor.Id">@distributor.Name · @(distributor.IsSimulation ? "Giả lập" : "Nguồn dữ liệu")</option>
+                    }
+                </select>
+                <span asp-validation-for="DistributorId" class="field-validation"></span>
+            </div>
+            <div class="field">
+                <label asp-for="ExternalRecordingCode">Mã bản ghi nguồn <span class="optional-label">· Không bắt buộc</span></label>
+                <input class="form-control" asp-for="ExternalRecordingCode" maxlength="64" placeholder="Ví dụ: SSDEMO-DK-REC-001" />
+                <span asp-validation-for="ExternalRecordingCode" class="field-validation"></span>
+                <small class="field-help">Mã nguồn giả lập để đối chiếu, không xác nhận là ISRC.</small>
+            </div>
+            <div class="field">
+                <label asp-for="ExternalReleaseCode">Mã gói phát hành nguồn <span class="optional-label">· Không bắt buộc</span></label>
+                <input class="form-control" asp-for="ExternalReleaseCode" maxlength="64" placeholder="Ví dụ: SSDEMO-DK-REL-001" />
+                <span asp-validation-for="ExternalReleaseCode" class="field-validation"></span>
+            </div>
+            <div class="field">
+                <label asp-for="Title">Tên bài hát</label>
+                <input class="form-control" asp-for="Title" required minlength="2" maxlength="160" />
+                <span asp-validation-for="Title" class="field-validation"></span>
+            </div>
+            <div class="field">
+                <label asp-for="Artist">Nghệ sĩ thể hiện</label>
+                <input class="form-control" asp-for="Artist" required minlength="2" maxlength="120" />
+                <span asp-validation-for="Artist" class="field-validation"></span>
+                <small class="field-help">Tên nghệ sĩ được hiển thị riêng với tên đơn vị phân phối.</small>
+            </div>
+            <div class="field">
+                <label asp-for="GenreId">Thể loại</label>
+                <select class="form-select" asp-for="GenreId" required>
+                    <option value="">Chọn thể loại</option>
+                    @foreach (var genre in Model.Genres)
+                    {
+                        <option value="@genre.Id">@genre.Name</option>
+                    }
+                </select>
+                <span asp-validation-for="GenreId" class="field-validation"></span>
+            </div>
+            <div class="field">
+                <label asp-for="FlacFile">Tệp FLAC gốc</label>
+                <input class="form-control" asp-for="FlacFile" type="file" accept=".flac,audio/flac" required />
+                <span asp-validation-for="FlacFile" class="field-validation"></span>
+                <small class="field-help">FLAC, tối đa 50 MB, tối đa 30 phút. Hệ thống tự đọc thời lượng và tạo MP3 128 kbps / 320 kbps.</small>
+            </div>
+            <div class="field">
+                <label asp-for="CoverFile">Ảnh bìa <span class="optional-label">· Không bắt buộc</span></label>
+                <input class="form-control" asp-for="CoverFile" type="file" accept=".png,.jpg,.jpeg,image/png,image/jpeg" />
+                <span asp-validation-for="CoverFile" class="field-validation"></span>
+                <small class="field-help">PNG hoặc JPG, tối đa 2 MB. Ảnh bạn chọn được ưu tiên; để trống sẽ tự lấy bìa có sẵn trong FLAC, nếu có.</small>
+            </div>
+            <h3 class="information-heading">Quyền sử dụng nội dung</h3>
+            <div class="field">
+                <label asp-for="RightsHolder">Chủ thể nắm giữ quyền / đơn vị ủy quyền</label>
+                <input class="form-control" asp-for="RightsHolder" required minlength="2" maxlength="160" />
+                <span asp-validation-for="RightsHolder" class="field-validation"></span>
+            </div>
+            <div class="field">
+                <label asp-for="RightsEvidence">Căn cứ và phạm vi quyền sử dụng</label>
+                <textarea class="form-control" asp-for="RightsEvidence" rows="5" required minlength="10" maxlength="2000"
+                          placeholder="Mô tả căn cứ sở hữu hoặc ủy quyền đối với tác phẩm, bản ghi, phần trình diễn và ảnh bìa; nêu rõ quyền nghe trực tuyến và tải xuống theo phạm vi nền tảng."></textarea>
+                <span asp-validation-for="RightsEvidence" class="field-validation"></span>
+                <small class="field-help">Thông tin này chỉ hiển thị cho admin. Bản đồ án tiếp nhận mô tả bằng văn bản.</small>
+            </div>
+            <label class="checkbox-field checkbox-multiline">
+                <input asp-for="AcceptRights" required />
+                <span>Tôi xác nhận có quyền cung cấp nội dung và cho phép phát trực tuyến và tải xuống theo phạm vi
+                    <a asp-controller="Home" asp-action="Policy">chính sách Soul Signal</a>.</span>
+            </label>
+            <span asp-validation-for="AcceptRights" class="field-validation"></span>
+            <p class="scope-note">Tải tệp xong, hệ thống tiếp tục chuyển mã và lấy ảnh bìa trước khi mở xét duyệt.</p>
+            <div class="upload-progress" data-upload-progress hidden>
+                <div class="upload-progress-heading"><strong data-upload-phase>Đang chuẩn bị</strong><span data-upload-number></span></div>
+                <progress data-upload-meter max="100" value="0" aria-label="Tiến độ tải nhạc"></progress>
+                <p data-upload-message role="status" aria-live="polite">Đang chuẩn bị tải tệp.</p>
+                <button class="text-button upload-cancel" type="button" data-upload-cancel>Hủy tải lên</button>
+            </div>
+            <button class="button button-primary button-full" type="submit">
+                Xử lý nhạc và mở xét duyệt <svg class="icon"><use href="#i-arrow" /></svg>
+            </button>
+        </form>
+    </section>
+    <aside class="workflow-aside">
+        <p class="eyebrow">TỪ NGUỒN MÔ PHỎNG ĐẾN NGƯỜI NGHE</p>
+        <h2>Đúng nghệ sĩ.<br />Rõ quyền sử dụng.</h2>
+        <ol class="workflow-steps">
+            <li>Admin chọn FLAC gốc và nhập thông tin quyền sử dụng.</li>
+            <li>Hệ thống đọc thời lượng, tạo MP3 128/320 kbps và cấp mã nội bộ.</li>
+            <li>Admin nghe thử và kiểm tra thông tin trước khi duyệt.</li>
+            <li>Bài được duyệt xuất hiện trên trang khám phá.</li>
+        </ol>
+        <p class="scope-note">Mã dạng SS-TRACK-000001 chỉ dùng trong Soul Signal, không phải ISRC hoặc chứng nhận bản quyền.</p>
+        <p class="scope-note">Nếu trang tải lại sau lỗi, hãy chọn lại các tệp trước khi gửi.</p>
+    </aside>
+</div>
+@section Scripts {
+    <script src="~/js/upload-progress.js" asp-append-version="true" defer></script>
+}

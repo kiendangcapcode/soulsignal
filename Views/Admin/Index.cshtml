@@ -1,0 +1,120 @@
+@model AdminDashboardViewModel
+@{
+    ViewData["Title"] = "Tổng quan quản trị";
+}
+<div class="page-heading">
+    <div>
+        <p class="eyebrow">KHU VỰC QUẢN TRỊ</p>
+        <h1>Tổng quan<span class="accent">.</span></h1>
+    </div>
+    <a class="button button-outline" asp-controller="Admin" asp-action="Distributors">Nguồn phân phối <span>↗</span></a>
+</div>
+<p class="page-description">Theo dõi tài khoản và trạng thái danh mục âm nhạc.</p>
+<section class="panel demo-receive-panel">
+    <div class="panel-heading">
+        <div>
+            <p class="eyebrow">TIẾP NHẬN VÀ XÉT DUYỆT</p>
+            <h2>Nhà phân phối gửi nhạc, admin xét duyệt</h2>
+        </div>
+    </div>
+    <div class="application-content">
+        <p>DistroKite Demo và TuneKore Demo có tài khoản riêng để tải nhạc lên Soul Signal.
+            Bài mới ở trạng thái chờ duyệt và xuất hiện trong danh mục bên dưới để admin kiểm tra.</p>
+        <p class="scope-note mb-2">Mở “Kiểm tra bản nhạc” để nghe thử, xem thông tin quyền sử dụng và lưu kết quả.
+            Chỉ bài được duyệt mới xuất hiện công khai cho người nghe.</p>
+        <a class="inline-link" asp-controller="Admin" asp-action="Import">Nhập gói thủ công bằng tài khoản admin ↗</a>
+    </div>
+</section>
+<div class="stat-grid">
+    <div class="stat-card">
+        <span>Tài khoản</span>
+        <strong data-testid="user-count">@Model.UserCount</strong>
+        <small>Tất cả tài khoản trong hệ thống</small>
+    </div>
+    <div class="stat-card">
+        <span>Nguồn phân phối</span>
+        <strong data-testid="distributor-count">@Model.DistributorCount</strong>
+        <small>Đơn vị giả lập trong dữ liệu</small>
+    </div>
+    <div class="stat-card">
+        <span>Bài đã duyệt</span>
+        <strong data-testid="approved-count">@Model.ApprovedSongCount</strong>
+        <small>Công khai trên trang khám phá</small>
+    </div>
+    <div class="stat-card">
+        <span>Bài chờ duyệt</span>
+        <strong data-testid="pending-count">@Model.PendingSongCount</strong>
+        <small>Chưa xuất hiện công khai</small>
+    </div>
+</div>
+<section class="panel">
+    <div class="panel-heading">
+        <h2>Danh mục gần đây</h2>
+        <span class="result-count">@Model.RecentSongs.Count bài hiển thị</span>
+    </div>
+    @if (Model.RecentSongs.Count == 0)
+    {
+        <div class="empty-state">
+            <h3>Chưa có bài hát</h3>
+            <p>Dữ liệu bài hát sẽ xuất hiện tại đây.</p>
+        </div>
+    }
+    else
+    {
+        <div class="table-scroll">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th scope="col">Bài hát</th>
+                        <th scope="col">Nguồn phân phối</th>
+                        <th scope="col">Thể loại</th>
+                        <th scope="col">Trạng thái</th>
+                        <th scope="col">Xét duyệt</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var song in Model.RecentSongs)
+                    {
+                        <tr>
+                            <td>
+                                <div class="table-song">
+                                    <img src="@song.CoverPath" alt="" width="48" height="48" />
+                                    <div>
+                                        <a asp-controller="Songs" asp-action="Details" asp-route-id="@song.Id">@song.Title</a>
+                                        <small>@song.Artist</small>
+                                        <small>@song.ReferenceCode</small>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>@(song.Distributor?.Name ?? "Nguồn demo")</td>
+                            <td>@song.Genre.Name</td>
+                            <td>
+                                @if (song.Status == SongStatus.Approved)
+                                {
+                                    <span class="badge rounded-pill badge-approved">Đã duyệt</span>
+                                }
+                                else if (song.Status == SongStatus.Pending)
+                                {
+                                    <span class="badge rounded-pill badge-pending">Chờ duyệt</span>
+                                }
+                                else
+                                {
+                                    <span class="badge rounded-pill badge-rejected">Từ chối</span>
+                                }
+                            </td>
+                            <td><a class="inline-link" asp-controller="Admin" asp-action="ReviewSong" asp-route-id="@song.Id">Kiểm tra bản nhạc ↗</a></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</section>
+<div class="notice notice-roadmap">
+    <svg class="icon"><use href="#i-info" /></svg>
+    <div>
+        <strong>Nhà phân phối tải lên → admin kiểm tra → duyệt công khai</strong>
+        <p>Mỗi nhà phân phối xem danh mục và phản hồi của đơn vị mình. Admin quyết định duyệt hoặc từ chối;
+            mọi quyết định từ chối cần ghi lý do.</p>
+    </div>
+</div>

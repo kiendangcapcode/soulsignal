@@ -1,0 +1,56 @@
+@model RegisterViewModel
+@{
+    ViewData["Title"] = "Tạo tài khoản";
+}
+<div class="auth-layout">
+    <section class="auth-intro">
+        <p class="eyebrow">FIND YOUR FREQUENCY</p>
+        <h1>Mỗi người một gu.<br /><span class="accent">Mỗi ngày một nhịp.</span></h1>
+        <p>Tạo tài khoản người nghe và bắt đầu hành trình âm nhạc cùng Soul Signal.</p>
+        <div class="auth-decoration" aria-hidden="true">
+            <span></span><span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span>
+        </div>
+        <span class="auth-caption">YOUR NEXT FAVORITE MOMENT STARTS HERE.</span>
+    </section>
+    <section class="auth-card" aria-labelledby="register-title">
+        <p class="eyebrow">THAM GIA SOUL SIGNAL</p>
+        <h2 id="register-title">Tạo tài khoản</h2>
+        <p class="auth-subtitle">Một vài thông tin để chúng ta làm quen.</p>
+        <form asp-controller="Account" asp-action="Register" method="post">
+            <div asp-validation-summary="ModelOnly" class="validation-summary" role="alert"></div>
+            <div class="field">
+                <label asp-for="DisplayName">Tên hiển thị</label>
+                <input class="form-control" asp-for="DisplayName" autocomplete="nickname"
+                       placeholder="Bạn muốn được gọi là gì?" required minlength="2" maxlength="80" />
+                <span asp-validation-for="DisplayName" class="field-validation"></span>
+            </div>
+            <div class="field">
+                <label asp-for="Email">Email</label>
+                <input class="form-control" asp-for="Email" type="email" autocomplete="email"
+                       placeholder="ban@example.com" required maxlength="256" />
+                <span asp-validation-for="Email" class="field-validation"></span>
+            </div>
+            <div class="field">
+                <label asp-for="Password">Mật khẩu</label>
+                <input class="form-control" asp-for="Password" type="password" autocomplete="new-password"
+                       placeholder="Tạo mật khẩu của bạn" required minlength="10" maxlength="100" />
+                <span asp-validation-for="Password" class="field-validation"></span>
+                <small class="field-help">Từ 10 ký tự, có chữ hoa, chữ thường, số và ký tự đặc biệt.</small>
+            </div>
+            <div class="field">
+                <label asp-for="ConfirmPassword">Nhập lại mật khẩu</label>
+                <input class="form-control" asp-for="ConfirmPassword" type="password" autocomplete="new-password"
+                       placeholder="Xác nhận mật khẩu" required minlength="10" maxlength="100" />
+                <span asp-validation-for="ConfirmPassword" class="field-validation"></span>
+            </div>
+            <button class="button button-primary button-full" type="submit">
+                Tạo tài khoản người nghe <svg class="icon"><use href="#i-arrow" /></svg>
+            </button>
+        </form>
+        <p class="auth-switch">
+            Đã có tài khoản?
+            <a asp-controller="Account" asp-action="Login">Đăng nhập</a>
+        </p>
+    </section>
+</div>

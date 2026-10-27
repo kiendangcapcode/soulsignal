@@ -1,0 +1,100 @@
+@model DistributorDashboardViewModel
+@{
+    ViewData["Title"] = "Nhạc đã gửi";
+}
+<div class="page-heading">
+    <div>
+        <p class="eyebrow">KHU VỰC NHÀ PHÂN PHỐI · @Model.Source.Code</p>
+        <h1>@Model.Source.Name<span class="accent">.</span></h1>
+    </div>
+    <a class="button button-primary" asp-controller="Distributor" asp-action="Upload">Tải nhạc lên <span>↗</span></a>
+</div>
+<p class="page-description">Theo dõi nhạc do đơn vị của bạn cung cấp và xem phản hồi từ admin.</p>
+<div class="stat-grid stat-grid-three">
+    <div class="stat-card">
+        <span>Chờ duyệt</span>
+        <strong data-testid="distributor-pending-count">@Model.Songs.Count(x => x.Status == SongStatus.Pending)</strong>
+        <small>Đang chờ admin kiểm tra</small>
+    </div>
+    <div class="stat-card">
+        <span>Đã duyệt</span>
+        <strong data-testid="distributor-approved-count">@Model.Songs.Count(x => x.Status == SongStatus.Approved)</strong>
+        <small>Đã công khai cho người nghe</small>
+    </div>
+    <div class="stat-card">
+        <span>Từ chối</span>
+        <strong data-testid="distributor-rejected-count">@Model.Songs.Count(x => x.Status == SongStatus.Rejected)</strong>
+        <small>Mở hồ sơ để xem lý do</small>
+    </div>
+</div>
+<section class="panel">
+    <div class="panel-heading">
+        <h2>Danh mục của @Model.Source.Name</h2>
+        <span class="result-count">@Model.Songs.Count bài</span>
+    </div>
+    @if (Model.Songs.Count == 0)
+    {
+        <div class="empty-state">
+            <h3>Chưa có bài hát</h3>
+            <p>Tải lên tệp MP3, FLAC và thông tin bản nhạc để gửi admin xét duyệt.</p>
+            <a class="button button-primary" asp-controller="Distributor" asp-action="Upload">Gửi bài đầu tiên <span>↗</span></a>
+        </div>
+    }
+    else
+    {
+        <div class="table-scroll">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th scope="col">Bài hát</th>
+                        <th scope="col">Ngày gửi</th>
+                        <th scope="col">Trạng thái</th>
+                        <th scope="col">Phản hồi</th>
+                        <th scope="col">Hồ sơ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var song in Model.Songs)
+                    {
+                        <tr>
+                            <td>
+                                <div class="table-song">
+                                    <img src="@song.CoverPath" alt="" width="48" height="48" />
+                                    <div>
+                                        <a asp-controller="Distributor" asp-action="Details" asp-route-id="@song.Id">@song.Title</a>
+                                        <small>@song.Artist</small>
+                                        <small>@song.ReferenceCode</small>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>@song.CreatedAt.ToOffset(TimeSpan.FromHours(7)).ToString("dd/MM/yyyy HH:mm")</td>
+                            <td>
+                                @if (song.Status == SongStatus.Pending)
+                                {
+                                    <span class="badge rounded-pill badge-pending">Chờ duyệt</span>
+                                }
+                                else if (song.Status == SongStatus.Approved)
+                                {
+                                    <span class="badge rounded-pill badge-approved">Đã duyệt</span>
+                                }
+                                else
+                                {
+                                    <span class="badge rounded-pill badge-rejected">Từ chối</span>
+                                }
+                            </td>
+                            <td class="review-note-cell">@(song.ReviewNote ?? (song.Status == SongStatus.Pending ? "Đang chờ admin kiểm tra." : "Không có ghi chú bổ sung."))</td>
+                            <td><a class="inline-link" asp-controller="Distributor" asp-action="Details" asp-route-id="@song.Id">Xem chi tiết ↗</a></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</section>
+<div class="notice notice-roadmap">
+    <svg class="icon"><use href="#i-info" /></svg>
+    <div>
+        <strong>Tải nhạc lên → chờ admin duyệt → xuất hiện cho người nghe</strong>
+        <p>Nguồn phân phối được gắn theo tài khoản đăng nhập. Bạn chỉ xem được hồ sơ nội bộ thuộc đơn vị của mình.</p>
+    </div>
+</div>

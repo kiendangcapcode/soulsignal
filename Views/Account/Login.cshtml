@@ -1,0 +1,63 @@
+@model LoginViewModel
+@inject IWebHostEnvironment HostEnvironment
+@{
+    ViewData["Title"] = "Đăng nhập";
+}
+<div class="auth-layout">
+    <section class="auth-intro">
+        <p class="eyebrow">WELCOME BACK</p>
+        <h1>Giai điệu quen.<br /><span class="accent">Cảm xúc mới.</span></h1>
+        <p>Đăng nhập để trở lại không gian âm nhạc của bạn.</p>
+        <div class="auth-decoration" aria-hidden="true">
+            <span></span><span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span>
+        </div>
+        <span class="auth-caption">A LITTLE MUSIC. A LITTLE MORE YOU.</span>
+    </section>
+    <section class="auth-card" aria-labelledby="login-title">
+        <p class="eyebrow">SOUL SIGNAL ACCOUNT</p>
+        <h2 id="login-title">Chào mừng trở lại</h2>
+        <p class="auth-subtitle">Nhập thông tin tài khoản để tiếp tục.</p>
+        <form asp-controller="Account" asp-action="Login" method="post">
+            <input asp-for="ReturnUrl" type="hidden" />
+            <div asp-validation-summary="ModelOnly" class="validation-summary" role="alert"></div>
+            <div class="field">
+                <label asp-for="Email">Email hoặc tên đăng nhập</label>
+                <input class="form-control" asp-for="Email" type="text" autocomplete="username"
+                       placeholder="Ví dụ: distrokite" required maxlength="256" />
+                <span asp-validation-for="Email" class="field-validation"></span>
+            </div>
+            <div class="field">
+                <label asp-for="Password">Mật khẩu</label>
+                <input class="form-control" asp-for="Password" type="password" autocomplete="current-password"
+                       placeholder="Nhập mật khẩu" required />
+                <span asp-validation-for="Password" class="field-validation"></span>
+            </div>
+            <label class="checkbox-field">
+                <input asp-for="RememberMe" />
+                Ghi nhớ đăng nhập trên máy này
+            </label>
+            <button class="button button-primary button-full" type="submit">
+                Đăng nhập <svg class="icon"><use href="#i-arrow" /></svg>
+            </button>
+        </form>
+        <p class="auth-switch">
+            Chưa có tài khoản?
+            <a asp-controller="Account" asp-action="Register">Đăng ký ngay</a>
+        </p>
+        @if (HostEnvironment.IsDevelopment())
+        {
+            <details class="demo-accounts">
+                <summary>Tài khoản dùng thử cho bản demo</summary>
+                <dl>
+                    <div><dt>Người nghe</dt><dd><code>listener</code></dd></div>
+                    <div><dt>Admin</dt><dd><code>admin</code></dd></div>
+                    <div><dt>DistroKite Demo</dt><dd><code>distrokite</code></dd></div>
+                    <div><dt>TuneKore Demo</dt><dd><code>tunekore</code></dd></div>
+                </dl>
+                <p>Mật khẩu chung: <code>123456</code></p>
+                <small>Tài khoản demo trong môi trường phát triển. Bạn vẫn có thể đăng nhập bằng email tương ứng.</small>
+            </details>
+        }
+    </section>
+</div>

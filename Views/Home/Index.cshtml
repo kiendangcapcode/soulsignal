@@ -1,0 +1,114 @@
+@model CatalogViewModel
+@{
+    ViewData["Title"] = "Khám phá";
+    var hasFilter = !string.IsNullOrWhiteSpace(Model.Query) || Model.GenreId.HasValue;
+}
+<div class="page-heading">
+    <div>
+        <p class="eyebrow">YOUR DAILY SOUNDTRACK</p>
+        <h1>Chào ngày mới<span class="accent">.</span></h1>
+    </div>
+    <span class="heading-note"><span class="status-dot"></span> Không gian âm nhạc của bạn</span>
+</div>
+<section class="hero" aria-labelledby="hero-title">
+    <div class="hero-content">
+        <span class="pill">TÌM MỘT NHỊP ĐIỆU RIÊNG</span>
+        <h2 id="hero-title">Lắng nghe.<br />Cảm nhận.<br /><em>Kết nối.</em></h2>
+        <p>Những giai điệu nhẹ nhàng cho một ngày đầy cảm hứng.<br class="desktop-break" /> Khám phá âm nhạc cùng Soul Signal.</p>
+        <a class="button button-primary" href="#catalog">
+            Khám phá bài hát <svg class="icon"><use href="#i-arrow" /></svg>
+        </a>
+    </div>
+    <div class="hero-art" aria-hidden="true">
+        <div class="orbit orbit-one"></div>
+        <div class="orbit orbit-two"></div>
+        <div class="orbit orbit-three"></div>
+        <div class="record">
+            <div class="record-label">
+                <span class="record-logo">ss.</span>
+                <span>SOUL SIGNAL<br />FIND YOUR FREQUENCY</span>
+            </div>
+        </div>
+        <div class="art-caption"><span>FEEL THE FREQUENCY</span><span>01 — 03</span></div>
+    </div>
+</section>
+<section id="catalog" class="catalog-section" aria-labelledby="catalog-title">
+    <div class="section-heading">
+        <div>
+            <p class="eyebrow">CHỌN MỘT GIAI ĐIỆU</p>
+            <h2 id="catalog-title">@(hasFilter ? "Kết quả tìm kiếm" : "Giai điệu dành cho bạn")</h2>
+        </div>
+        <span class="result-count">@Model.Songs.Count bài hát</span>
+    </div>
+    <form class="filter-bar" method="get" asp-controller="Home" asp-action="Index">
+        <input type="hidden" name="q" value="@Model.Query" />
+        <div class="filter-control">
+            <label for="genre-filter">Thể loại</label>
+            <select id="genre-filter" name="genreId">
+                <option value="">Tất cả thể loại</option>
+                @foreach (var genre in Model.Genres)
+                {
+                    <option value="@genre.Id" selected="@(Model.GenreId == genre.Id)">@genre.Name</option>
+                }
+            </select>
+            <button class="button button-small button-muted" type="submit">Lọc</button>
+        </div>
+        @if (hasFilter)
+        {
+            <div class="filter-summary">
+                @if (!string.IsNullOrWhiteSpace(Model.Query))
+                {
+                    <span>“@Model.Query”</span>
+                }
+                <a asp-controller="Home" asp-action="Index">Xóa bộ lọc ×</a>
+            </div>
+        }
+        else
+        {
+            <span class="filter-hint">Bản phát hành đã duyệt · Nghe trực tiếp</span>
+        }
+    </form>
+    @if (Model.Songs.Count == 0)
+    {
+        <div class="empty-state">
+            <svg class="icon"><use href="#i-search" /></svg>
+            <h3>Chưa tìm thấy giai điệu phù hợp</h3>
+            <p>Thử tên bài hát, nghệ sĩ hoặc một thể loại khác nhé.</p>
+            <a class="button button-outline" asp-controller="Home" asp-action="Index">Xem tất cả bài hát</a>
+        </div>
+    }
+    else
+    {
+        <div class="song-grid">
+            @foreach (var song in Model.Songs)
+            {
+                <article class="song-card">
+                    <a class="song-cover-link" asp-controller="Songs" asp-action="Details"
+                       asp-route-id="@song.Id" aria-label="Nghe @song.Title">
+                        <img class="song-cover" src="@song.CoverPath" alt="Ảnh bìa @song.Title"
+                             width="480" height="480" loading="lazy" />
+                        <span class="cover-genre">@song.Genre.Name</span>
+                        <span class="cover-action">
+                            Nghe ngay <svg class="icon"><use href="#i-arrow" /></svg>
+                        </span>
+                    </a>
+                    <div class="song-info">
+                        <div>
+                            <h3><a asp-controller="Songs" asp-action="Details" asp-route-id="@song.Id">@song.Title</a></h3>
+                            <p>@song.Artist</p>
+                        </div>
+                        <span class="song-duration">@($"{song.DurationSeconds / 60}:{song.DurationSeconds % 60:00}")</span>
+                    </div>
+                </article>
+            }
+        </div>
+    }
+</section>
+<section class="experience-strip" aria-label="Trải nghiệm Soul Signal">
+    <div class="experience-icon"><svg class="icon"><use href="#i-headphones" /></svg></div>
+    <div>
+        <h2>Âm nhạc ở đây. Khoảnh khắc là của bạn.</h2>
+        <p>Mở một bài hát và tận hưởng bằng trình phát có sẵn. Nhạc dừng khi bạn chuyển trang.</p>
+    </div>
+    <a asp-controller="Home" asp-action="Scope" class="inline-link">Về bản trải nghiệm <span>↗</span></a>
+</section>

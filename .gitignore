@@ -1,0 +1,40 @@
+# .NET / Visual Studio
+bin/
+obj/
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Editor and operating system files
+.idea/
+.DS_Store
+Thumbs.db
+
+# Local settings and credentials
+.env
+.env.*
+!.env.example
+appsettings.Local.json
+appsettings.*.local.json
+
+# Generated reports, logs and database backups
+TestResults/
+artifacts/
+publish/
+logs/
+*.log
+*.bak
+*.mdf
+*.ldf
+__pycache__/
+*.pyc
+
+# Runtime uploads and renditions; retain only the original project demo recordings.
+Media/Audio/*
+!Media/Audio/saigon-dawn.mp3
+!Media/Audio/saigon-dawn.flac
+!Media/Audio/afterglow.mp3
+!Media/Audio/quiet-orbit.mp3
+Media/Covers/

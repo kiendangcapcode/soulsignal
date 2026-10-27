@@ -1,0 +1,96 @@
+@model Song
+@{
+    ViewData["Title"] = "Hồ sơ bài hát";
+}
+<a class="back-link" asp-controller="Distributor" asp-action="Index">← Nhạc đã gửi</a>
+<div class="page-heading">
+    <div>
+        <p class="eyebrow">@Model.ReferenceCode · MÃ NỘI BỘ</p>
+        <h1>Hồ sơ bài hát<span class="accent">.</span></h1>
+    </div>
+    @if (Model.Status == SongStatus.Pending)
+    {
+        <span class="badge rounded-pill badge-pending">Chờ duyệt</span>
+    }
+    else if (Model.Status == SongStatus.Approved)
+    {
+        <span class="badge rounded-pill badge-approved">Đã duyệt</span>
+    }
+    else
+    {
+        <span class="badge rounded-pill badge-rejected">Từ chối</span>
+    }
+</div>
+<div class="workflow-grid">
+    <section class="panel">
+        <div class="panel-heading"><h2>@Model.Title</h2></div>
+        <div class="application-content">
+            <div class="review-track-heading">
+                <img src="@Model.CoverPath" alt="Ảnh bìa @Model.Title" width="120" height="120" />
+                <dl class="information-list">
+                    <div><dt>Nghệ sĩ</dt><dd>@Model.Artist</dd></div>
+                    <div><dt>Nguồn phân phối</dt><dd>@Model.Distributor?.Name</dd></div>
+                    <div><dt>Thể loại</dt><dd>@Model.Genre.Name</dd></div>
+                    <div><dt>Thời lượng</dt><dd>@($"{Model.DurationSeconds / 60}:{Model.DurationSeconds % 60:00}")</dd></div>
+                </dl>
+            </div>
+            @if (!string.IsNullOrWhiteSpace(Model.Description))
+            {
+                <p class="preserve-lines">@Model.Description</p>
+            }
+            <div class="audio-panel">
+                <label for="submission-audio">NGHE THỬ BẢN MP3</label>
+                <audio id="submission-audio" controls preload="metadata" src="@Url.Action("Stream", "Songs", new { id = Model.Id })">
+                    Trình duyệt của bạn chưa hỗ trợ phát âm thanh.
+                </audio>
+                <p>Nhạc dừng khi bạn rời trang này.</p>
+            </div>
+            <h3 class="information-heading">Thông tin đã cung cấp</h3>
+            <dl class="information-list">
+                <div><dt>Mã theo dõi nội bộ</dt><dd>@Model.ReferenceCode <small>· Không phải ISRC</small></dd></div>
+                <div><dt>Mã bản ghi nguồn</dt><dd>@(Model.ExternalRecordingCode ?? "Không cung cấp")</dd></div>
+                <div><dt>Mã gói phát hành nguồn</dt><dd>@(Model.ExternalReleaseCode ?? "Không cung cấp")</dd></div>
+                <div><dt>Tài khoản gửi / tiếp nhận</dt><dd>@Model.ImportedBy.DisplayName</dd></div>
+                <div><dt>Ngày gửi</dt><dd>@Model.CreatedAt.ToOffset(TimeSpan.FromHours(7)).ToString("dd/MM/yyyy HH:mm")</dd></div>
+                <div><dt>Chủ thể quyền / đơn vị ủy quyền</dt><dd>@Model.RightsHolder</dd></div>
+                <div><dt>Căn cứ và phạm vi quyền sử dụng</dt><dd class="preserve-lines">@Model.RightsEvidence</dd></div>
+                <div><dt>Tệp âm thanh</dt><dd>@(string.IsNullOrEmpty(Model.HighQualityFileName) ? "MP3" + (string.IsNullOrEmpty(Model.FlacFileName) ? "" : " và FLAC") : "FLAC gốc · MP3 128 kbps · MP3 320 kbps")</dd></div>
+                @if (!string.IsNullOrEmpty(Model.HighQualityFileName))
+                {
+                    <div><dt>Xử lý âm thanh</dt><dd>Đã tự đọc thời lượng và tạo hai bản MP3 từ FLAC gốc.</dd></div>
+                }
+            </dl>
+            @if (Model.Status == SongStatus.Approved)
+            {
+                <a class="inline-link" asp-controller="Songs" asp-action="Details" asp-route-id="@Model.Id">Xem bài hát công khai ↗</a>
+            }
+        </div>
+    </section>
+    <aside class="auth-card review-card">
+        <p class="eyebrow">KẾT QUẢ XÉT DUYỆT</p>
+        @if (Model.Status == SongStatus.Pending)
+        {
+            <h2>Đã gửi admin kiểm tra</h2>
+            <p>Người nghe chưa thấy bài này. Admin sẽ kiểm tra thông tin, tệp nhạc và quyền sử dụng trước khi duyệt.</p>
+        }
+        else if (Model.Status == SongStatus.Approved)
+        {
+            <h2>Bài hát đã công khai</h2>
+            <p>Người nghe có thể tìm và nghe bài hát trên Soul Signal.</p>
+        }
+        else
+        {
+            <h2>Bài hát bị từ chối</h2>
+            <p>Bài này chưa được công khai. Xem lý do bên dưới để chuẩn bị nội dung phù hợp cho lần gửi tiếp theo.</p>
+        }
+        <div class="review-note">
+            <strong>Phản hồi từ admin</strong>
+            <p>@(Model.ReviewNote ?? (Model.Status == SongStatus.Pending ? "Đang chờ admin kiểm tra." : "Không có ghi chú bổ sung."))</p>
+        </div>
+        @if (Model.ReviewedAt.HasValue)
+        {
+            <p class="scope-note mt-3">Đã xử lý: @Model.ReviewedAt.Value.ToOffset(TimeSpan.FromHours(7)).ToString("dd/MM/yyyy HH:mm").</p>
+        }
+        <p class="scope-note mt-3">Quyết định xét duyệt được thực hiện bởi admin. Tài khoản nhà phân phối không có quyền tự công khai bài.</p>
+    </aside>
+</div>

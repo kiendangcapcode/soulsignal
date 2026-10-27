@@ -1,0 +1,5 @@
+@model ErrorViewModel
+@{
+    ViewData["Title"] = "Có lỗi xảy ra";
+}
+<section class="message-page"><span class="message-icon"><svg class="icon"><use href="#i-info" /></svg></span><p class="eyebrow">TẠM NGẮT MỘT NHỊP</p><h1>Chưa thể hoàn thành yêu cầu.</h1><p>Bạn hãy thử lại sau hoặc trở về trang chủ.</p>@if(Model.ShowRequestId){<p class="error-reference">Mã đối chiếu: <code>@Model.RequestId</code></p>}<a class="button button-primary" asp-controller="Home" asp-action="Index">Về trang chủ <svg class="icon"><use href="#i-arrow" /></svg></a></section>

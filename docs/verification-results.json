@@ -1,0 +1,372 @@
+{
+  "model": "admin-import",
+  "startedAt": "2026-10-27T10:26:04+07:00",
+  "completedAt": "2026-10-27T10:26:06+07:00",
+  "timezone": "Asia/Saigon (UTC+07:00)",
+  "baseUrl": "http://localhost:5023",
+  "testAccountEmail": "week1-test-94516db4ed864daaafe45a1176d89a42@example.test",
+  "summary": {
+    "total": 44,
+    "passed": 44,
+    "failed": 0
+  },
+  "limitations": [
+    "Chỉ kiểm chứng HTTP, HTML và phân quyền phía server.",
+    "Chưa xác nhận âm thanh nghe thực tế, codec trình duyệt, nhạc dừng khi đổi trang hoặc bố cục.",
+    "Không suy ra đã chạy trên máy thành viên thứ hai."
+  ],
+  "tests": [
+    {
+      "id": "HTTP-00",
+      "name": "Ứng dụng trả trang chủ",
+      "status": "passed",
+      "detail": "HTTP 200.",
+      "timestamp": "2026-10-27T10:26:04+07:00",
+      "durationMs": 370
+    },
+    {
+      "id": "CAT-01",
+      "name": "Khách chỉ thấy ba bài Approved",
+      "status": "passed",
+      "detail": "Danh sách ID bài: [1, 2, 3].",
+      "timestamp": "2026-10-27T10:26:04+07:00",
+      "durationMs": 96
+    },
+    {
+      "id": "CAT-02",
+      "name": "Tìm Afterglow trả đúng một bài",
+      "status": "passed",
+      "detail": "Danh sách ID bài: [2].",
+      "timestamp": "2026-10-27T10:26:04+07:00",
+      "durationMs": 97
+    },
+    {
+      "id": "CAT-03",
+      "name": "Từ khóa không tồn tại trả danh sách rỗng",
+      "status": "passed",
+      "detail": "Danh sách ID bài: [].",
+      "timestamp": "2026-10-27T10:26:05+07:00",
+      "durationMs": 28
+    },
+    {
+      "id": "CAT-04",
+      "name": "Từ khóa chỉ khoảng trắng được bỏ qua",
+      "status": "passed",
+      "detail": "Danh sách ID bài: [1, 2, 3].",
+      "timestamp": "2026-10-27T10:26:05+07:00",
+      "durationMs": 32
+    },
+    {
+      "id": "AUDIO-01",
+      "name": "Trang nghe dùng audio mặc định, không script",
+      "status": "passed",
+      "detail": "Một audio controls, nguồn Stream/1, không có thẻ script; chưa kiểm tra phát nghe thực tế.",
+      "timestamp": "2026-10-27T10:26:05+07:00",
+      "durationMs": 51
+    },
+    {
+      "id": "AUDIO-02",
+      "name": "HEAD MP3 có MIME và chiều dài đúng",
+      "status": "passed",
+      "detail": "HEAD audio/mpeg; 385036 byte; không có body.",
+      "timestamp": "2026-10-27T10:26:05+07:00",
+      "durationMs": 17
+    },
+    {
+      "id": "AUDIO-03",
+      "name": "MP3 hỗ trợ byte range",
+      "status": "passed",
+      "detail": "HTTP 206; audio/mpeg; bytes 0-1023/385036; 1024 byte.",
+      "timestamp": "2026-10-27T10:26:05+07:00",
+      "durationMs": 10
+    },
+    {
+      "id": "AUDIO-04",
+      "name": "Không có URL FLAC tĩnh công khai",
+      "status": "passed",
+      "detail": "HTTP 404.",
+      "timestamp": "2026-10-27T10:26:05+07:00",
+      "durationMs": 2
+    },
+    {
+      "id": "AUDIO-05",
+      "name": "Không có URL MP3 private tĩnh công khai",
+      "status": "passed",
+      "detail": "HTTP 404.",
+      "timestamp": "2026-10-27T10:26:05+07:00",
+      "durationMs": 1
+    },
+    {
+      "id": "SONG-01",
+      "name": "Chi tiết ID không tồn tại trả 404",
+      "status": "passed",
+      "detail": "HTTP 404.",
+      "timestamp": "2026-10-27T10:26:05+07:00",
+      "durationMs": 4
+    },
+    {
+      "id": "SONG-02",
+      "name": "Stream ID không tồn tại trả 404",
+      "status": "passed",
+      "detail": "HTTP 404.",
+      "timestamp": "2026-10-27T10:26:05+07:00",
+      "durationMs": 4
+    },
+    {
+      "id": "AUTH-01",
+      "name": "Đăng nhập sai có validation",
+      "status": "passed",
+      "detail": "Thông tin sai trả 200 với lỗi validation; không tạo phiên đăng nhập.",
+      "timestamp": "2026-10-27T10:26:05+07:00",
+      "durationMs": 87
+    },
+    {
+      "id": "CSRF-01",
+      "name": "POST /Account/Login thiếu CSRF bị chặn",
+      "status": "passed",
+      "detail": "HTTP 400.",
+      "timestamp": "2026-10-27T10:26:05+07:00",
+      "durationMs": 3
+    },
+    {
+      "id": "CSRF-02",
+      "name": "POST /Account/Register thiếu CSRF bị chặn",
+      "status": "passed",
+      "detail": "HTTP 400.",
+      "timestamp": "2026-10-27T10:26:05+07:00",
+      "durationMs": 9
+    },
+    {
+      "id": "AUTH-02",
+      "name": "Đăng nhập Listener mẫu",
+      "status": "passed",
+      "detail": "Đăng nhập listener@soulsignal.local; Location=/.",
+      "timestamp": "2026-10-27T10:26:05+07:00",
+      "durationMs": 150
+    },
+    {
+      "id": "ROLE-01",
+      "name": "Listener bị chặn khi gọi trực tiếp /Admin",
+      "status": "passed",
+      "detail": "HTTP 403.",
+      "timestamp": "2026-10-27T10:26:05+07:00",
+      "durationMs": 56
+    },
+    {
+      "id": "ROLE-03",
+      "name": "Listener bị chặn khi gọi trực tiếp /Songs/Details/4",
+      "status": "passed",
+      "detail": "HTTP 403.",
+      "timestamp": "2026-10-27T10:26:05+07:00",
+      "durationMs": 30
+    },
+    {
+      "id": "ROLE-04",
+      "name": "Listener bị chặn khi gọi trực tiếp /Songs/Stream/4",
+      "status": "passed",
+      "detail": "HTTP 403.",
+      "timestamp": "2026-10-27T10:26:05+07:00",
+      "durationMs": 24
+    },
+    {
+      "id": "ROLE-05",
+      "name": "Listener bị chặn khi gọi trực tiếp /Songs/FlacPreview/1",
+      "status": "passed",
+      "detail": "HTTP 403.",
+      "timestamp": "2026-10-27T10:26:05+07:00",
+      "durationMs": 7
+    },
+    {
+      "id": "ROLE-06",
+      "name": "Khách mở bài Pending phải đăng nhập",
+      "status": "passed",
+      "detail": "Bị yêu cầu đăng nhập trước khi cấp nội dung.",
+      "timestamp": "2026-10-27T10:26:05+07:00",
+      "durationMs": 6
+    },
+    {
+      "id": "ROLE-07",
+      "name": "Khách stream Pending phải đăng nhập",
+      "status": "passed",
+      "detail": "Bị yêu cầu đăng nhập trước khi cấp nội dung.",
+      "timestamp": "2026-10-27T10:26:05+07:00",
+      "durationMs": 5
+    },
+    {
+      "id": "CSRF-03",
+      "name": "POST đăng xuất thiếu CSRF bị chặn",
+      "status": "passed",
+      "detail": "HTTP 400.",
+      "timestamp": "2026-10-27T10:26:05+07:00",
+      "durationMs": 11
+    },
+    {
+      "id": "AUTH-03",
+      "name": "GET đăng xuất không được thực hiện",
+      "status": "passed",
+      "detail": "HTTP 404; current-role='Người nghe'; phiên Listener vẫn được giữ.",
+      "timestamp": "2026-10-27T10:26:05+07:00",
+      "durationMs": 18
+    },
+    {
+      "id": "AUTH-04",
+      "name": "Tài khoản Publisher cũ đã bị khóa đăng nhập",
+      "status": "passed",
+      "detail": "Tài khoản Publisher cũ không tạo phiên đăng nhập; nguồn phân phối không phải tài khoản website.",
+      "timestamp": "2026-10-27T10:26:05+07:00",
+      "durationMs": 25
+    },
+    {
+      "id": "ROLE-08",
+      "name": "Không còn trang upload dành cho Publisher",
+      "status": "passed",
+      "detail": "HTTP 404.",
+      "timestamp": "2026-10-27T10:26:05+07:00",
+      "durationMs": 2
+    },
+    {
+      "id": "ROLE-09",
+      "name": "Không còn trang đăng ký đối tác Publisher",
+      "status": "passed",
+      "detail": "HTTP 404.",
+      "timestamp": "2026-10-27T10:26:05+07:00",
+      "durationMs": 1
+    },
+    {
+      "id": "AUTH-05",
+      "name": "Đăng nhập Admin mẫu",
+      "status": "passed",
+      "detail": "Đăng nhập admin@soulsignal.local; Location=/Admin.",
+      "timestamp": "2026-10-27T10:26:05+07:00",
+      "durationMs": 87
+    },
+    {
+      "id": "ROLE-10",
+      "name": "Admin hiển thị số liệu thật của bản seed",
+      "status": "passed",
+      "detail": "{\"user-count\": 3, \"distributor-count\": 2, \"approved-count\": 3, \"pending-count\": 1}",
+      "timestamp": "2026-10-27T10:26:05+07:00",
+      "durationMs": 141
+    },
+    {
+      "id": "ROLE-11",
+      "name": "Ngay cả Admin cũng không dùng route Publisher cũ",
+      "status": "passed",
+      "detail": "HTTP 404.",
+      "timestamp": "2026-10-27T10:26:05+07:00",
+      "durationMs": 22
+    },
+    {
+      "id": "AUDIO-08",
+      "name": "Admin thử FLAC bằng byte range",
+      "status": "passed",
+      "detail": "HTTP 206; audio/flac; bytes 0-1023/1415803; 1024 byte.",
+      "timestamp": "2026-10-27T10:26:05+07:00",
+      "durationMs": 28
+    },
+    {
+      "id": "AUDIO-09",
+      "name": "Admin nghe được MP3 Pending",
+      "status": "passed",
+      "detail": "HTTP 206; audio/mpeg; bytes 0-1023/512931; 1024 byte.",
+      "timestamp": "2026-10-27T10:26:05+07:00",
+      "durationMs": 19
+    },
+    {
+      "id": "AUTH-06",
+      "name": "ReturnUrl bên ngoài không gây chuyển hướng ngoài ứng dụng",
+      "status": "passed",
+      "detail": "Đăng nhập listener@soulsignal.local; Location=/.",
+      "timestamp": "2026-10-27T10:26:05+07:00",
+      "durationMs": 86
+    },
+    {
+      "id": "REG-01",
+      "name": "Tên hiển thị trống trả validation, không lỗi 500",
+      "status": "passed",
+      "detail": "HTTP 200, form có lỗi validation; số tài khoản được đối chiếu ở bước riêng.",
+      "timestamp": "2026-10-27T10:26:06+07:00",
+      "durationMs": 53
+    },
+    {
+      "id": "REG-02",
+      "name": "Tên còn một ký tự sau trim trả validation",
+      "status": "passed",
+      "detail": "HTTP 200, form có lỗi validation; số tài khoản được đối chiếu ở bước riêng.",
+      "timestamp": "2026-10-27T10:26:06+07:00",
+      "durationMs": 12
+    },
+    {
+      "id": "REG-03",
+      "name": "Mật khẩu xác nhận khác nhau bị từ chối",
+      "status": "passed",
+      "detail": "HTTP 200, form có lỗi validation; số tài khoản được đối chiếu ở bước riêng.",
+      "timestamp": "2026-10-27T10:26:06+07:00",
+      "durationMs": 11
+    },
+    {
+      "id": "REG-04",
+      "name": "Ba lần đăng ký lỗi không tạo tài khoản",
+      "status": "passed",
+      "detail": "UserCount=3; thay đổi so baseline=0.",
+      "timestamp": "2026-10-27T10:26:06+07:00",
+      "durationMs": 14
+    },
+    {
+      "id": "REG-05",
+      "name": "Đăng ký chỉ được Listener dù gửi trường Admin/VIP",
+      "status": "passed",
+      "detail": "Tạo đúng một tài khoản week1-test-94516db4ed864daaafe45a1176d89a42@example.test; nhãn role='Người nghe'; quyền được thử ở các ca tiếp theo.",
+      "timestamp": "2026-10-27T10:26:06+07:00",
+      "durationMs": 131
+    },
+    {
+      "id": "REG-06",
+      "name": "Tài khoản mới không được tự nâng quyền: /Admin",
+      "status": "passed",
+      "detail": "HTTP 403.",
+      "timestamp": "2026-10-27T10:26:06+07:00",
+      "durationMs": 5
+    },
+    {
+      "id": "REG-07",
+      "name": "Tài khoản mới không được tự nâng quyền: /Publisher",
+      "status": "passed",
+      "detail": "HTTP 404.",
+      "timestamp": "2026-10-27T10:26:06+07:00",
+      "durationMs": 1
+    },
+    {
+      "id": "REG-08",
+      "name": "Tài khoản mới không được tự nâng quyền: /Songs/FlacPreview/1",
+      "status": "passed",
+      "detail": "HTTP 403.",
+      "timestamp": "2026-10-27T10:26:06+07:00",
+      "durationMs": 4
+    },
+    {
+      "id": "REG-09",
+      "name": "Tài khoản mới không được tự nâng quyền: /Songs/Stream/4",
+      "status": "passed",
+      "detail": "HTTP 403.",
+      "timestamp": "2026-10-27T10:26:06+07:00",
+      "durationMs": 25
+    },
+    {
+      "id": "REG-10",
+      "name": "Chỉ đúng một tài khoản mới được tạo",
+      "status": "passed",
+      "detail": "UserCount=4; thay đổi so baseline=1.",
+      "timestamp": "2026-10-27T10:26:06+07:00",
+      "durationMs": 26
+    },
+    {
+      "id": "AUTH-07",
+      "name": "POST đăng xuất hợp lệ kết thúc phiên",
+      "status": "passed",
+      "detail": "Bị yêu cầu đăng nhập trước khi cấp nội dung.",
+      "timestamp": "2026-10-27T10:26:06+07:00",
+      "durationMs": 17
+    }
+  ]
+}

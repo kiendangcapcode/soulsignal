@@ -1,0 +1,99 @@
+@{
+    var controller = ViewContext.RouteData.Values["controller"]?.ToString();
+    var action = ViewContext.RouteData.Values["action"]?.ToString();
+    var name = User.FindFirst("DisplayName")?.Value ?? User.Identity?.Name?.Split('@')[0] ?? "Bạn";
+    var role = User.IsInRole("Admin") ? "Quản trị viên"
+        : User.IsInRole("Distributor") ? "Nhà phân phối" : "Người nghe";
+}
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#141613" />
+    <meta name="description" content="Soul Signal — không gian âm nhạc cho những khoảnh khắc của riêng bạn." />
+    <title>@ViewData["Title"] · Soul Signal</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+    <a class="skip-link" href="#main-content">Đến nội dung chính</a>
+    <svg class="icon-definitions" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <symbol id="i-discover" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="m15.5 8.5-2 5-5 2 2-5 5-2Z"/></symbol>
+        <symbol id="i-music" viewBox="0 0 24 24"><path d="M9 17V5l11-2v12M9 9l11-2"/><ellipse cx="6" cy="18" rx="3" ry="2.5"/><ellipse cx="17" cy="16" rx="3" ry="2.5"/></symbol>
+        <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></symbol>
+        <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6"/></symbol>
+        <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></symbol>
+        <symbol id="i-shield" viewBox="0 0 24 24"><path d="m12 3 8 3v6c0 5-8 9-8 9s-8-4-8-9V6l8-3Z"/><path d="m8 12 3 3 5-6"/></symbol>
+        <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6m0-11v1"/></symbol>
+        <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+        <symbol id="i-headphones" viewBox="0 0 24 24"><path d="M4 14v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="12" width="4" height="8" rx="2"/><rect x="17" y="12" width="4" height="8" rx="2"/></symbol>
+    </svg>
+    <div class="app-shell">
+        <aside class="sidebar" aria-label="Điều hướng chính">
+            <a class="brand" asp-controller="Home" asp-action="Index" aria-label="Soul Signal — Trang chủ">
+                <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
+                <span>soul<span class="brand-light">signal</span><span class="brand-period">.</span></span>
+            </a>
+            <div class="nav-caption">KHÔNG GIAN CỦA BẠN</div>
+            <nav class="main-nav">
+                <a class="nav-item @(controller == "Home" && action == "Index" ? "is-active" : "")" asp-controller="Home" asp-action="Index"><svg class="icon"><use href="#i-discover" /></svg>Khám phá</a>
+                <a class="nav-item @(controller == "Songs" ? "is-active" : "")" href="@Url.Action("Index", "Home")#catalog"><svg class="icon"><use href="#i-music" /></svg>Bài hát</a>
+                <a class="nav-item @(controller == "Home" && action == "Scope" ? "is-active" : "")" asp-controller="Home" asp-action="Scope"><svg class="icon"><use href="#i-info" /></svg>Về Soul Signal</a>
+                @if (User.IsInRole("Admin"))
+                {
+                    <div class="nav-caption nav-caption-inner">QUẢN TRỊ HỆ THỐNG</div>
+                    <a class="nav-item @(controller == "Admin" && action == "Index" ? "is-active" : "")" asp-controller="Admin" asp-action="Index"><svg class="icon"><use href="#i-shield" /></svg>Tổng quan</a>
+                    <a class="nav-item @(controller == "Admin" && action == "Distributors" ? "is-active" : "")" asp-controller="Admin" asp-action="Distributors"><svg class="icon"><use href="#i-grid" /></svg>Nguồn phân phối</a>
+                }
+                @if (User.IsInRole("Distributor"))
+                {
+                    <div class="nav-caption nav-caption-inner">KHU VỰC NHÀ PHÂN PHỐI</div>
+                    <a class="nav-item @(controller == "Distributor" && action != "Upload" ? "is-active" : "")" asp-controller="Distributor" asp-action="Index"><svg class="icon"><use href="#i-grid" /></svg>Nhạc đã gửi</a>
+                    <a class="nav-item @(controller == "Distributor" && action == "Upload" ? "is-active" : "")" asp-controller="Distributor" asp-action="Upload"><svg class="icon"><use href="#i-music" /></svg>Tải nhạc lên</a>
+                }
+            </nav>
+            <div class="sidebar-bottom">
+                <div class="sidebar-note"><svg class="icon"><use href="#i-headphones" /></svg><strong>Một chút nhạc,<br />một khoảng riêng.</strong><p>Dành thời gian cho điều<br />khiến bạn thấy dễ chịu.</p></div>
+                <a class="sidebar-about" asp-controller="Home" asp-action="Scope">Bản trải nghiệm · Tuần 01 <span>↗</span></a>
+            </div>
+        </aside>
+        <div class="main-shell">
+            <header class="topbar">
+                <form class="search-form" method="get" asp-controller="Home" asp-action="Index" role="search">
+                    <svg class="icon"><use href="#i-search" /></svg>
+                    <label class="visually-hidden" for="global-search">Tìm bài hát hoặc nghệ sĩ</label>
+                    <input id="global-search" name="q" type="search" value="@Context.Request.Query["q"]" placeholder="Tìm bài hát, nghệ sĩ…" maxlength="100" />
+                    <button type="submit" aria-label="Tìm kiếm"><svg class="icon"><use href="#i-arrow" /></svg></button>
+                </form>
+                <div class="account-nav">
+                    @if (User.Identity?.IsAuthenticated == true)
+                    {
+                        <span class="user-avatar" aria-hidden="true">@(string.IsNullOrEmpty(name) ? "S" : name[..1].ToUpperInvariant())</span>
+                        <span class="user-label"><strong>@name</strong><small data-testid="current-role">@role</small></span>
+                        <form asp-controller="Account" asp-action="Logout" method="post"><button class="text-button" type="submit">Đăng xuất</button></form>
+                    }
+                    else
+                    {
+                        <a class="login-link" asp-controller="Account" asp-action="Login">Đăng nhập</a>
+                        <a class="button button-small button-outline" asp-controller="Account" asp-action="Register">Tạo tài khoản <span>↗</span></a>
+                    }
+                </div>
+            </header>
+            <main id="main-content" class="page-content" tabindex="-1">
+                @if (TempData["Success"] is string success)
+                {
+                    <div class="notice notice-success" role="status">@success</div>
+                }
+                @RenderBody()
+            </main>
+            <footer class="site-footer">
+                <span>© 2026 Soul Signal</span>
+                <span>Âm nhạc kết nối cảm xúc.</span>
+                <a asp-controller="Home" asp-action="Policy">Chính sách nền tảng ↗</a>
+            </footer>
+        </div>
+    </div>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

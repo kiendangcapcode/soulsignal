@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="800" viewBox="0 0 800 800" role="img" aria-labelledby="title desc">
+  <title id="title">Quiet Orbit</title><desc id="desc">A lavender planet and fine tilted orbit lines against a midnight sky.</desc>
+  <defs>
+    <linearGradient id="bg" x2="1" y2="1"><stop stop-color="#29283f"/><stop offset="1" stop-color="#101522"/></linearGradient>
+    <radialGradient id="planet" cx=".3" cy=".2"><stop stop-color="#e4d8f1"/><stop offset=".42" stop-color="#a294c8"/><stop offset="1" stop-color="#58517b"/></radialGradient>
+    <linearGradient id="orbit"><stop stop-color="#c0b6e1" stop-opacity=".12"/><stop offset=".5" stop-color="#ece4f3" stop-opacity=".85"/><stop offset="1" stop-color="#c0b6e1" stop-opacity=".2"/></linearGradient>
+  </defs>
+  <rect width="800" height="800" fill="url(#bg)"/>
+  <g fill="#e3d9ee"><circle cx="125" cy="176" r="2"/><circle cx="658" cy="202" r="2"/><circle cx="612" cy="470" r="1.8"/><circle cx="186" cy="492" r="1.6"/><circle cx="541" cy="128" r="1.5"/><circle cx="705" cy="386" r="1.5"/><circle cx="250" cy="246" r="1.5"/></g>
+  <ellipse cx="400" cy="348" rx="282" ry="89" transform="rotate(-28 400 348)" fill="none" stroke="#d4cae6" stroke-opacity=".2"/>
+  <circle cx="400" cy="348" r="146" fill="url(#planet)"/>
+  <path d="M184 491C323 517 589 369 654 221" fill="none" stroke="url(#orbit)" stroke-width="3"/>
+  <ellipse cx="400" cy="348" rx="295" ry="148" transform="rotate(30 400 348)" fill="none" stroke="#b3a6d1" stroke-opacity=".16"/>
+  <circle cx="621" cy="238" r="11" fill="#d1ed9b"/>
+  <path d="M400 151V128M400 569V546M203 348H180M620 348H597" stroke="#c8bfdc" stroke-opacity=".4"/>
+  <text x="64" y="80" fill="#d9d4e7" font-family="Arial,Helvetica,sans-serif" font-size="16" letter-spacing="5">SOUL SIGNAL STUDIO</text>
+  <text x="64" y="701" fill="#ede8f3" font-family="Arial,Helvetica,sans-serif" font-size="68" font-weight="600" letter-spacing="-2">quiet orbit</text>
+  <text x="67" y="740" fill="#b4a9ca" font-family="Arial,Helvetica,sans-serif" font-size="15" letter-spacing="4">ORIGINAL DEMO · 003</text>
+</svg>

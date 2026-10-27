@@ -1,0 +1,114 @@
+@model ReviewSongViewModel
+@inject IWebHostEnvironment HostEnvironment
+@{
+    ViewData["Title"] = "Xét duyệt bản phát hành";
+    var song = Model.Song;
+}
+<a class="back-link" asp-controller="Admin" asp-action="Index">← Tổng quan quản trị</a>
+<div class="page-heading">
+    <div>
+        <p class="eyebrow">@song.ReferenceCode · MÃ NỘI BỘ</p>
+        <h1>Xét duyệt bản nhạc<span class="accent">.</span></h1>
+    </div>
+    @if (song.Status == SongStatus.Pending)
+    {
+        <span class="badge rounded-pill badge-pending">Chờ duyệt</span>
+    }
+    else if (song.Status == SongStatus.Approved)
+    {
+        <span class="badge rounded-pill badge-approved">Đã duyệt</span>
+    }
+    else
+    {
+        <span class="badge rounded-pill badge-rejected">Từ chối</span>
+    }
+</div>
+<div class="workflow-grid">
+    <section class="panel">
+        <div class="panel-heading"><h2>@song.Title</h2></div>
+        <div class="application-content">
+            <div class="review-track-heading">
+                <img src="@song.CoverPath" alt="Ảnh bìa @song.Title" width="120" height="120" />
+                <dl class="information-list">
+                    <div><dt>Nghệ sĩ</dt><dd>@song.Artist</dd></div>
+                    <div><dt>Nguồn phân phối</dt><dd>@(song.Distributor?.Name ?? "Nguồn demo")</dd></div>
+                    <div><dt>Thể loại</dt><dd>@song.Genre.Name</dd></div>
+                    <div><dt>Thời lượng</dt><dd>@($"{song.DurationSeconds / 60}:{song.DurationSeconds % 60:00}")</dd></div>
+                </dl>
+            </div>
+            @if (!string.IsNullOrWhiteSpace(song.Description))
+            {
+                <p class="preserve-lines">@song.Description</p>
+            }
+            <div class="audio-panel">
+                <label for="review-audio">NGHE THỬ BẢN MP3</label>
+                <audio id="review-audio" controls preload="metadata" src="@Url.Action("Stream", "Songs", new { id = song.Id })">
+                    Trình duyệt của bạn chưa hỗ trợ phát âm thanh.
+                </audio>
+            </div>
+            @if (!string.IsNullOrEmpty(song.HighQualityFileName))
+            {
+                <p class="scope-note">Đã tạo MP3 128 kbps và 320 kbps từ FLAC gốc; thời lượng được đọc tự động.</p>
+                @if (HostEnvironment.IsDevelopment())
+                {
+                    <details class="demo-accounts">
+                        <summary>Nghe thử MP3 320 kbps · Kiểm tra nội bộ</summary>
+                        <audio controls preload="none" aria-label="Nghe thử MP3 320 kbps" src="@Url.Action("HighQualityPreview", "Songs", new { id = song.Id })">
+                            Trình duyệt của bạn chưa hỗ trợ phát tệp này.
+                        </audio>
+                    </details>
+                }
+            }
+            <h3 class="information-heading">Thông tin quyền sử dụng · Nội bộ</h3>
+            <dl class="information-list">
+                <div><dt>Chủ thể quyền / đơn vị ủy quyền</dt><dd>@song.RightsHolder</dd></div>
+                <div><dt>Mã theo dõi nội bộ</dt><dd>@song.ReferenceCode <small>· Không phải ISRC</small></dd></div>
+                <div><dt>Mã bản ghi nguồn giả lập</dt><dd>@(song.ExternalRecordingCode ?? "Không cung cấp")</dd></div>
+                <div><dt>Mã gói nguồn giả lập</dt><dd>@(song.ExternalReleaseCode ?? "Không cung cấp")</dd></div>
+                <div><dt>Tài khoản gửi / tiếp nhận</dt><dd>@song.ImportedBy.DisplayName <small>· @song.ImportedBy.Email</small></dd></div>
+                <div><dt>Ngày gửi</dt><dd>@song.CreatedAt.ToOffset(TimeSpan.FromHours(7)).ToString("dd/MM/yyyy HH:mm")</dd></div>
+            </dl>
+            <p class="preserve-lines">@song.RightsEvidence</p>
+            <a class="inline-link" asp-controller="Songs" asp-action="Details" asp-route-id="@song.Id">Xem trang bài hát ↗</a>
+        </div>
+    </section>
+    <section class="auth-card review-card">
+        <p class="eyebrow">QUYẾT ĐỊNH CỦA ADMIN</p>
+        @if (song.Status == SongStatus.Pending)
+        {
+            <h2>Kiểm tra trước khi công khai</h2>
+            <p class="auth-subtitle">Đánh giá thông tin bài hát, tệp nghe thử và căn cứ quyền sử dụng.</p>
+            <form asp-controller="Admin" asp-action="ReviewSong" asp-route-id="@Model.Id" method="post">
+                <input asp-for="Id" type="hidden" />
+                <div asp-validation-summary="ModelOnly" class="validation-summary" role="alert"></div>
+                <div class="field">
+                    <label asp-for="Decision">Kết quả xét duyệt</label>
+                    <select class="form-select" asp-for="Decision" required>
+                        <option value="">Chọn kết quả</option>
+                        <option value="Approve">Duyệt và công khai</option>
+                        <option value="Reject">Từ chối bản phát hành</option>
+                    </select>
+                    <span asp-validation-for="Decision" class="field-validation"></span>
+                </div>
+                <div class="field">
+                    <label asp-for="ReviewNote">Phản hồi / lý do</label>
+                    <textarea class="form-control" asp-for="ReviewNote" rows="5" maxlength="1000"
+                              placeholder="Ghi nhận kết quả kiểm tra hoặc nội dung cần điều chỉnh."></textarea>
+                    <small class="field-help">Bắt buộc ghi lý do khi từ chối. Nhà phân phối xem được phản hồi cho bài của mình.</small>
+                    <span asp-validation-for="ReviewNote" class="field-validation"></span>
+                </div>
+                <button class="button button-primary button-full" type="submit">Lưu kết quả xét duyệt</button>
+            </form>
+        }
+        else
+        {
+            <h2>@(song.Status == SongStatus.Approved ? "Bản nhạc đã được duyệt" : "Bản nhạc đã bị từ chối")</h2>
+            <p class="preserve-lines">@(song.ReviewNote ?? "Không có ghi chú bổ sung.")</p>
+            @if (song.ReviewedAt.HasValue)
+            {
+                <p class="scope-note">Đã xử lý: @song.ReviewedAt.Value.ToOffset(TimeSpan.FromHours(7)).ToString("dd/MM/yyyy HH:mm").</p>
+            }
+        }
+        <p class="scope-note mt-3">Duyệt bài là quyết định quản lý nội dung trong đồ án, không xác nhận pháp lý về bản quyền.</p>
+    </section>
+</div>

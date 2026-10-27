@@ -1,0 +1,94 @@
+{
+  "model": "development-demo-login-aliases",
+  "startedAt": "2026-10-27T12:28:57+07:00",
+  "completedAt": "2026-10-27T12:28:58+07:00",
+  "timezone": "Asia/Saigon (UTC+07:00)",
+  "baseUrl": "http://localhost:5023",
+  "summary": {
+    "total": 9,
+    "passed": 9,
+    "failed": 0
+  },
+  "resourcesCreated": {
+    "users": [],
+    "songs": [],
+    "mediaFiles": []
+  },
+  "limitations": [
+    "Uses existing Development demo accounts; does not exercise registration, failed login or lockout."
+  ],
+  "tests": [
+    {
+      "id": "LOGIN-00",
+      "name": "Form chấp nhận tên đăng nhập ngắn",
+      "status": "passed",
+      "detail": "Identifier is a text input and accepts usernames or email addresses.",
+      "timestamp": "2026-10-27T12:28:57+07:00",
+      "durationMs": 53
+    },
+    {
+      "id": "LOGIN-01",
+      "name": "Đăng nhập admin",
+      "status": "passed",
+      "detail": "Đăng nhập admin; Location=/Admin. Role=Quản trị viên.",
+      "timestamp": "2026-10-27T12:28:57+07:00",
+      "durationMs": 154
+    },
+    {
+      "id": "LOGIN-02",
+      "name": "Đăng nhập admin@soulsignal.local",
+      "status": "passed",
+      "detail": "Đăng nhập admin@soulsignal.local; Location=/Admin. Role=Quản trị viên.",
+      "timestamp": "2026-10-27T12:28:57+07:00",
+      "durationMs": 153
+    },
+    {
+      "id": "LOGIN-03",
+      "name": "Đăng nhập distrokite",
+      "status": "passed",
+      "detail": "Đăng nhập distrokite; Location=/Distributor. Role=Nhà phân phối.",
+      "timestamp": "2026-10-27T12:28:57+07:00",
+      "durationMs": 140
+    },
+    {
+      "id": "LOGIN-04",
+      "name": "Đăng nhập distrokite@soulsignal.local",
+      "status": "passed",
+      "detail": "Đăng nhập distrokite@soulsignal.local; Location=/Distributor. Role=Nhà phân phối.",
+      "timestamp": "2026-10-27T12:28:57+07:00",
+      "durationMs": 125
+    },
+    {
+      "id": "LOGIN-05",
+      "name": "Đăng nhập tunekore",
+      "status": "passed",
+      "detail": "Đăng nhập tunekore; Location=/Distributor. Role=Nhà phân phối.",
+      "timestamp": "2026-10-27T12:28:57+07:00",
+      "durationMs": 137
+    },
+    {
+      "id": "LOGIN-06",
+      "name": "Đăng nhập tunekore@soulsignal.local",
+      "status": "passed",
+      "detail": "Đăng nhập tunekore@soulsignal.local; Location=/Distributor. Role=Nhà phân phối.",
+      "timestamp": "2026-10-27T12:28:58+07:00",
+      "durationMs": 136
+    },
+    {
+      "id": "LOGIN-07",
+      "name": "Đăng nhập listener",
+      "status": "passed",
+      "detail": "Đăng nhập listener; Location=/. Role=Người nghe.",
+      "timestamp": "2026-10-27T12:28:58+07:00",
+      "durationMs": 136
+    },
+    {
+      "id": "LOGIN-08",
+      "name": "Đăng nhập listener@soulsignal.local",
+      "status": "passed",
+      "detail": "Đăng nhập listener@soulsignal.local; Location=/. Role=Người nghe.",
+      "timestamp": "2026-10-27T12:28:58+07:00",
+      "durationMs": 118
+    }
+  ]
+}

@@ -1,0 +1,420 @@
+{
+  "model": "upload-progress-and-embedded-cover",
+  "startedAt": "2026-10-27T12:26:43+07:00",
+  "completedAt": "2026-10-27T12:26:52+07:00",
+  "timezone": "Asia/Saigon (UTC+07:00)",
+  "baseUrl": "http://localhost:5023",
+  "summary": {
+    "total": 17,
+    "passed": 17,
+    "failed": 0
+  },
+  "resourcesCreated": {
+    "songIds": [
+      19,
+      20
+    ],
+    "titles": [
+      "Progress Cover QA embedded cfbcc3b8e1f9",
+      "Progress Cover QA explicit cfbcc3b8e1f9"
+    ],
+    "uploadIds": [
+      "8febe35598ea45bda0bb106ecd11a548",
+      "dec4f3be97d7482f9f3532d90b63118e",
+      "ac7757bb89ab4bb69faff02d6ef7085a",
+      "36c163c4b4904016841c7779fa975dd4",
+      "5e7bfc3bda494483a79db46bfd7ec7ff"
+    ],
+    "filesCreated": [
+      "Media\\Audio\\0988d3542c3244b7b85fe6335b91fe50.flac",
+      "Media\\Audio\\1b34f70bc58f4e02beeb9e864fd8c13c-320.mp3",
+      "Media\\Audio\\2326594e867e4925bbc167c82b593f1b.flac",
+      "Media\\Audio\\631ffca003644a78bbf5ac8d2baf033b-128.mp3",
+      "Media\\Audio\\85f878b8d4f94e2a8c11c582ffa46c90-320.mp3",
+      "Media\\Audio\\dad1768e837f4466b1e4995559e6c504-128.mp3",
+      "Media\\Covers\\3590784821db48f39792dfcb241fb19a.jpg",
+      "Media\\Covers\\656f3e50d7414014a647b69eb2897ebd.png"
+    ],
+    "existingSongsModified": [],
+    "accountsCreated": []
+  },
+  "measurements": {
+    "observations": [
+      {
+        "phase": "waiting",
+        "percent": null,
+        "message": "Đang chờ tệp tải lên."
+      },
+      {
+        "phase": "probing",
+        "percent": null,
+        "message": "Đang đọc định dạng và thời lượng FLAC…"
+      },
+      {
+        "phase": "encoding",
+        "percent": 0,
+        "message": "Đang tạo MP3 128 / 320 kbps…"
+      },
+      {
+        "phase": "encoding",
+        "percent": 0,
+        "message": "Đang tạo MP3 128 / 320 kbps…"
+      },
+      {
+        "phase": "encoding",
+        "percent": 0,
+        "message": "Đang tạo MP3 128 / 320 kbps…"
+      },
+      {
+        "phase": "encoding",
+        "percent": 10,
+        "message": "Đang tạo MP3 128 / 320 kbps: 10%"
+      },
+      {
+        "phase": "encoding",
+        "percent": 10,
+        "message": "Đang tạo MP3 128 / 320 kbps: 10%"
+      },
+      {
+        "phase": "encoding",
+        "percent": 10,
+        "message": "Đang tạo MP3 128 / 320 kbps: 10%"
+      },
+      {
+        "phase": "encoding",
+        "percent": 23,
+        "message": "Đang tạo MP3 128 / 320 kbps: 23%"
+      },
+      {
+        "phase": "encoding",
+        "percent": 23,
+        "message": "Đang tạo MP3 128 / 320 kbps: 23%"
+      },
+      {
+        "phase": "encoding",
+        "percent": 23,
+        "message": "Đang tạo MP3 128 / 320 kbps: 23%"
+      },
+      {
+        "phase": "encoding",
+        "percent": 23,
+        "message": "Đang tạo MP3 128 / 320 kbps: 23%"
+      },
+      {
+        "phase": "encoding",
+        "percent": 34,
+        "message": "Đang tạo MP3 128 / 320 kbps: 34%"
+      },
+      {
+        "phase": "encoding",
+        "percent": 34,
+        "message": "Đang tạo MP3 128 / 320 kbps: 34%"
+      },
+      {
+        "phase": "encoding",
+        "percent": 34,
+        "message": "Đang tạo MP3 128 / 320 kbps: 34%"
+      },
+      {
+        "phase": "encoding",
+        "percent": 45,
+        "message": "Đang tạo MP3 128 / 320 kbps: 45%"
+      },
+      {
+        "phase": "encoding",
+        "percent": 45,
+        "message": "Đang tạo MP3 128 / 320 kbps: 45%"
+      },
+      {
+        "phase": "encoding",
+        "percent": 45,
+        "message": "Đang tạo MP3 128 / 320 kbps: 45%"
+      },
+      {
+        "phase": "encoding",
+        "percent": 55,
+        "message": "Đang tạo MP3 128 / 320 kbps: 55%"
+      },
+      {
+        "phase": "encoding",
+        "percent": 55,
+        "message": "Đang tạo MP3 128 / 320 kbps: 55%"
+      },
+      {
+        "phase": "encoding",
+        "percent": 55,
+        "message": "Đang tạo MP3 128 / 320 kbps: 55%"
+      },
+      {
+        "phase": "encoding",
+        "percent": 66,
+        "message": "Đang tạo MP3 128 / 320 kbps: 66%"
+      },
+      {
+        "phase": "encoding",
+        "percent": 66,
+        "message": "Đang tạo MP3 128 / 320 kbps: 66%"
+      },
+      {
+        "phase": "encoding",
+        "percent": 66,
+        "message": "Đang tạo MP3 128 / 320 kbps: 66%"
+      },
+      {
+        "phase": "encoding",
+        "percent": 77,
+        "message": "Đang tạo MP3 128 / 320 kbps: 77%"
+      },
+      {
+        "phase": "encoding",
+        "percent": 77,
+        "message": "Đang tạo MP3 128 / 320 kbps: 77%"
+      },
+      {
+        "phase": "encoding",
+        "percent": 77,
+        "message": "Đang tạo MP3 128 / 320 kbps: 77%"
+      },
+      {
+        "phase": "encoding",
+        "percent": 87,
+        "message": "Đang tạo MP3 128 / 320 kbps: 87%"
+      },
+      {
+        "phase": "encoding",
+        "percent": 87,
+        "message": "Đang tạo MP3 128 / 320 kbps: 87%"
+      },
+      {
+        "phase": "encoding",
+        "percent": 87,
+        "message": "Đang tạo MP3 128 / 320 kbps: 87%"
+      },
+      {
+        "phase": "encoding",
+        "percent": 97,
+        "message": "Đang tạo MP3 128 / 320 kbps: 97%"
+      },
+      {
+        "phase": "probing",
+        "percent": null,
+        "message": "Đang kiểm tra các bản MP3 đã tạo…"
+      },
+      {
+        "phase": "cover",
+        "percent": null,
+        "message": "Đang tìm và lấy ảnh bìa có sẵn trong FLAC…"
+      },
+      {
+        "phase": "cover",
+        "percent": null,
+        "message": "Đang tìm và lấy ảnh bìa có sẵn trong FLAC…"
+      },
+      {
+        "phase": "completed",
+        "percent": 100,
+        "message": "Đã xử lý xong. Bài hát đang chờ admin duyệt."
+      }
+    ],
+    "fixture": {
+      "durationSeconds": 180,
+      "bytes": 10917124,
+      "embeddedArtwork": {
+        "codec_name": "mjpeg",
+        "width": 320,
+        "height": 240
+      }
+    },
+    "observedEncodingPercents": [
+      0,
+      0,
+      0,
+      10,
+      10,
+      10,
+      23,
+      23,
+      23,
+      23,
+      34,
+      34,
+      34,
+      45,
+      45,
+      45,
+      55,
+      55,
+      55,
+      66,
+      66,
+      66,
+      77,
+      77,
+      77,
+      87,
+      87,
+      87,
+      97
+    ],
+    "automaticCover": {
+      "path": "/Songs/Cover/3590784821db48f39792dfcb241fb19a.jpg",
+      "bytes": 673,
+      "codec_name": "mjpeg",
+      "width": 320,
+      "height": 240
+    },
+    "explicitCover": {
+      "path": "/Songs/Cover/656f3e50d7414014a647b69eb2897ebd.png",
+      "bytes": 70,
+      "codec_name": "png",
+      "width": 1,
+      "height": 1
+    }
+  },
+  "fatalError": null,
+  "limitations": [
+    "Browser upload byte percentages and cancel/retry UI are verified separately; this script polls server processing state.",
+    "Real encoding phases may be too short to observe every update; only observed encode percentages are checked for bounds/ordering.",
+    "No missing-encoder, forced-timeout, client-disconnect or maximum-size tests are performed here.",
+    "Exactly two QA song rows may be created and retained; existing rows/files are never modified or deleted.",
+    "The no-art case is a read-only existing-record check, not another fresh upload."
+  ],
+  "tests": [
+    {
+      "id": "PROGRESS-00",
+      "name": "Application responds",
+      "status": "passed",
+      "detail": "HTTP 200.",
+      "timestamp": "2026-10-27T12:26:43+07:00",
+      "durationMs": 334
+    },
+    {
+      "id": "PROGRESS-01",
+      "name": "Authenticate owners and other roles",
+      "status": "passed",
+      "detail": "Existing demo accounts signed in; polling uses an independent session of the same owner.",
+      "timestamp": "2026-10-27T12:26:44+07:00",
+      "durationMs": 820
+    },
+    {
+      "id": "PROGRESS-02",
+      "name": "Progress creation requires an authorized role",
+      "status": "passed",
+      "detail": "Guest and listener cannot create source/admin processing jobs.",
+      "timestamp": "2026-10-27T12:26:44+07:00",
+      "durationMs": 45
+    },
+    {
+      "id": "PROGRESS-03",
+      "name": "Progress creation requires CSRF",
+      "status": "passed",
+      "detail": "HTTP 400.",
+      "timestamp": "2026-10-27T12:26:44+07:00",
+      "durationMs": 19
+    },
+    {
+      "id": "PROGRESS-04",
+      "name": "Owner starts and reads a waiting job",
+      "status": "passed",
+      "detail": "{\"phase\": \"waiting\", \"percent\": null, \"message\": \"Đang chờ tệp tải lên.\"}",
+      "timestamp": "2026-10-27T12:26:44+07:00",
+      "durationMs": 56
+    },
+    {
+      "id": "PROGRESS-05",
+      "name": "Job status is private to its uploader",
+      "status": "passed",
+      "detail": "Other source/admin sessions cannot read another uploader's job; unknown ID returns404.",
+      "timestamp": "2026-10-27T12:26:44+07:00",
+      "durationMs": 6
+    },
+    {
+      "id": "PROGRESS-06",
+      "name": "Generate a real FLAC with attached front artwork",
+      "status": "passed",
+      "detail": "{\"durationSeconds\": 180, \"bytes\": 10917124, \"embeddedArtwork\": {\"codec_name\": \"mjpeg\", \"width\": 320, \"height\": 240}}",
+      "timestamp": "2026-10-27T12:26:44+07:00",
+      "durationMs": 387
+    },
+    {
+      "id": "PROGRESS-07",
+      "name": "AJAX validation errors terminate their job without files",
+      "status": "passed",
+      "detail": "{\"errors\": [{\"field\": \"Title\", \"message\": \"The Title field is required.\"}, {\"field\": \"Title\", \"message\": \"Nội dung cần từ 2 đến 160 ký tự sau khi bỏ khoảng trắng.\"}]}",
+      "timestamp": "2026-10-27T12:26:45+07:00",
+      "durationMs": 285
+    },
+    {
+      "id": "PROGRESS-08",
+      "name": "Bad media fails visibly and leaves no orphan files",
+      "status": "passed",
+      "detail": "{\"phase\": \"failed\", \"percent\": null, \"message\": \"Không đọc được tệp âm thanh. Hãy chọn tệp FLAC gốc có thể phát đầy đủ.\"}",
+      "timestamp": "2026-10-27T12:26:45+07:00",
+      "durationMs": 157
+    },
+    {
+      "id": "PROGRESS-09",
+      "name": "A source cannot submit with another source's upload ID",
+      "status": "passed",
+      "detail": "Foreign job ID cannot authorize a submission or mutate its owner's waiting status.",
+      "timestamp": "2026-10-27T12:26:45+07:00",
+      "durationMs": 100
+    },
+    {
+      "id": "PROGRESS-10",
+      "name": "Poll actual conversion while a real FLAC is submitted",
+      "status": "passed",
+      "detail": "CreatedID=19; observed phases=['completed', 'cover', 'encoding', 'probing', 'waiting']; encode%=[0, 0, 0, 10, 10, 10, 23, 23, 23, 23, 34, 34, 34, 45, 45, 45, 55, 55, 55, 66, 66, 66, 77, 77, 77, 87, 87, 87, 97].",
+      "timestamp": "2026-10-27T12:26:48+07:00",
+      "durationMs": 2991
+    },
+    {
+      "id": "PROGRESS-11",
+      "name": "Embedded FLAC picture becomes the song cover",
+      "status": "passed",
+      "detail": "{\"path\": \"/Songs/Cover/3590784821db48f39792dfcb241fb19a.jpg\", \"bytes\": 673, \"codec_name\": \"mjpeg\", \"width\": 320, \"height\": 240}",
+      "timestamp": "2026-10-27T12:26:48+07:00",
+      "durationMs": 160
+    },
+    {
+      "id": "PROGRESS-12",
+      "name": "Processing IDs cannot be reused",
+      "status": "passed",
+      "detail": "A used upload ID cannot create another song or overwrite completed state.",
+      "timestamp": "2026-10-27T12:26:48+07:00",
+      "durationMs": 96
+    },
+    {
+      "id": "PROGRESS-13",
+      "name": "A separately chosen image takes priority over embedded art",
+      "status": "passed",
+      "detail": "{\"path\": \"/Songs/Cover/656f3e50d7414014a647b69eb2897ebd.png\", \"bytes\": 70, \"codec_name\": \"png\", \"width\": 1, \"height\": 1}",
+      "timestamp": "2026-10-27T12:26:51+07:00",
+      "durationMs": 3178
+    },
+    {
+      "id": "PROGRESS-14",
+      "name": "Progress and cover extraction preserve moderation/privacy",
+      "status": "passed",
+      "detail": "Both new submissions remain Pending; admin can preview; other source/listener cannot read private media.",
+      "timestamp": "2026-10-27T12:26:52+07:00",
+      "durationMs": 335
+    },
+    {
+      "id": "PROGRESS-15",
+      "name": "Existing submissions without embedded art keep their cover",
+      "status": "passed",
+      "detail": "Existing no-art submission keeps its default cover; no third QA song is created.",
+      "timestamp": "2026-10-27T12:26:52+07:00",
+      "durationMs": 6
+    },
+    {
+      "id": "PROGRESS-16",
+      "name": "Unused extracted artwork is cleaned up after an override",
+      "status": "passed",
+      "detail": "Only the two chosen covers remain; embedded artwork superseded by an explicit image is cleaned up.",
+      "timestamp": "2026-10-27T12:26:52+07:00",
+      "durationMs": 2
+    }
+  ]
+}

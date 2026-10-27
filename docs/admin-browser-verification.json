@@ -1,0 +1,36 @@
+{
+  "testedAt": "2026-10-27T03:22:30.710Z",
+  "browser": "156.0.4314.42",
+  "siteJavaScriptEnabled": false,
+  "createdSongId": 5,
+  "results": [
+    {
+      "name": "Admin sees two source records without publisher accounts",
+      "passed": true
+    },
+    {
+      "name": "Demo receipt form exists without site scripts",
+      "passed": true
+    },
+    {
+      "name": "Received demo exposes source identifiers and internal track code",
+      "passed": true
+    },
+    {
+      "name": "Approved imported sample plays via native controls with JavaScript disabled",
+      "passed": true
+    },
+    {
+      "name": "Distributor catalogue distinguishes DistroKite and TuneKore as simulated sources",
+      "passed": true
+    },
+    {
+      "name": "Admin receipt workflow fits mobile screen",
+      "passed": true
+    },
+    {
+      "name": "Published listener page omits private rights evidence and review note",
+      "passed": true
+    }
+  ]
+}

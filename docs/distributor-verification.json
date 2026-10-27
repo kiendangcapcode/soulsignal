@@ -1,0 +1,237 @@
+{
+  "model": "admin-import",
+  "startedAt": "2026-10-27T10:26:06+07:00",
+  "completedAt": "2026-10-27T10:26:08+07:00",
+  "timezone": "Asia/Saigon (UTC+07:00)",
+  "baseUrl": "http://localhost:5023",
+  "summary": {
+    "total": 24,
+    "passed": 24,
+    "failed": 0
+  },
+  "resourcesCreated": {
+    "model": "admin-import",
+    "songIds": [
+      7,
+      8,
+      9
+    ],
+    "exercisedExistingSongIds": [],
+    "titles": [
+      "Admin Import QA ede369a73aca",
+      "Admin Import QA ede369a73aca — reject"
+    ],
+    "fileNames": [
+      "742b202e64a1420b969c2c96abbc7d43.png"
+    ],
+    "testAccountsCreated": [],
+    "sharedSeedFilesDoNotDelete": [
+      "saigon-dawn.mp3",
+      "saigon-dawn.flac",
+      "/images/covers/saigon-dawn.svg"
+    ],
+    "externalRecordingCode": "DEMO-REC-QA-ede369a73aca",
+    "externalReleaseCode": "DEMO-REL-QA-ede369a73aca"
+  },
+  "fatalError": null,
+  "limitations": [
+    "Không tạo tài khoản mới; dùng Admin và Listener mẫu.",
+    "Không kết nối công ty thật, không tạo ISRC/UPC thật và không chuyển tiền.",
+    "Script không xóa dữ liệu; root đối chiếu songIds và CSDL để dọn đúng tệp/record test.",
+    "Chỉ kiểm tra HTTP và phân quyền, chưa xác nhận âm thanh qua loa hay bố cục trình duyệt."
+  ],
+  "tests": [
+    {
+      "id": "IMP-01",
+      "name": "Khách không truy cập khu vực nhận gói",
+      "status": "passed",
+      "detail": "Cả ba route yêu cầu đăng nhập.",
+      "timestamp": "2026-10-27T10:26:06+07:00",
+      "durationMs": 19
+    },
+    {
+      "id": "IMP-02",
+      "name": "Đăng nhập Listener hiện có",
+      "status": "passed",
+      "detail": "Đăng nhập listener@soulsignal.local; Location=/.",
+      "timestamp": "2026-10-27T10:26:07+07:00",
+      "durationMs": 92
+    },
+    {
+      "id": "IMP-03",
+      "name": "Listener không tự nhập, nhận hoặc duyệt bài",
+      "status": "passed",
+      "detail": "GET/POST quản trị đều bị chặn phía server.",
+      "timestamp": "2026-10-27T10:26:07+07:00",
+      "durationMs": 39
+    },
+    {
+      "id": "IMP-04",
+      "name": "Luồng Partner/Publisher cũ đã được gỡ",
+      "status": "passed",
+      "detail": "('HTTP 404.', 'HTTP 404.')",
+      "timestamp": "2026-10-27T10:26:07+07:00",
+      "durationMs": 3
+    },
+    {
+      "id": "IMP-05",
+      "name": "Admin có form nhận gói và hai nguồn mô phỏng",
+      "status": "passed",
+      "detail": "Hai nguồn ID=[1, 2]; form có CSRF, không JavaScript.",
+      "timestamp": "2026-10-27T10:26:07+07:00",
+      "durationMs": 191
+    },
+    {
+      "id": "IMP-06",
+      "name": "POST import/nhận mẫu thiếu CSRF bị chặn",
+      "status": "passed",
+      "detail": "('HTTP 400.', 'HTTP 400.')",
+      "timestamp": "2026-10-27T10:26:07+07:00",
+      "durationMs": 21
+    },
+    {
+      "id": "IMP-07",
+      "name": "Thiếu MP3/FLAC không tạo bài",
+      "status": "passed",
+      "detail": "Có validation, danh sách ID không tăng.",
+      "timestamp": "2026-10-27T10:26:07+07:00",
+      "durationMs": 83
+    },
+    {
+      "id": "IMP-08",
+      "name": "Nội dung giả đuôi MP3 bị từ chối",
+      "status": "passed",
+      "detail": "Có validation, danh sách ID không tăng.",
+      "timestamp": "2026-10-27T10:26:07+07:00",
+      "durationMs": 78
+    },
+    {
+      "id": "IMP-09",
+      "name": "Nội dung giả đuôi FLAC bị từ chối",
+      "status": "passed",
+      "detail": "Có validation, danh sách ID không tăng.",
+      "timestamp": "2026-10-27T10:26:07+07:00",
+      "durationMs": 66
+    },
+    {
+      "id": "IMP-10",
+      "name": "Chưa xác nhận quyền thì không tạo bài",
+      "status": "passed",
+      "detail": "Có validation, danh sách ID không tăng.",
+      "timestamp": "2026-10-27T10:26:07+07:00",
+      "durationMs": 47
+    },
+    {
+      "id": "IMP-11",
+      "name": "SVG giả đuôi PNG bị từ chối",
+      "status": "passed",
+      "detail": "Có validation, danh sách ID không tăng.",
+      "timestamp": "2026-10-27T10:26:07+07:00",
+      "durationMs": 94
+    },
+    {
+      "id": "IMP-12",
+      "name": "Admin nhập gói hợp lệ vào hàng chờ",
+      "status": "passed",
+      "detail": "Gói 7 Pending, mã nội bộ và mã nguồn hiển thị cho admin.",
+      "timestamp": "2026-10-27T10:26:07+07:00",
+      "durationMs": 178
+    },
+    {
+      "id": "IMP-13",
+      "name": "Cùng nguồn không nhận trùng mã bản ghi",
+      "status": "passed",
+      "detail": "Có validation, danh sách ID không tăng.",
+      "timestamp": "2026-10-27T10:26:07+07:00",
+      "durationMs": 60
+    },
+    {
+      "id": "IMP-14",
+      "name": "Gói Pending và ảnh bìa chỉ admin được kiểm tra",
+      "status": "passed",
+      "detail": "Metadata, âm thanh và ảnh riêng của Pending đều không công khai.",
+      "timestamp": "2026-10-27T10:26:08+07:00",
+      "durationMs": 107
+    },
+    {
+      "id": "IMP-15",
+      "name": "Admin nghe thử MP3/FLAC Pending bằng range",
+      "status": "passed",
+      "detail": "('HTTP 206; audio/mpeg; bytes 0-1023/385036; 1024 byte.', 'HTTP 206; audio/flac; bytes 0-1023/1415803; 1024 byte.')",
+      "timestamp": "2026-10-27T10:26:08+07:00",
+      "durationMs": 36
+    },
+    {
+      "id": "IMP-16",
+      "name": "Từ chối phải nhập lý do",
+      "status": "passed",
+      "detail": "HTTP 200, form có lỗi validation.",
+      "timestamp": "2026-10-27T10:26:08+07:00",
+      "durationMs": 29
+    },
+    {
+      "id": "IMP-17",
+      "name": "Duyệt xong mới công khai nhạc, giữ riêng hồ sơ quyền",
+      "status": "passed",
+      "detail": "HTTP 206; audio/mpeg; bytes 0-1023/385036; 1024 byte.",
+      "timestamp": "2026-10-27T10:26:08+07:00",
+      "durationMs": 214
+    },
+    {
+      "id": "IMP-18",
+      "name": "Quyết định lặp không đảo bài đã xử lý",
+      "status": "passed",
+      "detail": "Danh sách ID bài: [7].",
+      "timestamp": "2026-10-27T10:26:08+07:00",
+      "durationMs": 19
+    },
+    {
+      "id": "IMP-19",
+      "name": "Một nút nhận mẫu có mã và hoạt động idempotent",
+      "status": "passed",
+      "detail": "Gói mẫu ID=8; mới=True; nhận lặp không tạo trùng.",
+      "timestamp": "2026-10-27T10:26:08+07:00",
+      "durationMs": 134
+    },
+    {
+      "id": "IMP-20",
+      "name": "Gói mẫu mới cũng phải duyệt trước khi công khai",
+      "status": "passed",
+      "detail": "HTTP 206; audio/mpeg; bytes 0-1023/385036; 1024 byte.",
+      "timestamp": "2026-10-27T10:26:08+07:00",
+      "durationMs": 54
+    },
+    {
+      "id": "IMP-21",
+      "name": "Nguồn khác có mã trùng vẫn nhận được, ảnh bìa tùy chọn",
+      "status": "passed",
+      "detail": "Nguồn khác dùng cùng mã được nhận; ảnh bìa là tùy chọn.",
+      "timestamp": "2026-10-27T10:26:08+07:00",
+      "durationMs": 74
+    },
+    {
+      "id": "IMP-22",
+      "name": "Admin từ chối có lý do và giữ gói riêng tư",
+      "status": "passed",
+      "detail": "Lưu lý do từ chối; bài vẫn không công khai.",
+      "timestamp": "2026-10-27T10:26:08+07:00",
+      "durationMs": 96
+    },
+    {
+      "id": "IMP-23",
+      "name": "Gửi lại quyết định không khôi phục gói đã từ chối",
+      "status": "passed",
+      "detail": "HTTP 403.",
+      "timestamp": "2026-10-27T10:26:08+07:00",
+      "durationMs": 59
+    },
+    {
+      "id": "IMP-24",
+      "name": "Listener vẫn không được lấy FLAC sau khi bài công khai",
+      "status": "passed",
+      "detail": "HTTP 403.",
+      "timestamp": "2026-10-27T10:26:08+07:00",
+      "durationMs": 18
+    }
+  ]
+}

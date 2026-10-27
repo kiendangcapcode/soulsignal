@@ -1,0 +1,98 @@
+@model SongDetailsViewModel
+@inject IWebHostEnvironment HostEnvironment
+@{
+    ViewData["Title"] = Model.Song.Title;
+    var song = Model.Song;
+    var canSeeInternal = User.IsInRole("Admin");
+}
+<a class="back-link" asp-controller="Home" asp-action="Index">← Trở về khám phá</a>
+<section class="track-detail" aria-labelledby="track-title">
+    <div class="track-art">
+        <img src="@song.CoverPath" alt="Ảnh bìa @song.Title" width="600" height="600" />
+    </div>
+    <div class="track-content">
+        <p class="eyebrow">BÀI HÁT · @song.Genre.Name.ToUpperInvariant()</p>
+        <h1 id="track-title">@song.Title</h1>
+        <p class="track-artist">@song.Artist</p>
+        <div class="track-meta">
+            <span><svg class="icon"><use href="#i-clock" /></svg>@($"{song.DurationSeconds / 60}:{song.DurationSeconds % 60:00}")</span>
+            <span class="meta-separator">·</span>
+            <span>@(string.IsNullOrEmpty(song.HighQualityFileName) ? "MP3 · Chất lượng thường" : "MP3 · 128 kbps")</span>
+        </div>
+        @if (!string.IsNullOrWhiteSpace(song.Description))
+        {
+            <p class="track-description">@song.Description</p>
+        }
+        <div class="audio-panel">
+            <label for="track-audio">LẮNG NGHE BÀI HÁT</label>
+            <audio id="track-audio" controls preload="metadata" src="@Url.Action("Stream", "Songs", new { id = song.Id })">
+                Trình duyệt của bạn chưa hỗ trợ phát âm thanh.
+            </audio>
+            <p>Nhấn nút phát để bắt đầu. Nhạc dừng khi bạn rời trang này.</p>
+        </div>
+        <div class="publisher-credit">
+            <span class="credit-icon"><svg class="icon"><use href="#i-music" /></svg></span>
+            <div>
+                <small>NGUỒN PHÂN PHỐI · GIẢ LẬP</small>
+                <strong>@(song.Distributor?.Name ?? "Nguồn demo")</strong>
+            </div>
+            @if (song.Status == SongStatus.Approved)
+            {
+                <span class="badge rounded-pill badge-approved">Đã duyệt</span>
+            }
+            else if (song.Status == SongStatus.Pending)
+            {
+                <span class="badge rounded-pill badge-pending">Chờ duyệt · Nội bộ</span>
+            }
+            else
+            {
+                <span class="badge rounded-pill badge-rejected">Từ chối · Nội bộ</span>
+            }
+        </div>
+    </div>
+</section>
+<section class="detail-bottom">
+    <div>
+        <p class="eyebrow">THÔNG TIN BÀI HÁT</p>
+        <h2>@song.Title</h2>
+        @if (!string.IsNullOrWhiteSpace(song.Description))
+        {
+            <p>@song.Description</p>
+        }
+        <p class="scope-note">Mã theo dõi nội bộ: <strong>@song.ReferenceCode</strong> · Không phải mã ISRC.</p>
+        <p class="muted">Nghệ sĩ thể hiện và nguồn phân phối được ghi nhận riêng. Nhà phân phối gửi bản nhạc và admin kiểm tra trước khi công khai.</p>
+        @if (canSeeInternal)
+        {
+            <details class="demo-accounts">
+                <summary>Thông tin xét duyệt và quyền sử dụng · Nội bộ</summary>
+                <dl class="information-list">
+                    <div><dt>Chủ thể quyền / đơn vị ủy quyền</dt><dd>@song.RightsHolder</dd></div>
+                    <div><dt>Căn cứ quyền sử dụng</dt><dd class="preserve-lines">@song.RightsEvidence</dd></div>
+                    <div><dt>Mã bản ghi nguồn giả lập</dt><dd>@(song.ExternalRecordingCode ?? "Không cung cấp")</dd></div>
+                    <div><dt>Mã gói nguồn giả lập</dt><dd>@(song.ExternalReleaseCode ?? "Không cung cấp")</dd></div>
+                    <div>
+                        <dt>Phản hồi xét duyệt</dt>
+                        <dd class="preserve-lines">@(song.ReviewNote ?? (song.Status == SongStatus.Pending ? "Đang chờ admin kiểm tra." : "Chưa có ghi chú bổ sung."))</dd>
+                    </div>
+                </dl>
+            </details>
+        }
+        @if (HostEnvironment.IsDevelopment() && !string.IsNullOrEmpty(song.FlacFileName)
+            && canSeeInternal)
+        {
+            <details class="demo-accounts">
+                <summary>Kiểm tra kỹ thuật FLAC · Chỉ dành cho bản phát triển</summary>
+                <p>Đây là bước kiểm tra tệp FLAC trên trình duyệt, chưa phải chức năng VIP.</p>
+                <audio controls preload="none" aria-label="Kiểm tra phát FLAC" src="@Url.Action("FlacPreview", "Songs", new { id = song.Id })">
+                    Trình duyệt của bạn chưa hỗ trợ phát tệp này.
+                </audio>
+            </details>
+        }
+    </div>
+    <aside class="future-card">
+        <span class="pill pill-muted">LỘ TRÌNH · TUẦN 03</span>
+        <h3>Nghe sâu hơn với VIP</h3>
+        <p>Nghe chất lượng FLAC và tải nhạc sẽ có trong giai đoạn phát triển VIP. Bản tuần 1 hiện hỗ trợ nghe MP3 trực tuyến.</p>
+        <a class="inline-link" asp-controller="Home" asp-action="Scope">Xem phạm vi bản demo ↗</a>
+    </aside>
+</section>

@@ -1,0 +1,71 @@
+@{
+    ViewData["Title"] = "Về Soul Signal";
+}
+<div class="page-heading">
+    <div>
+        <p class="eyebrow">A SPACE FOR YOUR SOUND</p>
+        <h1>Về Soul Signal<span class="accent">.</span></h1>
+    </div>
+    <span class="pill pill-muted">BẢN ĐỒ ÁN · NGUỒN NHẠC GIẢ LẬP</span>
+</div>
+<section class="scope-intro">
+    <h2>Một không gian nghe nhạc,<br />một quy trình quản lý đơn giản.</h2>
+    <p>Soul Signal là đồ án nền tảng phát nhạc trực tuyến. Người nghe khám phá bài hát;
+        nhà phân phối tải nhạc lên, admin kiểm tra mã cùng thông tin và duyệt công khai.</p>
+</section>
+<div class="role-grid">
+    <article class="role-card">
+        <svg class="icon"><use href="#i-headphones" /></svg>
+        <h3>Người nghe</h3>
+        <p>Tạo tài khoản, đăng nhập, tìm bài hát và nghe MP3 trực tuyến.
+            Tài khoản người nghe không có chức năng đăng nhạc.</p>
+    </article>
+    <article class="role-card">
+        <svg class="icon"><use href="#i-shield" /></svg>
+        <h3>Quản trị viên</h3>
+        <p>Xem bài chờ duyệt, mã bài hát và thông tin nguồn, nghe thử rồi duyệt hoặc từ chối.
+            Admin có thể nhập gói thủ công để thử với tệp khác.</p>
+    </article>
+    <article class="role-card">
+        <svg class="icon"><use href="#i-music" /></svg>
+        <h3>Nhà phân phối</h3>
+        <p>DistroKite Demo và TuneKore Demo có tài khoản được cấp sẵn trên Soul Signal.
+            Đăng nhập để tải nhạc lên và theo dõi kết quả xét duyệt của nguồn mình.</p>
+    </article>
+</div>
+<section class="scope-details">
+    <div>
+        <p class="eyebrow">TRẢI NGHIỆM HIỆN TẠI</p>
+        <h2>Những điều bạn có thể thử</h2>
+        <ul class="check-list">
+            <li>Đăng ký tài khoản người nghe, đăng nhập và tìm bài hát.</li>
+            <li>Nhà phân phối đăng nhập, chọn tệp nhạc và gửi bài chờ duyệt.</li>
+            <li>Xem mã theo dõi nội bộ và mã nguồn giả lập trong hồ sơ bài hát.</li>
+            <li>Admin duyệt bài để bài xuất hiện trên trang khám phá.</li>
+            <li>Tải FLAC gốc; hệ thống tự đọc thời lượng, tạo MP3 128/320 kbps rồi chờ admin duyệt.</li>
+            <li>Nghe MP3 bằng trình phát mặc định của trình duyệt.</li>
+        </ul>
+        @if (User.IsInRole("Admin"))
+        {
+            <a class="button button-outline" asp-controller="Admin" asp-action="Index">Đến trang xét duyệt ↗</a>
+        }
+        else if (User.IsInRole("Distributor"))
+        {
+            <a class="button button-outline" asp-controller="Distributor" asp-action="Index">Đến khu vực nhà phân phối ↗</a>
+        }
+        <p class="scope-note mt-4">DistroKite Demo và TuneKore Demo là tên giả lập cho đồ án, không đại diện
+            cho công ty ngoài hệ thống. Soul Signal không kết nối API hay nhận gói thật từ các công ty đó.</p>
+        <p class="scope-note">Mã SS-TRACK dùng để theo dõi nội bộ, không phải mã ISRC. Nhạc dừng khi chuyển trang.
+            VIP, tải nhạc cho người nghe và tiếp nhận phản ánh tự động vẫn nằm trong lộ trình phát triển.</p>
+        <a class="inline-link" asp-controller="Home" asp-action="Policy">Đọc chính sách nền tảng ↗</a>
+    </div>
+    <aside class="roadmap-card">
+        <p class="eyebrow">LỘ TRÌNH PHÁT TRIỂN</p>
+        <ol>
+            <li><span>01</span><div><strong>Tài khoản & nghe nhạc</strong><small>Đã triển khai</small></div></li>
+            <li><span>02</span><div><strong>Tải nhạc lên & xét duyệt</strong><small>Đã triển khai quy trình mô phỏng</small></div></li>
+            <li><span>03</span><div><strong>VIP, FLAC & tải nhạc</strong><small>Dự kiến · Thanh toán mô phỏng</small></div></li>
+            <li><span>04</span><div><strong>Kiểm thử & hoàn thiện</strong><small>Chuẩn bị bản nộp đồ án</small></div></li>
+        </ol>
+    </aside>
+</section>

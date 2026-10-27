@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="800" viewBox="0 0 800 800" role="img" aria-labelledby="title desc">
+  <title id="title">Afterglow</title><desc id="desc">A warm peach ring reflecting over a dark teal sea.</desc>
+  <defs>
+    <linearGradient id="bg" x2="0" y2="1"><stop stop-color="#133536"/><stop offset="1" stop-color="#081a20"/></linearGradient>
+    <linearGradient id="ring" x2=".8" y2="1"><stop stop-color="#ffe2b0"/><stop offset=".6" stop-color="#d59970"/><stop offset="1" stop-color="#7b6660"/></linearGradient>
+    <linearGradient id="water" x2="0" y2="1"><stop stop-color="#86c0b1" stop-opacity=".45"/><stop offset="1" stop-color="#86c0b1" stop-opacity="0"/></linearGradient>
+  </defs>
+  <rect width="800" height="800" fill="url(#bg)"/>
+  <circle cx="400" cy="338" r="214" fill="none" stroke="#d3e6d5" stroke-opacity=".1"/>
+  <circle cx="400" cy="338" r="175" fill="none" stroke="url(#ring)" stroke-width="56"/>
+  <path d="M0 464H800" stroke="#acdacb" stroke-opacity=".3"/>
+  <path d="M238 490H562M218 515H582M250 542H550M230 571H570M268 600H532M286 628H514" stroke="url(#water)" stroke-width="5"/>
+  <path d="M110 365C255 461 555 452 687 325" fill="none" stroke="#bfdac7" stroke-width="1.5" stroke-opacity=".65"/>
+  <circle cx="110" cy="365" r="5" fill="#e6c6a4"/>
+  <circle cx="687" cy="325" r="7" fill="#e6c6a4"/>
+  <text x="64" y="80" fill="#d7e3d7" font-family="Arial,Helvetica,sans-serif" font-size="16" letter-spacing="5">SOUL SIGNAL STUDIO</text>
+  <text x="64" y="701" fill="#f5e7d6" font-family="Arial,Helvetica,sans-serif" font-size="68" font-weight="600" letter-spacing="-2">afterglow</text>
+  <text x="67" y="740" fill="#a7c7bd" font-family="Arial,Helvetica,sans-serif" font-size="15" letter-spacing="4">ORIGINAL DEMO · 002</text>
+</svg>

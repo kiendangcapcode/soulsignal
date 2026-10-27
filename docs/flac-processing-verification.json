@@ -1,0 +1,207 @@
+{
+  "model": "flac-only-processing",
+  "startedAt": "2026-10-27T12:27:05+07:00",
+  "completedAt": "2026-10-27T12:27:08+07:00",
+  "timezone": "Asia/Saigon (UTC+07:00)",
+  "baseUrl": "http://localhost:5023",
+  "summary": {
+    "total": 16,
+    "passed": 16,
+    "failed": 0
+  },
+  "resourcesCreated": {
+    "songIds": [
+      21,
+      22
+    ],
+    "titles": [
+      "FLAC QA DistroKite 6b328c47e6a6",
+      "FLAC QA Admin 6b328c47e6a6"
+    ],
+    "filesCreated": [
+      "Media\\Audio\\2f974b5569854e5687add196dec2270f-128.mp3",
+      "Media\\Audio\\3bd91293bd8e48288be95866303ba525-320.mp3",
+      "Media\\Audio\\7052eac2fb3244b7b521f7fb9d8f25ae.flac",
+      "Media\\Audio\\d1b2441815df4f9a9aad90a9b1cbfbc3-128.mp3",
+      "Media\\Audio\\dfc964532d8f4ad4af156f652d4acb51-320.mp3",
+      "Media\\Audio\\ef02da314d344a2288dd6b364fe8eaa7.flac",
+      "Media\\Covers\\0a3c0fd09bb348edb79bb73663e92157.png"
+    ],
+    "existingSongsModified": [],
+    "accountsCreated": []
+  },
+  "measurements": {
+    "original": {
+      "codec_name": "flac",
+      "sample_rate": "44100",
+      "channels": 2,
+      "duration": 24.0
+    },
+    "originalSha256": "5d4c1b683d97b461c496b96b658037c70489fa89abf6e88b6625ea3da0f8a509",
+    "song21_128000": {
+      "codec_name": "mp3",
+      "sample_rate": "44100",
+      "channels": 2,
+      "bit_rate": "128000",
+      "duration": 24.0
+    },
+    "song21_320000": {
+      "codec_name": "mp3",
+      "sample_rate": "44100",
+      "channels": 2,
+      "bit_rate": "320000",
+      "duration": 24.0
+    },
+    "song22_128000": {
+      "codec_name": "mp3",
+      "sample_rate": "44100",
+      "channels": 2,
+      "bit_rate": "128000",
+      "duration": 24.0
+    },
+    "song22_320000": {
+      "codec_name": "mp3",
+      "sample_rate": "44100",
+      "channels": 2,
+      "bit_rate": "320000",
+      "duration": 24.0
+    }
+  },
+  "fatalError": null,
+  "limitations": [
+    "Dùng tệp tổng hợp gốc 24 giây; chưa thử toàn bộ biên dung lượng/thời lượng hoặc mất encoder/timeout.",
+    "ffprobe kiểm tra codec/bitrate/thời lượng thật trên bytes HTTP; không xác nhận phát âm thanh qua loa.",
+    "Tạo và giữ hai bản ghi QA; không sửa/xóa bài hát hoặc tệp có trước lần chạy.",
+    "Chưa triển khai VIP/thanh toán/download cho người nghe; endpoint chất lượng cao chỉ là kiểm tra admin Development."
+  ],
+  "tests": [
+    {
+      "id": "FLAC-00",
+      "name": "Ứng dụng sẵn sàng",
+      "status": "passed",
+      "detail": "HTTP 200.",
+      "timestamp": "2026-10-27T12:27:05+07:00",
+      "durationMs": 21
+    },
+    {
+      "id": "FLAC-01",
+      "name": "Đăng nhập các vai trò",
+      "status": "passed",
+      "detail": "Bốn tài khoản demo đăng nhập đúng khu vực.",
+      "timestamp": "2026-10-27T12:27:06+07:00",
+      "durationMs": 669
+    },
+    {
+      "id": "FLAC-02",
+      "name": "Form tải lên đã bỏ ba trường nhập tay",
+      "status": "passed",
+      "detail": "Cả hai form chỉ nhận FLAC gốc, không yêu cầu giới thiệu/thời lượng/MP3 và không dùng JS.",
+      "timestamp": "2026-10-27T12:27:06+07:00",
+      "durationMs": 132
+    },
+    {
+      "id": "FLAC-03",
+      "name": "Đọc codec và thời lượng bản FLAC gốc",
+      "status": "passed",
+      "detail": "{\"codec_name\": \"flac\", \"sample_rate\": \"44100\", \"channels\": 2, \"duration\": 24.0}",
+      "timestamp": "2026-10-27T12:27:06+07:00",
+      "durationMs": 38
+    },
+    {
+      "id": "FLAC-04",
+      "name": "MP3 đổi đuôi FLAC bị chặn và không rác tệp",
+      "status": "passed",
+      "detail": "Form báo lỗi; không thêm bài hoặc để lại FLAC/MP3/ảnh mới.",
+      "timestamp": "2026-10-27T12:27:06+07:00",
+      "durationMs": 92
+    },
+    {
+      "id": "FLAC-05",
+      "name": "FLAC chỉ có header giả bị chặn và không rác tệp",
+      "status": "passed",
+      "detail": "Form báo lỗi; không thêm bài hoặc để lại FLAC/MP3/ảnh mới.",
+      "timestamp": "2026-10-27T12:27:06+07:00",
+      "durationMs": 109
+    },
+    {
+      "id": "FLAC-06",
+      "name": "FLAC bị cắt giữa dữ liệu bị chặn và không rác tệp",
+      "status": "passed",
+      "detail": "Form báo lỗi; không thêm bài hoặc để lại FLAC/MP3/ảnh mới.",
+      "timestamp": "2026-10-27T12:27:06+07:00",
+      "durationMs": 391
+    },
+    {
+      "id": "FLAC-07",
+      "name": "Nhà phân phối chỉ tải FLAC và hệ thống tự xử lý",
+      "status": "passed",
+      "detail": "ID=21; upload chỉ có FLAC; Pending và tự đọc 24 giây.",
+      "timestamp": "2026-10-27T12:27:07+07:00",
+      "durationMs": 628
+    },
+    {
+      "id": "FLAC-08",
+      "name": "Admin nhập FLAC và bỏ qua thời lượng/giới thiệu giả",
+      "status": "passed",
+      "detail": "ID=22; dữ liệu thời lượng/giới thiệu/tên tệp/trạng thái giả bị bỏ qua.",
+      "timestamp": "2026-10-27T12:27:08+07:00",
+      "durationMs": 695
+    },
+    {
+      "id": "FLAC-09",
+      "name": "MP3 thường thực sự mã hóa ở 128 kbps",
+      "status": "passed",
+      "detail": "{\"codec_name\": \"mp3\", \"sample_rate\": \"44100\", \"channels\": 2, \"bit_rate\": \"128000\", \"duration\": 24.0}",
+      "timestamp": "2026-10-27T12:27:08+07:00",
+      "durationMs": 54
+    },
+    {
+      "id": "FLAC-10",
+      "name": "MP3 chất lượng cao thực sự mã hóa ở 320 kbps",
+      "status": "passed",
+      "detail": "{\"codec_name\": \"mp3\", \"sample_rate\": \"44100\", \"channels\": 2, \"bit_rate\": \"320000\", \"duration\": 24.0}",
+      "timestamp": "2026-10-27T12:27:08+07:00",
+      "durationMs": 53
+    },
+    {
+      "id": "FLAC-11",
+      "name": "Đường nhập admin dùng cùng quy trình chuyển mã",
+      "status": "passed",
+      "detail": "Admin import cũng sinh đúng hai MP3 128/320 kbps.",
+      "timestamp": "2026-10-27T12:27:08+07:00",
+      "durationMs": 115
+    },
+    {
+      "id": "FLAC-12",
+      "name": "Giữ nguyên bản FLAC gốc",
+      "status": "passed",
+      "detail": "SHA256 FLAC lưu lại giống hệt bản tải lên ở cả hai đường nhập.",
+      "timestamp": "2026-10-27T12:27:08+07:00",
+      "durationMs": 19
+    },
+    {
+      "id": "FLAC-13",
+      "name": "Bài xử lý xong vẫn chờ duyệt và cách ly nguồn",
+      "status": "passed",
+      "detail": "HTTP 206; audio/mpeg; bytes 0-1023/384983; 1024 byte.",
+      "timestamp": "2026-10-27T12:27:08+07:00",
+      "durationMs": 175
+    },
+    {
+      "id": "FLAC-14",
+      "name": "MP3 128/320 và FLAC hỗ trợ nghe/tua bằng range",
+      "status": "passed",
+      "detail": "Cả ba bản hỗ trợ HTTP206/range và đúng MIME.",
+      "timestamp": "2026-10-27T12:27:08+07:00",
+      "durationMs": 11
+    },
+    {
+      "id": "FLAC-15",
+      "name": "Duyệt công khai bản128 và giữ quyền bản320/FLAC",
+      "status": "passed",
+      "detail": "Sau duyệt công khai đúng MP3128; bản320/FLAC vẫn giới hạn admin kiểm tra kỹ thuật.",
+      "timestamp": "2026-10-27T12:27:08+07:00",
+      "durationMs": 175
+    }
+  ]
+}

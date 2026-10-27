@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="800" viewBox="0 0 800 800" role="img" aria-labelledby="title desc">
+  <title id="title">Saigon Dawn</title><desc id="desc">A lime sunrise above layered dark green hills, with orbiting musical lines.</desc>
+  <defs>
+    <linearGradient id="bg" x2="1" y2="1"><stop stop-color="#142c26"/><stop offset="1" stop-color="#071310"/></linearGradient>
+    <radialGradient id="sun"><stop stop-color="#f2ffb5"/><stop offset=".7" stop-color="#d1f36a"/><stop offset="1" stop-color="#9bc64a"/></radialGradient>
+    <linearGradient id="hill" x2="0" y2="1"><stop stop-color="#496545"/><stop offset="1" stop-color="#173129"/></linearGradient>
+    <pattern id="grid" width="80" height="80" patternUnits="userSpaceOnUse"><path d="M80 0H0V80" fill="none" stroke="#b4cd94" stroke-opacity=".08"/></pattern>
+  </defs>
+  <rect width="800" height="800" fill="url(#bg)"/><rect width="800" height="800" fill="url(#grid)"/>
+  <circle cx="430" cy="344" r="198" fill="none" stroke="#d6ef97" stroke-opacity=".12"/>
+  <circle cx="430" cy="344" r="244" fill="none" stroke="#d6ef97" stroke-opacity=".08"/>
+  <circle cx="430" cy="344" r="150" fill="url(#sun)"/>
+  <path d="M-40 532C105 443 198 437 339 488S623 587 840 418V840H-40Z" fill="url(#hill)"/>
+  <path d="M-30 645C138 509 224 535 398 594S655 650 840 534V840H-30Z" fill="#102c24"/>
+  <path d="M-20 720C155 624 245 654 400 693S664 737 820 671V820H-20Z" fill="#091e19"/>
+  <path d="M150 343C315 210 563 249 642 398" fill="none" stroke="#ebf6c9" stroke-opacity=".63" stroke-width="2"/>
+  <circle cx="642" cy="398" r="7" fill="#e5f5b9"/>
+  <text x="64" y="80" fill="#e6edce" font-family="Arial,Helvetica,sans-serif" font-size="16" letter-spacing="5">SOUL SIGNAL STUDIO</text>
+  <text x="64" y="701" fill="#f2f4df" font-family="Arial,Helvetica,sans-serif" font-size="62" font-weight="600" letter-spacing="-2">saigon dawn</text>
+  <text x="67" y="740" fill="#b4c3aa" font-family="Arial,Helvetica,sans-serif" font-size="15" letter-spacing="4">ORIGINAL DEMO · 001</text>
+</svg>
