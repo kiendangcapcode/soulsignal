@@ -10,6 +10,7 @@ builder.Services.AddControllersWithViews(options =>
     options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute()));
 builder.Services.AddScoped<MediaUploadService>();
 builder.Services.AddScoped<AudioProcessingService>();
+builder.Services.AddScoped<VipEntitlements>();
 builder.Services.AddSingleton<UploadProgressStore>();
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(
     builder.Configuration.GetConnectionString("DefaultConnection")

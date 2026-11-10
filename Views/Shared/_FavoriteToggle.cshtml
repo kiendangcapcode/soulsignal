@@ -1,0 +1,27 @@
+@model (int? Id, string? Title, bool IsFavorite)
+@{
+    var inPlayer = !Model.Id.HasValue;
+    var buttonClass = inPlayer ? "player-icon favorite-button" : "favorite-button favorite-button-outline";
+    var returnUrl = Context.Request.PathBase + Context.Request.Path + Context.Request.QueryString;
+}
+@if (User.IsInRole(AppRoles.Listener))
+{
+    <form class="favorite-form" asp-controller="Favorites" asp-action="Set" method="post" data-favorite-form>
+        <input type="hidden" name="id" value="@Model.Id" />
+        <input type="hidden" name="isFavorite" value="@(Model.IsFavorite ? "false" : "true")" />
+        <input type="hidden" name="returnUrl" value="@returnUrl" />
+        <button class="@buttonClass" type="submit" data-favorite-button
+                aria-label="Yêu thích @Model.Title" aria-pressed="@(Model.IsFavorite ? "true" : "false")"
+                title="@(Model.IsFavorite ? "Bỏ yêu thích" : "Thêm vào Yêu thích")">
+            <svg class="icon" aria-hidden="true"><use href="#i-heart" /></svg>
+        </button>
+    </form>
+}
+else if (User.Identity?.IsAuthenticated != true)
+{
+    <a class="@buttonClass" asp-controller="Account" asp-action="Login" asp-route-returnUrl="@returnUrl"
+       data-favorite-button
+       aria-label="Đăng nhập để lưu bài yêu thích" title="Đăng nhập để lưu bài yêu thích">
+        <svg class="icon" aria-hidden="true"><use href="#i-heart" /></svg>
+    </a>
+}

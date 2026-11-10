@@ -21,6 +21,8 @@ erDiagram
     VipPlans ||--o{ VipSubscriptions : defines
     AspNetUsers ||--o{ DemoOrders : creates
     VipPlans ||--o{ DemoOrders : purchases
+    AspNetUsers ||--o{ FavoriteSongs : saves
+    Songs ||--o{ FavoriteSongs : appears_in
 
     AspNetUsers {
         string Id PK
@@ -57,6 +59,7 @@ erDiagram
         string AudioFileName
         string HighQualityFileName
         string FlacFileName
+        bool AllowDownload
         string CoverFileName
         int GenreId FK
         string ImportedById FK
@@ -86,11 +89,17 @@ erDiagram
     }
     DemoOrders {
         int Id PK
+        guid RequestId
         string UserId FK
         int VipPlanId FK
         decimal Amount
         datetimeoffset CreatedAt
         string Status
+    }
+    FavoriteSongs {
+        string UserId PK,FK
+        int SongId PK,FK
+        datetimeoffset SavedAt
     }
 ```
 
@@ -108,7 +117,9 @@ erDiagram
 - Tên tệp do ứng dụng quản lý; CSDL lưu metadata/tên tệp, không lưu blob âm thanh.
 - CoverFileName/CoverPath dùng ảnh chọn riêng nếu có; tiếp theo là ảnh PNG/JPEG nhúng hợp lệ trong FLAC, ưu tiên loại bìa trước; cuối cùng là bìa mặc định. Ảnh nhúng ≤ 2 MB được giải mã/chuyển JPEG, giữ tỷ lệ và không quá 1.600 px mỗi chiều. Ảnh nhúng không dùng được không làm hỏng bản nhạc hợp lệ.
 - UploadProgressStore là trạng thái tạm trong RAM, không thêm bảng SQL: UploadId ngẫu nhiên gắn đúng user, chỉ được nhận một lần cho một lượt gửi; bản ghi hết hạn sau 30 phút, không khôi phục qua restart. Chỉ Admin/Distributor mở hoặc đọc tiến độ của chính mình; HTTP POST mở lượt có chống CSRF. Các giới hạn số lượt giúp tránh tích lũy trạng thái không giới hạn.
-- VIP/đơn hàng là phần chuẩn bị cho giai đoạn sau. Có bảng không đồng nghĩa mua VIP/tải nhạc đã hoàn thành.
+- VIP còn hạn khi `StartsAt ≤ thời điểm kiểm tra < EndsAt`. Gói demo có thời hạn 30 ngày. Đơn thành công và thuê bao mới được lưu trong cùng giao dịch. `(UserId, RequestId)` chống xử lý trùng một yêu cầu.
+- `AllowDownload` lưu quyền tải FLAC đã khai cho từng bài. Máy chủ chỉ cấp bản tải nếu bài đã duyệt, có FLAC, có quyền tải và Listener còn hạn VIP.
+- `FavoriteSongs` nối tài khoản và bài hát bằng khóa chính `(UserId, SongId)`. Listener lưu bài Approved, bỏ lưu và xem danh sách theo `SavedAt` mới nhất. Khi bài thôi công khai, danh sách chỉ trả bài còn Approved.
 - Migrations giữ lịch sử để nâng CSDL không mất dữ liệu. Bản ghi tài khoản cũ đã khóa nếu còn chỉ phục vụ lịch sử/FK, không phải role hoặc cổng đăng bài đang hoạt động.
 
 ## Ma trận quyền hiện tại
@@ -124,7 +135,10 @@ erDiagram
 | Duyệt/từ chối Pending | Không | Không | Không | Có |
 | Thử FLAC / MP3 320 kbps Development | Không | Không | Không | Có |
 | Mở/đọc phiên tiến độ upload | Không | Không | Chỉ phiên của user hiện tại | Chỉ phiên của user hiện tại |
-| Mua VIP/FLAC theo thuê bao/tải chính thức | Chưa triển khai | Chưa triển khai | Chưa triển khai | Chưa triển khai |
+| Mua VIP mô phỏng | Không | Có | Không | Không |
+| Nghe FLAC qua StreamFlac | Không | VIP còn hạn, bài Approved có FLAC | Không | Không |
+| Tải FLAC qua Download | Không | VIP còn hạn, bài Approved có FLAC và quyền tải | Không | Không |
+| Lưu và xem bài hát yêu thích | Đăng nhập để sử dụng | Danh sách riêng theo tài khoản | Không | Không |
 
 ## Kiểm tra phía server
 
@@ -133,5 +147,7 @@ erDiagram
 FLAC gốc ≤ 50 MB; ảnh PNG/JPG tùy chọn ≤ 2 MB. Server kiểm tra codec, đọc thời lượng thực (>0 đến 1.800 giây), giải mã để sinh MP3 128/320 kbps; không tin thời lượng/giới thiệu hoặc MP3 do client gửi thêm. Tệp lỗi, thiếu bộ xử lý hoặc timeout không tạo bài; dọn các tệp vừa tạo khi thất bại. Âm thanh/ảnh upload ở vùng riêng, endpoint kiểm tra quyền; ảnh demo có thể công khai. FLAC/320 preview chỉ cho admin trong Development.
 
 API tiến độ chỉ trả phase/percent/message của user sở hữu UploadId, không cấp quyền audio hoặc quyền duyệt. JavaScript không thay thế kiểm tra quyền/CSRF phía server. Phiên tiến độ đã nhận không dùng lại để gửi thêm bài. POST thường không có UploadId vẫn hỗ trợ luồng xử lý cũ.
+
+Thanh phát hiển thị dữ liệu bài và điều khiển audio trên trang hiện tại. Mỗi yêu cầu nghe và tải vẫn qua endpoint kiểm tra bài, vai trò và thời hạn cần thiết. Thao tác phát, tạm dừng, tua và đổi âm lượng diễn ra trong trình duyệt.
 
 Bảng/role trong migration lịch sử không thay cho schema mới nhất và ma trận quyền ở trên. Các bộ 44 HTTP, 24 ca gói và 7 quan sát Edge thuộc bản hai vai trò trước đây; xem [trạng thái kiểm thử](04-demo-va-kiem-thu.md) và kiểm chứng mới cho quyền tài khoản nguồn.

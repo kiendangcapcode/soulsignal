@@ -1,0 +1,53 @@
+{
+  "testDate": "2026-11-10",
+  "environment": "Chrome và Edge headless trên Windows, ứng dụng ASP.NET Core Development và CSDL SQL Server riêng",
+  "song": "Saigon Dawn",
+  "observedDemo": {
+    "browser": "Chrome 156.0.8078.80",
+    "beforePurchase": "Trình phát dùng /Songs/Stream/1, chạy MP3 và ẩn nút tải FLAC.",
+    "purchase": "Listener bấm mô phỏng thành công. Trang hiển thị VIP đang hoạt động, hết hạn 16:22 ngày 10/12/2026 giờ Việt Nam.",
+    "afterPurchase": "Trình phát dùng /Songs/StreamFlac/1 và thời gian phát tiến 0,370 giây.",
+    "download": {
+      "filename": "SS-TRACK-000001.flac",
+      "matchesOriginal": true,
+      "sha256": "5d4c1b683d97b461c496b96b658037c70489fa89abf6e88b6625ea3da0f8a509"
+    }
+  },
+  "repeatMethod": "Mỗi lượt mở lại trang bài hát với phiên VIP còn hạn, kích hoạt điều khiển phát và ghi nguồn âm thanh thực tế.",
+  "repeats": [
+    {
+      "browser": "Chrome 156.0.8078.80",
+      "host": "127.0.0.1",
+      "visits": 6,
+      "playedFlac": 4,
+      "fellBackToMp3": 2
+    },
+    {
+      "browser": "Chrome 156.0.8078.80",
+      "host": "127.0.0.1",
+      "visits": 6,
+      "playedFlac": 3,
+      "fellBackToMp3": 3
+    },
+    {
+      "browser": "Chrome 156.0.8078.80",
+      "host": "localhost",
+      "visits": 6,
+      "playedFlac": 6,
+      "fellBackToMp3": 0
+    },
+    {
+      "browser": "Edge 157.0.4341.42",
+      "host": "localhost",
+      "visits": 6,
+      "playedFlac": 3,
+      "fellBackToMp3": 3
+    }
+  ],
+  "fallbackObservation": "Một số yêu cầu phát FLAC báo ERR_INVALID_HTTP_RESPONSE trong Chromium, sau đó trình phát chuyển sang nguồn MP3. Kiểm tra HTTP riêng vẫn nhận đúng dữ liệu FLAC theo Range.",
+  "isolatedDatabasesRemoved": true,
+  "limitations": [
+    "Thử phát trong headless ở chế độ tắt tiếng và kiểm tra thời gian phát. Chưa nghe qua loa.",
+    "Kết quả Chrome tại localhost thuộc sáu lượt của một phiên, chưa xác nhận độ ổn định trên mọi máy hoặc trình duyệt."
+  ]
+}

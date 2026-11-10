@@ -1,0 +1,63 @@
+{
+  "passed": 10,
+  "failed": 0,
+  "results": [
+    {
+      "name": "Khách thấy FLAC khóa, nghe MP3",
+      "status": "passed",
+      "detail": "Hiện khóa VIP và đường dẫn gói VIP, máy chủ từ chối URL FLAC và tải xuống, MP3 phát được."
+    },
+    {
+      "name": "Người nghe thường thấy FLAC khóa, nghe MP3",
+      "status": "passed",
+      "detail": "Hiện khóa VIP và đường dẫn gói VIP, máy chủ từ chối URL FLAC và tải xuống, MP3 phát được."
+    },
+    {
+      "name": "VIP hết hạn thấy FLAC khóa, nghe MP3",
+      "status": "passed",
+      "detail": "Hiện khóa VIP và đường dẫn gói VIP, máy chủ từ chối URL FLAC và tải xuống, MP3 phát được."
+    },
+    {
+      "name": "VIP đổi MP3 → FLAC → MP3 khi đang tạm dừng",
+      "status": "passed",
+      "detail": "Cả hai menu đồng bộ, giữ mốc 5 giây và trạng thái tạm dừng, sau đó phát tiếp. Endpoint FLAC trả đúng định dạng."
+    },
+    {
+      "name": "VIP đổi chất lượng khi phát từ danh mục",
+      "status": "passed",
+      "detail": "Đổi ngay từ thanh dưới, FLAC tiếp tục phát sau mốc 7 giây trên cùng trang danh mục."
+    },
+    {
+      "name": "Bài chỉ có MP3 báo FLAC không khả dụng",
+      "status": "passed",
+      "detail": "Cả hai menu báo thiếu bản FLAC, bài Afterglow vẫn phát MP3."
+    },
+    {
+      "name": "Lỗi mạng FLAC tự quay về MP3",
+      "status": "passed",
+      "detail": "Chrome đã yêu cầu FLAC, lỗi mạng kích hoạt MP3. Hai menu hiện MP3 và bài phát tiếp ở gần mốc 4 giây."
+    },
+    {
+      "name": "Tắt JavaScript vẫn phát bằng điều khiển gốc",
+      "status": "passed",
+      "detail": "Nút danh mục mở chi tiết. Điều khiển audio có sẵn của trình duyệt vẫn hiển thị, nút tùy chỉnh được ẩn."
+    },
+    {
+      "name": "Menu chất lượng nằm trong khung desktop",
+      "status": "passed",
+      "detail": "Hai menu mở được và lựa chọn FLAC nằm trong khung 1440 × 900."
+    },
+    {
+      "name": "Menu chất lượng nằm trong khung mobile",
+      "status": "passed",
+      "detail": "Hai menu mở được và lựa chọn FLAC nằm trong khung 320 × 640."
+    }
+  ],
+  "testedAt": "2026-11-10T18:20:20+07:00",
+  "isolatedDatabaseRemoved": true,
+  "previousRun": {
+    "failed": 1,
+    "passed": 9,
+    "note": "Một lần hết thời gian chờ 5 giây trong kịch bản đổi MP3 và FLAC khi đang tạm dừng."
+  }
+}

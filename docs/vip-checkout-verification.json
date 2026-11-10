@@ -1,0 +1,129 @@
+{
+  "startedAt": "2026-11-10T17:49:11+07:00",
+  "finishedAt": "2026-11-10T17:49:30+07:00",
+  "environment": "ASP.NET Core MVC Development, SQL Server riêng và HTTP loopback",
+  "summary": {
+    "total": 14,
+    "passed": 14,
+    "failed": 0
+  },
+  "isolatedDatabaseRemoved": true,
+  "limitations": [
+    "Mô phỏng kết quả chuyển khoản, không kiểm tra giao dịch ngân hàng thật."
+  ],
+  "fatal": null,
+  "results": [
+    {
+      "id": "VC-01",
+      "name": "Tài khoản mẫu và trạng thái VIP",
+      "status": "passed",
+      "detail": "Các tài khoản chưa mua, còn hạn và hết hạn đăng nhập đúng khu vực và có dữ liệu thuê bao tương ứng.",
+      "timestamp": "2026-11-10T17:49:26+07:00",
+      "durationMs": 1366
+    },
+    {
+      "id": "VC-02",
+      "name": "Vai trò, quyền xem và thông tin gói",
+      "status": "passed",
+      "detail": "Khách phải đăng nhập. Admin và nhà phân phối không truy cập checkout. Giá gói lấy từ dữ liệu máy chủ.",
+      "timestamp": "2026-11-10T17:49:27+07:00",
+      "durationMs": 291
+    },
+    {
+      "id": "VC-03",
+      "name": "Quyền nghe của các tài khoản mẫu",
+      "status": "passed",
+      "detail": "Tài khoản còn hạn nghe và tải đúng FLAC. Khách, tài khoản thường và hết hạn vẫn nghe MP3.",
+      "timestamp": "2026-11-10T17:49:27+07:00",
+      "durationMs": 424
+    },
+    {
+      "id": "VC-04",
+      "name": "Từ chối gói giả và thiếu CSRF",
+      "status": "passed",
+      "detail": "Mã gói giả hoặc POST thiếu CSRF không ghi đơn hay cấp quyền VIP.",
+      "timestamp": "2026-11-10T17:49:27+07:00",
+      "durationMs": 142
+    },
+    {
+      "id": "VC-05",
+      "name": "Tạo đơn chờ với giá từ máy chủ",
+      "status": "passed",
+      "detail": "Đơn #1 chờ chuyển khoản mô phỏng, hiển thị 29.000đ và chưa mở quyền VIP.",
+      "timestamp": "2026-11-10T17:49:27+07:00",
+      "durationMs": 252
+    },
+    {
+      "id": "VC-14",
+      "name": "Dùng lại đơn chờ ở hai phiên",
+      "status": "passed",
+      "detail": "Cùng mã yêu cầu và mã mới từ hai phiên đều mở lại đơn đang chờ.",
+      "timestamp": "2026-11-10T17:49:28+07:00",
+      "durationMs": 247
+    },
+    {
+      "id": "VC-06",
+      "name": "Chặn truy cập và xác nhận đơn của người khác",
+      "status": "passed",
+      "detail": "Tài khoản khác không xem hoặc xác nhận được đơn. Chủ đơn vẫn thấy đơn chờ thanh toán.",
+      "timestamp": "2026-11-10T17:49:28+07:00",
+      "durationMs": 185
+    },
+    {
+      "id": "VC-07",
+      "name": "Mô phỏng thất bại và chống sửa kết quả",
+      "status": "passed",
+      "detail": "Thất bại được ghi một lần. Bấm lại theo kết quả thành công không sửa được đơn và không cấp VIP.",
+      "timestamp": "2026-11-10T17:49:28+07:00",
+      "durationMs": 194
+    },
+    {
+      "id": "VC-08",
+      "name": "Mô phỏng thành công và kích hoạt VIP",
+      "status": "passed",
+      "detail": "Đơn #2 xác nhận thành công, cấp đúng một VIP 30 ngày và hiện hạn dùng.",
+      "timestamp": "2026-11-10T17:49:28+07:00",
+      "durationMs": 280
+    },
+    {
+      "id": "VC-09",
+      "name": "Xác nhận lại hoặc mua khi còn hạn",
+      "status": "passed",
+      "detail": "Xác nhận lại không đổi trạng thái hoặc gia hạn. Khi VIP còn hiệu lực, tài khoản không tạo thêm đơn.",
+      "timestamp": "2026-11-10T17:49:29+07:00",
+      "durationMs": 258
+    },
+    {
+      "id": "VC-10",
+      "name": "Quyền nghe và tải sau khi mua",
+      "status": "passed",
+      "detail": "VIP vừa mua có quyền nghe/tải tệp gốc riêng cho tài khoản đó. Bài tắt quyền tải vẫn chặn tải.",
+      "timestamp": "2026-11-10T17:49:29+07:00",
+      "durationMs": 197
+    },
+    {
+      "id": "VC-11",
+      "name": "Đơn hết hạn và tạo lại",
+      "status": "passed",
+      "detail": "Đơn hết hạn không thể cấp VIP. Tài khoản tạo được đơn mới.",
+      "timestamp": "2026-11-10T17:49:29+07:00",
+      "durationMs": 346
+    },
+    {
+      "id": "VC-12",
+      "name": "Xác nhận cùng đơn ở hai phiên đồng thời",
+      "status": "passed",
+      "detail": "Hai phiên xác nhận đồng thời chỉ cấp một thuê bao và ghi nhận một đơn thành công.",
+      "timestamp": "2026-11-10T17:49:30+07:00",
+      "durationMs": 416
+    },
+    {
+      "id": "VC-13",
+      "name": "Mua lại sau khi hết hạn VIP",
+      "status": "passed",
+      "detail": "Tài khoản VIP hết hạn mua lại được. Lịch sử cũ còn và chỉ kỳ mới hoạt động.",
+      "timestamp": "2026-11-10T17:49:30+07:00",
+      "durationMs": 139
+    }
+  ]
+}

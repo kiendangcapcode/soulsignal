@@ -1,0 +1,47 @@
+@model bool
+@{
+    var isPlayer = Model;
+    var canViewVip = User.IsInRole(AppRoles.Listener) || User.Identity?.IsAuthenticated != true;
+}
+<details class="quality-picker" data-quality-picker="@(isPlayer ? "player" : "detail")" hidden>
+    <summary class="quality-trigger">
+        <span class="visually-hidden">Chất lượng âm thanh </span>
+        @if (isPlayer)
+        {
+            <span data-quality-label data-player-quality aria-live="polite">MP3</span>
+        }
+        else
+        {
+            <span data-quality-label>MP3</span>
+        }
+        <svg class="icon quality-chevron" aria-hidden="true"><use href="#i-player-chevron" /></svg>
+    </summary>
+    <div class="quality-options" role="group" aria-label="Chọn chất lượng âm thanh">
+        <p class="quality-heading" aria-hidden="true">Chất lượng âm thanh</p>
+        <button type="button" class="quality-option" data-quality-option="mp3" aria-pressed="false">
+            <span><strong data-quality-mp3-label>MP3</strong><small>Chất lượng tiêu chuẩn</small></span>
+            <svg class="icon quality-check" aria-hidden="true"><use href="#i-player-check" /></svg>
+        </button>
+        <button type="button" class="quality-option" data-quality-option="flac" aria-pressed="false" hidden>
+            <span><strong>FLAC</strong><small>Âm thanh không mất dữ liệu</small></span>
+            <svg class="icon quality-check" aria-hidden="true"><use href="#i-player-check" /></svg>
+        </button>
+        @if (canViewVip)
+        {
+            <a class="quality-option" data-quality-vip asp-controller="Vip" asp-action="Index" hidden>
+                <span><strong>FLAC</strong><small>Xem gói VIP</small></span>
+                <span class="quality-vip"><svg class="icon" aria-hidden="true"><use href="#i-player-lock" /></svg>VIP</span>
+            </a>
+        }
+        else
+        {
+            <span class="quality-option quality-unavailable" data-quality-vip hidden>
+                <span><strong>FLAC</strong><small>Dành cho người nghe VIP</small></span>
+                <span class="quality-vip"><svg class="icon" aria-hidden="true"><use href="#i-player-lock" /></svg>VIP</span>
+            </span>
+        }
+        <span class="quality-option quality-unavailable" data-quality-unavailable hidden>
+            <span><strong>FLAC</strong><small>Hiện không khả dụng</small></span>
+        </span>
+    </div>
+</details>

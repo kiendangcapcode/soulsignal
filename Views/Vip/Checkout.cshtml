@@ -1,0 +1,65 @@
+@model VipOrderViewModel
+@using System.Globalization
+@{
+    ViewData["Title"] = $"Đơn VIP {Model.Code}";
+    var vietnamese = CultureInfo.GetCultureInfo("vi-VN");
+    var localExpiresAt = Model.ExpiresAt.ToOffset(TimeSpan.FromHours(7));
+}
+<section class="vip-checkout" aria-labelledby="vip-checkout-title">
+    <a class="back-link" asp-action="Index">← Gói VIP</a>
+    <header class="vip-checkout-heading">
+        <p class="eyebrow">ĐĂNG KÝ VIP</p>
+        <h1 id="vip-checkout-title">Chuyển khoản mô phỏng</h1>
+        <p>Dùng bản demo để thử xác nhận chuyển khoản và kích hoạt gói. Giao dịch chỉ ghi nhận trong Soul Signal.</p>
+    </header>
+    @if (TempData["VipSuccess"] is string success)
+    {
+        <div class="notice notice-success" role="status">@success</div>
+    }
+    @if (TempData["VipError"] is string error)
+    {
+        <div class="validation-summary p-3 mb-3" role="alert">@error</div>
+    }
+    <div class="vip-checkout-grid">
+        <section class="auth-card" aria-labelledby="vip-order-title">
+            <header class="vip-order-heading">
+                <h2 id="vip-order-title">Thông tin đơn</h2>
+                <partial name="_OrderStatus" model="Model.Status" />
+            </header>
+            <dl class="vip-payment-details">
+                <div><dt>Gói đăng ký</dt><dd>@Model.PlanName</dd></div>
+                <div><dt>Mã đơn</dt><dd>@Model.Code</dd></div>
+                <div><dt>Số tiền</dt><dd class="vip-payment-amount">@Model.Amount.ToString("N0", vietnamese) đ</dd></div>
+                <div><dt>Nội dung chuyển khoản</dt><dd><code>@Model.Code</code></dd></div>
+                <div>
+                    <dt>Hạn chuyển khoản</dt>
+                    <dd><time datetime="@localExpiresAt.ToString("O", CultureInfo.InvariantCulture)">@localExpiresAt.ToString("HH:mm dd/MM/yyyy", CultureInfo.InvariantCulture)</time> (giờ Việt Nam)</dd>
+                </div>
+            </dl>
+        </section>
+        <section class="auth-card vip-actions" aria-labelledby="vip-payment-title">
+            @if (Model.Status == DemoOrderStatus.Pending)
+            {
+                <h2 id="vip-payment-title">Xác nhận giao dịch</h2>
+                <p class="auth-subtitle">Chọn kết quả để thử. Gói VIP bắt đầu khi hệ thống ghi nhận chuyển khoản thành công.</p>
+                <form asp-controller="Vip" asp-action="Simulate" asp-route-id="@Model.Id" method="post" class="d-grid gap-2">
+                    <button class="button button-primary" type="submit" name="succeeded" value="true">Mô phỏng đã nhận tiền</button>
+                    <button class="button button-outline" type="submit" name="succeeded" value="false">Mô phỏng giao dịch thất bại</button>
+                </form>
+            }
+            else if (Model.Status == DemoOrderStatus.Succeeded)
+            {
+                <h2 id="vip-payment-title">Đơn đã thanh toán</h2>
+                <p class="auth-subtitle">Xem thời hạn sử dụng hiện tại trong mục Gói VIP.</p>
+                <a class="button button-primary button-full" asp-action="Index">Xem gói VIP</a>
+                <p class="auth-switch"><a asp-controller="Home" asp-action="Index">Khám phá bài hát ↗</a></p>
+            }
+            else
+            {
+                <h2 id="vip-payment-title">@(Model.Status == DemoOrderStatus.Expired ? "Đơn đã hết hạn" : "Giao dịch thất bại")</h2>
+                <p class="auth-subtitle">Quay lại trang Gói VIP để tạo đơn mới.</p>
+                <a class="button button-primary button-full" asp-action="Index">Trở về Gói VIP</a>
+            }
+        </section>
+    </div>
+</section>

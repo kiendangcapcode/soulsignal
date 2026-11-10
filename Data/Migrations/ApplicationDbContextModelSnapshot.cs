@@ -245,6 +245,9 @@ namespace SoulSignal.Data.Migrations
                     b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("datetimeoffset");
 
+                    b.Property<Guid?>("RequestId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Status")
                         .IsRequired()
                         .HasMaxLength(16)
@@ -259,9 +262,11 @@ namespace SoulSignal.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
-
                     b.HasIndex("VipPlanId");
+
+                    b.HasIndex("UserId", "RequestId")
+                        .IsUnique()
+                        .HasFilter("[RequestId] IS NOT NULL");
 
                     b.ToTable("DemoOrders");
                 });
@@ -300,6 +305,24 @@ namespace SoulSignal.Data.Migrations
                     b.ToTable("Distributors");
                 });
 
+            modelBuilder.Entity("SoulSignal.Models.FavoriteSong", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("SongId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTimeOffset>("SavedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.HasKey("UserId", "SongId");
+
+                    b.HasIndex("SongId");
+
+                    b.ToTable("FavoriteSongs");
+                });
+
             modelBuilder.Entity("SoulSignal.Models.Genre", b =>
                 {
                     b.Property<int>("Id")
@@ -328,6 +351,9 @@ namespace SoulSignal.Data.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("AllowDownload")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Artist")
                         .IsRequired()
@@ -565,6 +591,23 @@ namespace SoulSignal.Data.Migrations
                     b.Navigation("User");
 
                     b.Navigation("VipPlan");
+                });
+
+            modelBuilder.Entity("SoulSignal.Models.FavoriteSong", b =>
+                {
+                    b.HasOne("SoulSignal.Models.Song", "Song")
+                        .WithMany()
+                        .HasForeignKey("SongId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SoulSignal.Models.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Song");
                 });
 
             modelBuilder.Entity("SoulSignal.Models.Song", b =>

@@ -2,7 +2,7 @@
 
 Các bản thu dưới đây là nhạc tổng hợp được tạo riêng cho bản demo Soul Signal bằng bộ tạo sóng, hợp âm, giai điệu và nhịp điệu có thể tái tạo trong `scripts/generate-demo-audio.py`. Không sử dụng bản thu, giọng hát hoặc sample nhạc từ bên thứ ba. Tên nghệ sĩ dùng trong demo: **Soul Signal Studio**.
 
-| Bài hát | Thời lượng nội dung | Tệp nghe thường | Tệp FLAC thử nghiệm | Ảnh bìa |
+| Bài hát | Thời lượng nội dung | Tệp nghe thường | Tệp FLAC mẫu | Ảnh bìa |
 |---|---:|---|---|---|
 | Saigon Dawn | 24 giây | `Media/Audio/saigon-dawn.mp3` | `Media/Audio/saigon-dawn.flac` | `wwwroot/images/covers/saigon-dawn.svg` |
 | Afterglow | 28 giây | `Media/Audio/afterglow.mp3` | Chưa có trong tuần 1 | `wwwroot/images/covers/afterglow.svg` |
@@ -12,7 +12,7 @@ Các bản thu dưới đây là nhạc tổng hợp được tạo riêng cho b
 - **FLAC:** stereo, 44.100 Hz, nguồn PCM 16-bit; mã hóa trực tiếp từ cùng nguồn WAV tổng hợp. Không đổi đuôi hoặc chuyển ngược từ MP3 thành FLAC.
 - **Ảnh bìa:** SVG tự thiết kế bằng hình học và gradient; không tải ảnh bên ngoài. Văn bản dùng font hệ thống dự phòng, không có phụ thuộc font mạng.
 - Âm thanh nằm ngoài `wwwroot` để ứng dụng chủ động kiểm tra quyền trước khi cấp tệp. Chỉ ảnh bìa được phục vụ như tài nguyên công khai.
-- Ở tuần 1, FLAC phục vụ kiểm tra kỹ thuật trên trình duyệt demo. Luồng mua VIP và quyền truy cập FLAC hoàn chỉnh thuộc mốc tuần 3.
+- Dùng Saigon Dawn để demo ảnh bìa, thời lượng, nhãn MP3 hoặc FLAC và nút tải theo quyền trên thanh phát. Bài mẫu được duyệt và cho phép VIP tải FLAC.
 
 ## Tái tạo tệp âm thanh
 

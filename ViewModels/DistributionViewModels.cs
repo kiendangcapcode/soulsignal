@@ -21,8 +21,9 @@ public class CreateSongViewModel
     public IFormFile? CoverFile { get; set; }
     [Required, StringLength(160, MinimumLength = 2)] public string RightsHolder { get; set; } = string.Empty;
     [Required, StringLength(2000, MinimumLength = 10)] public string RightsEvidence { get; set; } = string.Empty;
-    [MustBeTrue(ErrorMessage = "Bạn cần xác nhận đủ quyền phát trực tuyến và cho tải theo phạm vi nền tảng.")]
+    [MustBeTrue(ErrorMessage = "Bạn cần xác nhận có quyền cung cấp nội dung để phát trực tuyến.")]
     public bool AcceptRights { get; set; }
+    public bool AllowDownload { get; set; }
 }
 
 public class ReviewSongViewModel

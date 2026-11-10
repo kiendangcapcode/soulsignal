@@ -1,0 +1,39 @@
+@model CatalogViewModel
+@{
+    ViewData["Title"] = "Bài hát yêu thích";
+}
+
+<section class="favorites-section" aria-labelledby="favorites-title">
+    <div class="page-heading">
+        <div>
+            <p class="eyebrow">THƯ VIỆN CỦA BẠN</p>
+            <h1 id="favorites-title" tabindex="-1">Bài hát yêu thích</h1>
+        </div>
+        <span class="result-count" data-favorite-count>@Model.Songs.Count bài hát</span>
+    </div>
+
+    <div class="empty-state" data-favorite-empty hidden="@(Model.Songs.Count > 0)">
+        <svg class="icon" aria-hidden="true"><use href="#i-heart" /></svg>
+        <h2>Chưa có bài hát yêu thích</h2>
+        <p>Bấm trái tim khi nghe được bài bạn muốn lưu lại.</p>
+        <a class="button button-outline" asp-controller="Home" asp-action="Index">Khám phá bài hát</a>
+    </div>
+
+    <ul class="favorites-list" hidden="@(Model.Songs.Count == 0)">
+        @foreach (var song in Model.Songs)
+        {
+            var hasFlac = Model.FlacSongIds.Contains(song.Id);
+            var canStreamFlac = hasFlac && Model.HasActiveVip;
+            <li class="favorite-row" data-favorite-row>
+                <img class="favorite-cover" src="@song.CoverPath" alt="" width="48" height="48" loading="lazy" />
+                <div class="favorite-song">
+                    <a asp-controller="Songs" asp-action="Details" asp-route-id="@song.Id" title="@song.Title">@song.Title</a>
+                    <a class="artist-link" asp-controller="Home" asp-action="Index" asp-route-artist="@song.Artist" asp-fragment="catalog" title="@song.Artist">@song.Artist</a>
+                </div>
+                <span class="song-duration">@($"{song.DurationSeconds / 60}:{song.DurationSeconds % 60:00}")</span>
+                <partial name="_PlaybackLink" model="new PlaybackLinkViewModel(song, canStreamFlac, canStreamFlac && song.AllowDownload, Compact: true, HasFlac: hasFlac, IsFavorite: true)" />
+                <partial name="_FavoriteToggle" model="((int?)song.Id, song.Title, true)" />
+            </li>
+        }
+    </ul>
+</section>

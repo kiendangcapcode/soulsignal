@@ -2,7 +2,7 @@
 
 ## Mục tiêu và mô hình hiện tại
 
-Website nghe nhạc cho đồ án hai người/bốn tuần. Luồng chính: **nhà phân phối đăng nhập và tải nhạc lên → bài chờ duyệt → admin kiểm tra và duyệt/từ chối → người nghe tìm/nghe MP3**.
+Website nghe nhạc cho đồ án hai người trong bốn tuần. Nhà phân phối gửi bài, admin xét duyệt và người nghe phát bài đã duyệt từ danh mục hoặc chi tiết.
 
 Có ba vai trò **Listener, Distributor, Admin**. Hai nguồn giả lập DistroKite Demo và TuneKore Demo có tài khoản được cấp sẵn ngay trên Soul Signal, không cần dựng website hãng đĩa riêng. Nghệ sĩ là metadata, không phải vai trò đăng nhập. Đăng ký công khai luôn tạo Listener; không có form tự xin hoặc tự cấp quyền Distributor/Admin.
 
@@ -11,8 +11,9 @@ Mô hình phục vụ đồ án, không phải bản sao hệ thống Amazon Mus
 ## Công nghệ và trải nghiệm đã chốt
 
 - ASP.NET Core MVC trên .NET 10; Razor, Bootstrap/CSS; Identity; EF Core và SQL Server.
-- Chỉ thêm JavaScript nhỏ trên hai form tải nhạc để báo % tải, trạng thái/% chuyển mã, hủy và lỗi. Phát bằng audio controls mặc định; không xây SPA.
-- Điều hướng thông thường tải lại trang; rời trang nghe trong cùng tab thì nhạc dừng.
+- Thanh phát cố định ở đáy màn hình sau khi bấm Phát. Thanh có ảnh bìa, tên bài, nghệ sĩ, thời gian, tua, âm lượng, nhãn MP3 hoặc FLAC và nút đóng.
+- Danh mục cho chuyển bài trước, bài tiếp và tự chuyển khi còn bài. Phiên phát kết thúc khi MVC tải trang mới. Nếu tắt JavaScript, trang chi tiết dùng điều khiển audio của trình duyệt.
+- Hai form gửi nhạc dùng JavaScript để báo tiến độ tải, tiến độ chuyển mã, hủy và lỗi.
 - Chạy local phục vụ báo cáo; triển khai VPS không nằm trong yêu cầu đã chốt.
 - CSDL lưu metadata và tên tệp; âm thanh/ảnh tải lên được quản lý riêng trên máy chạy ứng dụng.
 - FFmpeg/ffprobe trên máy server đọc thời lượng và tạo MP3 từ FLAC. Không cần JavaScript để thực hiện bước này.
@@ -21,12 +22,13 @@ Mô hình phục vụ đồ án, không phải bản sao hệ thống Amazon Mus
 
 | Đối tượng | Chức năng |
 |---|---|
-| Khách/Listener | Danh mục, tìm kiếm, chi tiết và nghe MP3 Approved; đăng ký/đăng nhập/đăng xuất |
+| Khách/Listener | Tìm bài đã duyệt, bấm Phát từ danh mục hoặc chi tiết và điều khiển MP3 trên thanh phát. Listener có thể đăng ký, đăng nhập và đăng xuất. |
 | Distributor | Tải nhạc cho nguồn gắn với tài khoản; xem hồ sơ bài của nguồn mình, trạng thái và lý do từ chối |
 | Admin | Xem tất cả nguồn/bài, nghe thử, kiểm tra metadata/quyền, duyệt hoặc từ chối Pending; nhập thủ công khi cần |
-| Người nghe có VIP | Thuê bao có hạn, thanh toán mô phỏng, nghe FLAC/tải chính thức dự kiến làm sau |
+| Người nghe có VIP | Mua gói mô phỏng, xem ngày hết hạn, nghe FLAC của bài đã duyệt có FLAC và tải nếu bài cho phép. |
+| Listener thường, VIP và VIP hết hạn | Lưu hoặc bỏ lưu bài đã duyệt, xem và phát lại từ danh sách Yêu thích của tài khoản. |
 
-Form tải lên chỉ yêu cầu **FLAC gốc ≤ 50 MB**, ảnh PNG/JPG tùy chọn ≤ 2 MB. Thứ tự ảnh bìa: ảnh chọn riêng → PNG/JPEG nhúng hợp lệ trong FLAC → ảnh mặc định. Ảnh nhúng ưu tiên bìa trước, được chuyển thành JPEG tối đa 1.600 px mỗi chiều. Không có ô giới thiệu hoặc nhập thời lượng, không cần tải MP3. Server đọc thời lượng thực từ FLAC (>0 đến 1.800 giây), tạo MP3 128/320 kbps rồi mới lưu Pending. Cần tên bài, nghệ sĩ, thể loại hợp lệ, chủ thể/căn cứ quyền và xác nhận phạm vi nghe/tải dự kiến. Dữ liệu giới thiệu cũ được giữ cho bài đã có.
+Form tải lên chỉ yêu cầu **FLAC gốc ≤ 50 MB**, ảnh PNG/JPG tùy chọn ≤ 2 MB. Thứ tự ảnh bìa: ảnh chọn riêng → PNG/JPEG nhúng hợp lệ trong FLAC → ảnh mặc định. Ảnh nhúng ưu tiên bìa trước, được chuyển thành JPEG tối đa 1.600 px mỗi chiều. Không có ô giới thiệu hoặc nhập thời lượng, không cần tải MP3. Server đọc thời lượng thực từ FLAC (>0 đến 1.800 giây), tạo MP3 128/320 kbps rồi mới lưu Pending. Cần tên bài, nghệ sĩ, thể loại hợp lệ, chủ thể, căn cứ quyền và xác nhận quyền phát. Người gửi có thể khai thêm quyền tải nếu được phép. Dữ liệu giới thiệu cũ được giữ cho bài đã có.
 
 % tải lên là số byte đã gửi, % chuyển mã là tiến độ thực do FFmpeg báo; hai giai đoạn hiển thị riêng. Khi tải đạt 100%, người dùng còn chờ kiểm tra/chuyển mã/lấy bìa/lưu. Tắt JavaScript vẫn gửi form và xử lý được bằng POST thường, không có tiến độ trực tiếp. Không có hàng đợi nền hay tự tiếp tục lượt xử lý khi khởi động lại server.
 
@@ -40,7 +42,7 @@ Mã SS-TRACK-000001 theo dõi nội bộ. Hai mã nguồn tùy chọn ExternalRe
 |---|---|
 | Tuần 1 — nền tảng và luồng tối thiểu | CSDL, ba vai trò, tài khoản, danh mục/MP3, tải nhạc chờ duyệt, chính sách và test case |
 | Tuần 2 | Hoàn thiện luồng nhà phân phối tải lên–admin duyệt; kiểm tra cách ly nguồn, tệp và lỗi |
-| Tuần 3 | VIP/thanh toán mô phỏng, thời hạn, nghe FLAC/tải theo quyền |
+| Tuần 3 | Thanh phát ở đáy màn hình, thanh toán VIP mô phỏng và nghe hoặc tải FLAC theo quyền |
 | Tuần 4 | Hoàn thiện dữ liệu, kiểm thử, hướng dẫn chạy, báo cáo và demo dự phòng |
 
 Kết quả kiểm thử phải ghi theo phiên bản. JSON/ảnh của bản chỉ có Listener/Admin là bằng chứng lịch sử, không chứng minh luồng Distributor mới đã Pass.

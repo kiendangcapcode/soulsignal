@@ -12,7 +12,7 @@ Mỗi lần chạy ghi ngày/giờ, build/phiên bản, người hoặc công c�
 
 Luồng mới có JavaScript riêng trên Distributor/Upload và Admin/Import để báo % byte tải lên, sau đó đọc % chuyển mã thực từ FFmpeg. Tắt JavaScript vẫn POST thường. Thêm ảnh bìa nhúng trong FLAC với thứ tự ảnh chọn riêng → ảnh nhúng hợp lệ → ảnh mặc định. Test case và giới hạn bằng chứng ở [tài liệu 08](08-tien-do-va-anh-bia.md).
 
-## Kết quả hiện tại
+## Kiểm chứng ngày 27/10/2026
 
 Ngày **27/10/2026**, build **0 lỗi/0 cảnh báo**, ba bộ chạy tuần tự trên phiên bản tiến độ/ảnh nhúng đạt **59/59 ca HTTP**:
 
@@ -57,8 +57,8 @@ Bộ tiến độ dùng FLAC thực 180 giây/10.917.124 byte, quan sát encodin
 | SONG-02 | Có Pending/Rejected | Khách/Listener gọi trực tiếp Details/Stream/Cover | Không cấp nội dung riêng | Partial: Pending Details/Stream/Cover đạt HTTP:DIST-19; Rejected stream/danh mục đạt DIST-23, cover chưa thử riêng |
 | SONG-03 | Admin/đúng nguồn, có Pending | Xem hồ sơ và phát thử MP3 | Có quyền xem đúng bài và trạng thái; chỉ Admin được duyệt | Pass cấp MP3/controls và quyền GET: HTTP:DIST-08/18/20 |
 | SONG-04 | ID không tồn tại | Mở Details/Stream | 404, không lộ đường dẫn/lỗi nội bộ | Chờ chạy mới; Not run |
-| AUDIO-01 | Approved MP3 | Phát/tạm dừng/tua bằng controls mặc định, không JS ứng dụng | Giải mã/phát được, controls hoạt động | Partial: HTTP range/controls đạt DIST-18/20/22; chưa lưu quan sát phát/tạm dừng/tua qua trình duyệt |
-| AUDIO-02 | MP3 đang phát | Chuyển trang trong cùng tab | Nhạc dừng theo phạm vi MVC | Chờ chạy mới; Not run |
+| AUDIO-01 | Approved MP3 | Phát, tạm dừng và tua trên trang nghe | Phát được và điều khiển đúng vị trí | Kiểm tra HTTP range của bản cũ ở DIST-18/20/22. Giao diện hiện tại xem các ca thanh phát bên dưới. |
+| AUDIO-02 | MP3 đang phát | Chuyển trang trong cùng tab | Nhạc dừng khi MVC tải trang mới | Xem ca chuyển trang ở mục thanh phát bên dưới. |
 | AUDIO-03 | Khách/Listener/Distributor | Gọi FlacPreview và URL tĩnh của tệp private | Không được cấp FLAC qua đường bỏ qua quyền | Partial: Listener bị chặn FlacPreview HTTP:DIST-25; chưa chạy lại toàn bộ vai trò/URL tĩnh |
 | AUDIO-04 | Admin, Development | Thử FLAC, HEAD/range và giải mã trên trình duyệt demo | MIME/range đúng; ghi khả năng giải mã thực tế | Partial: MIME/range đúng HTTP:DIST-20; chưa xác nhận giải mã FLAC trên trình duyệt |
 | AUDIO-05 | Ngoài Development | Gọi FlacPreview bằng phiên Admin | Không cấp endpoint thử nghiệm | Chờ chạy mới; Not run |
@@ -77,7 +77,7 @@ Các ca tài liệu FLAC-01–09 dưới đây khác mã HTTP:FLAC-00–15 trong
 
 | ID | Tiền điều kiện và bước | Mong đợi | Thực tế/trạng thái |
 |---|---|---|---|
-| FLAC-01 | Mở form Distributor/Upload và Admin/Import | Chỉ FLAC là tệp nhạc đầu vào; không có Description, DurationSeconds, Mp3File | Pass HTTP:FLAC-02; cả hai form bỏ ba trường nhập tay, không JavaScript |
+| FLAC-01 | Mở form Distributor/Upload và Admin/Import | Chỉ FLAC là tệp nhạc đầu vào. Bỏ Description, DurationSeconds và Mp3File. | Pass HTTP:FLAC-02 trên phiên bản form FLAC-only trước bổ sung tiến độ. |
 | FLAC-02 | Upload FLAC mẫu hợp lệ, metadata/quyền đầy đủ | Tự tính đúng thời lượng, sinh MP3 128 và 320 kbps, giữ FLAC, tạo Pending | Pass HTTP:FLAC-03/07/09–12; hai đường nhập tạo Pending, tự đọc 24 giây và sinh bản nhạc |
 | FLAC-03 | Gửi thêm Description, DurationSeconds sai, Mp3File và trạng thái/nguồn giả | Không tin dữ liệu tính toán từ client; thời lượng lấy từ FLAC, giới thiệu mới trống, đúng nguồn và Pending | Partial: HTTP:FLAC-08 và HTTP:DIST-14 xác nhận bỏ thời lượng/giới thiệu/tên tệp/trạng thái/nguồn giả; ImportedBy cần đối chiếu SQL riêng |
 | FLAC-04 | ffprobe các tệp sinh và so nguồn | Codec MP3, bitrate lần lượt 128000/320000 bit/s, thời lượng tương đương nguồn có dung sai mã hóa; FLAC gốc không đổi | Pass HTTP:FLAC-09–12; 128000/320000 bit/s, stereo 44.100 Hz, 24 giây, SHA256 FLAC giống nguồn |
@@ -89,13 +89,51 @@ Các ca tài liệu FLAC-01–09 dưới đây khác mã HTTP:FLAC-00–15 trong
 
 Lỗi lưu DB và hủy yêu cầu chưa được thử trong hai bộ này; cần ca riêng để xác nhận dọn đúng FLAC/MP3/ảnh vừa tạo. Thử tệp nhỏ không thay cho thử timeout/dung lượng/giá trị biên. Đo bitrate bằng công cụ không thay cho nghe qua loa.
 
+## Kiểm chứng VIP ngày 10/11/2026
+
+[Bộ tích hợp VIP](vip-verification.json) đạt 17/17 ca, gồm đơn mô phỏng, ngày hết hạn, quyền nghe và tải, phản hồi Range và tải trùng bản gốc. [Bộ hiệu năng](vip-performance-verification.json) đạt 3/3 kịch bản với 150 yêu cầu tại localhost. [Quan sát trình duyệt](vip-browser-verification.json) ghi nhận kết quả phát FLAC khác nhau giữa Chrome và Edge trên phiên bản trước khi có thanh phát. Ghi kết quả giao diện mới riêng.
+
+[Kiểm thử luồng chuyển khoản mô phỏng](vip-checkout-verification.json) đạt 14/14 ca trên CSDL thử nghiệm. Bộ này kiểm tra tạo đơn, thành công, thất bại, hết hạn, xử lý lại và quyền truy cập đơn.
+
+[Kiểm thử hồi quy menu chất lượng](quality-picker-verification.json) đạt 10/10 ca ở lượt chạy lại trên Chrome. Lượt trước có một lần hết thời gian chờ 5 giây khi đổi chất lượng ở trạng thái tạm dừng.
+
+## Kiểm thử bài hát yêu thích
+
+Chrome và SQL Server cục bộ đạt **12 Pass, 0 Fail** trên cơ sở dữ liệu thử nghiệm độc lập. [Chi tiết từng ca](favorites-verification.json).
+
+| Kịch bản | Kết quả mong đợi |
+|---|---|
+| Khách bấm trái tim | Chuyển tới đăng nhập và giữ đường dẫn trở về. |
+| Listener lưu và bỏ lưu bài đã duyệt | Trạng thái được giữ qua tải lại. Danh sách xếp bài mới lưu lên trước. |
+| Bấm trái tim từ thanh phát | Hai nút cùng cập nhật, bài tiếp tục phát ở vị trí hiện tại. |
+| So sánh thường, VIP và VIP hết hạn | Cả ba lưu được. Phát FLAC vẫn cần VIP còn hạn. |
+| Hai người dùng, bài Pending và POST thiếu token | Dữ liệu riêng theo tài khoản. Bài Pending và yêu cầu thiếu token bị từ chối. |
+| Nhiều yêu cầu cùng lưu một bài | Mỗi cặp tài khoản và bài hát có tối đa một bản ghi. |
+| Lỗi mạng, màn hình hẹp và tắt JavaScript | Lỗi được báo rõ. Nút dùng được ở 320 px. Form trên trang chi tiết vẫn lưu và bỏ lưu. |
+
+Bản có trang chuyển khoản riêng đạt **14/14 ca** trên cơ sở dữ liệu kiểm thử. Các ca bao gồm tài khoản mẫu, tạo đơn chờ, số tiền và mã đơn, hết hạn sau 15 phút, quyền chủ đơn, giao dịch thất bại hoặc thành công và gửi đồng thời từ nhiều tab. [Bộ kiểm thử trang chuyển khoản](vip-checkout-verification.json)
+
+## Ca kiểm thử thanh phát ở đáy màn hình
+
+| Mã | Thao tác | Kết quả mong đợi |
+|---|---|---|
+| PL-01 | Khách bấm **Phát** từ danh mục | Thanh xuất hiện ở đáy màn hình với ảnh bìa, tên bài, nghệ sĩ và nhãn MP3. Nút tải FLAC ẩn. |
+| PL-02 | Tạm dừng, phát lại, tua, chỉnh âm lượng và tắt/bật tiếng | Thanh vẫn hiện khi tạm dừng. Vị trí phát, trạng thái và âm lượng thay đổi theo thao tác. |
+| PL-03 | Dùng bài trước, bài sau và để một bài phát hết | Phát theo thứ tự danh mục hiện tại. Tự phát bài tiếp theo nếu danh mục còn bài. |
+| PL-04 | Đóng thanh, mở danh mục lọc một bài rồi mở trang chi tiết | Đóng dừng và xóa nguồn phát. Danh mục một bài vô hiệu hóa đổi bài. Khi chuyển trang, thanh trở về trạng thái ẩn. |
+| PL-05 | Phát ở trang chi tiết trên màn hình 390 px rồi cuộn | Thanh vẫn bám đáy và trang vừa chiều rộng màn hình. |
+| PL-06 | Tắt JavaScript rồi dùng nút Phát từ danh mục | Liên kết mở chi tiết và điều khiển audio của trình duyệt vẫn hiện. |
+| PL-07 | Mua VIP mô phỏng, phát và tải Saigon Dawn | Thanh ghi FLAC khi phát bằng FLAC. Tệp tải khớp SHA-256 của tệp gốc. |
+| PL-08 | Giả lập yêu cầu FLAC bị lỗi rồi phát | Thanh chuyển nguồn phát và nhãn sang MP3. |
+
+Ngày 10/11/2026, **8/8 ca đạt** trên Chrome headless với CSDL kiểm thử cục bộ. Các ca kiểm tra nguồn và tiến trình phát ở chế độ tắt tiếng. [Kết quả từng ca](player-browser-verification.json)
+
+Ảnh minh chứng chụp trong phiên kiểm thử. [Desktop](screenshots/18-thanh-phat-desktop.png), [màn hình hẹp](screenshots/19-thanh-phat-mobile.png), [VIP phát FLAC](screenshots/20-thanh-phat-vip.png).
+
 ## Phần còn dự kiến
 
 | ID | Tiền điều kiện/bước | Mong đợi | Thực tế/trạng thái |
 |---|---|---|---|
-| VIP-01 | VIP còn hạn, bài được phép tải; thử FLAC/tải | Đúng người/gói/thời hạn được cấp tệp | Chưa triển khai; Planned |
-| VIP-02 | Không VIP/chưa bắt đầu/hết hạn; gọi URL trực tiếp | Không cấp FLAC/tải, vẫn nghe MP3 Approved | Chưa triển khai; Planned |
-| PAY-01 | Giao dịch mô phỏng thất bại/thành công/gửi lại | Chỉ thành công cấp một lần, không thu tiền thật | Chưa triển khai; Planned |
 | COPY-01 | Phiếu phản ánh mô phỏng thiếu/đủ thông tin | Yêu cầu bổ sung/ghi nhận, không công khai dữ liệu riêng | Quy trình thủ công dự kiến; Planned |
 | COPY-02 | Phản ánh và phản hồi mô phỏng | Xem xét/giải thích/khôi phục hoặc giữ ẩn theo căn cứ | Chưa có hệ thống khiếu nại; Planned |
 

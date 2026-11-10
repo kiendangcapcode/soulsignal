@@ -13,6 +13,7 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     public DbSet<VipSubscription> VipSubscriptions => Set<VipSubscription>();
     public DbSet<DemoOrder> DemoOrders => Set<DemoOrder>();
     public DbSet<Distributor> Distributors => Set<Distributor>();
+    public DbSet<FavoriteSong> FavoriteSongs => Set<FavoriteSong>();
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -33,6 +34,9 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
             .OnDelete(DeleteBehavior.Restrict);
         builder.Entity<Song>().HasIndex(x => new { x.DistributorId, x.ExternalRecordingCode }).IsUnique()
             .HasFilter("[DistributorId] IS NOT NULL AND [ExternalRecordingCode] IS NOT NULL");
+        builder.Entity<FavoriteSong>().HasKey(x => new { x.UserId, x.SongId });
+        builder.Entity<FavoriteSong>().HasOne<ApplicationUser>().WithMany().HasForeignKey(x => x.UserId);
+        builder.Entity<FavoriteSong>().HasOne(x => x.Song).WithMany().HasForeignKey(x => x.SongId);
         builder.Entity<VipPlan>().Property(x => x.Price).HasPrecision(12, 2);
         builder.Entity<VipSubscription>().HasIndex(x => new { x.UserId, x.EndsAt });
         builder.Entity<VipSubscription>().HasOne(x => x.User).WithMany().HasForeignKey(x => x.UserId);
@@ -40,6 +44,8 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
             .OnDelete(DeleteBehavior.Restrict);
         builder.Entity<DemoOrder>().Property(x => x.Amount).HasPrecision(12, 2);
         builder.Entity<DemoOrder>().Property(x => x.Status).HasConversion<string>().HasMaxLength(16);
+        builder.Entity<DemoOrder>().HasIndex(x => new { x.UserId, x.RequestId }).IsUnique()
+            .HasFilter("[RequestId] IS NOT NULL");
         builder.Entity<DemoOrder>().HasOne(x => x.User).WithMany().HasForeignKey(x => x.UserId);
         builder.Entity<DemoOrder>().HasOne(x => x.VipPlan).WithMany().HasForeignKey(x => x.VipPlanId)
             .OnDelete(DeleteBehavior.Restrict);

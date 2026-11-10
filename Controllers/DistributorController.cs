@@ -93,6 +93,7 @@ public class DistributorController(ApplicationDbContext db, MediaUploadService m
                 ExternalReleaseCode = model.ExternalReleaseCode,
                 AudioFileName = audio.Mp3FileName, HighQualityFileName = audio.HighQualityFileName,
                 FlacFileName = audio.FlacFileName, CoverFileName = cover,
+                AllowDownload = model.AllowDownload,
                 CoverPath = cover is null ? "/images/covers/saigon-dawn.svg" : $"/Songs/Cover/{cover}",
                 RightsHolder = model.RightsHolder, RightsEvidence = model.RightsEvidence,
                 Status = SongStatus.Pending

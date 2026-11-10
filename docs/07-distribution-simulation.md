@@ -3,10 +3,10 @@
 ## Demo cùng một website
 
 1. Đăng nhập **distrokite** hoặc **tunekore**, mật khẩu demo **123456**, mở **/Distributor**. Chỉ dùng tài khoản đơn giản này trong Development; email tương ứng vẫn đăng nhập được.
-2. Mở **Tải nhạc lên**. Nguồn được xác định từ tài khoản; nhập tên bài/nghệ sĩ/thể loại, thông tin quyền và mã nguồn nếu có; chỉ chọn **FLAC gốc** cùng ảnh tùy chọn. Không nhập giới thiệu/thời lượng hoặc chọn MP3. Dùng `Media/Audio/saigon-dawn.flac` để trình diễn. Server đọc thời lượng rồi tạo MP3 128/320 kbps trước khi lưu bài chờ duyệt.
+2. Mở **Tải nhạc lên**. Nhập tên bài, nghệ sĩ, thể loại, thông tin quyền và mã nguồn nếu có. Chọn **FLAC gốc** cùng ảnh tùy chọn. Chọn thêm quyền tải FLAC nếu giấy phép bài cho phép. Có thể dùng `Media/Audio/saigon-dawn.flac` để trình diễn. Máy chủ đọc thời lượng rồi tạo MP3 128/320 kbps trước khi lưu bài chờ duyệt.
 3. Gửi bài và theo dõi **% tải tệp**. Khi tải xong, form chuyển sang đọc FLAC, **% chuyển mã MP3 thực**, lấy bìa và lưu. Tải tệp đạt 100% chưa phải bài đã lưu. Xử lý thành công mới có bài **Pending**, mã SS-TRACK và xuất hiện trong danh sách của nguồn mình. Nhà phân phối mở hồ sơ để xem trạng thái và kết quả xét duyệt. Tắt JavaScript vẫn POST thường và chờ trang kết quả; không có % trực tiếp.
 4. Đăng xuất, đăng nhập **admin / 123456**, mở **/Admin**. Chọn **Kiểm tra bản nhạc**, nghe thử, xem mã nguồn/chủ thể/căn cứ quyền rồi **Duyệt** hoặc **Từ chối**. Từ chối phải có lý do.
-5. Dùng Listener/khách để kiểm tra: Approved xuất hiện/nghe MP3 được; Pending/Rejected không công khai. Nhà phân phối thấy trạng thái và lý do từ chối trong khu vực của mình.
+5. Mở danh mục bằng phiên khách hoặc Listener. Bấm **Phát** trên bài đã duyệt và kiểm tra ảnh bìa, tên bài và MP3 trên thanh phát ở đáy màn hình. Nhà phân phối xem trạng thái và lý do từ chối trong khu vực của mình.
 
 DistroKite Demo/DKT-DEMO và TuneKore Demo/TKR-DEMO là tên hư cấu, không kết nối hãng thật. Không cần website ngoài, API, DDEX XML, SFTP/S3, ISRC/UPC thật hoặc tiền bản quyền. Đây là quy trình mô phỏng đơn giản của đồ án.
 
@@ -29,7 +29,7 @@ Cùng nguồn không nhận trùng mã bản ghi có giá trị; nguồn khác c
 
 FLAC gốc bắt buộc ≤ 50 MB; PNG/JPG chọn riêng tùy chọn ≤ 2 MB. Thứ tự bìa: ảnh chọn riêng → PNG/JPEG nhúng hợp lệ trong FLAC → ảnh mặc định. Ảnh nhúng ưu tiên bìa trước, ≤ 2 MB, chuyển JPEG giữ tỷ lệ tối đa 1.600 px mỗi chiều. Server đọc thời lượng thực (>0 đến 1.800 giây, lưu làm tròn lên giây), xác nhận FLAC và giải mã để tạo MP3 CBR 128/320 kbps, stereo 44.100 Hz. Không yêu cầu MP3, giới thiệu hoặc thời lượng do người gửi nhập. 1 MB = 1.024 × 1.024 byte. FFmpeg/ffprobe cần có trên máy chạy ứng dụng; [cấu hình trong README](../README.md). Tệp hỏng/giả, thiếu bộ xử lý hoặc timeout không tạo bài; dọn các tệp vừa tạo khi xử lý/lưu thất bại. Chuyển mã không tự xác minh bản quyền.
 
-**/Admin/Import** vẫn cho admin tiếp nhận tệp thủ công khi cần; đây là đường bổ sung. Tệp bài chưa công khai chỉ được cấp cho admin hoặc đúng nguồn sở hữu. FLAC và MP3 320 kbps preview hiện chỉ phục vụ admin kiểm tra kỹ thuật trong Development; FLAC/VIP/tải chính thức cho người nghe còn dự kiến.
+**/Admin/Import** cho admin tiếp nhận tệp thủ công. Tệp bài chưa công khai chỉ được cấp cho admin hoặc đúng nguồn sở hữu. Admin có đường dẫn nghe thử FLAC và MP3 320 kbps trong Development. Listener còn hạn VIP có thể nghe FLAC của bài đã duyệt và tải nếu bài có quyền tải.
 
 ## Kiểm chứng hiện tại
 
@@ -63,7 +63,7 @@ Tham chiếu **FLAC-01–09** trong [test case hiện tại](04-demo-va-kiem-thu
 
 ## Phiên tiến độ và phản hồi lỗi
 
-JavaScript chỉ chạy trên Distributor/Upload và Admin/Import. Form mở UploadId gắn user qua POST chống CSRF, gửi multipart bằng XMLHttpRequest rồi đọc trạng thái của đúng user. UploadId được nhận một lần, trạng thái giữ tạm trong RAM và hết hạn sau 30 phút; không phải hàng đợi nền hoặc lịch sử CSDL. Không thể dùng API tiến độ để đọc nhạc của nguồn khác hay tự duyệt bài.
+JavaScript xử lý tiến độ tải nhạc trên Distributor/Upload và Admin/Import. Form mở UploadId gắn user qua POST chống CSRF, gửi multipart bằng XMLHttpRequest rồi đọc trạng thái của đúng user. UploadId được nhận một lần, trạng thái giữ tạm trong RAM và hết hạn sau 30 phút; không phải hàng đợi nền hoặc lịch sử CSDL. Không thể dùng API tiến độ để đọc nhạc của nguồn khác hay tự duyệt bài.
 
 Nếu validation/xử lý lỗi, form hiển thị thông báo và cho sửa/gửi lại; file đã chọn được giữ khi không tải lại trang. Có nút hủy và giới hạn chờ 4 phút ở trình duyệt. Nếu mất kết nối hoặc chưa rõ kết quả, kiểm tra danh mục đã gửi trước khi thử lại để tránh gửi trùng. Không giả lập % trong các giai đoạn không đo được. [Ca kiểm thử chi tiết](08-tien-do-va-anh-bia.md).
 

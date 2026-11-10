@@ -16,23 +16,35 @@ public static class DemoData
         foreach (var role in new[] { AppRoles.Listener, AppRoles.Distributor, AppRoles.Admin })
             if (!await roles.RoleExistsAsync(role)) Check(await roles.CreateAsync(new IdentityRole(role)));
         await EnsureUserAsync(users, "listener@soulsignal.local", "Người nghe demo", AppRoles.Listener);
+        await EnsureUserAsync(users, "thuong@soulsignal.local", "Người nghe thường", AppRoles.Listener);
+        await EnsureUserAsync(users, "listener2@soulsignal.local", "Người nghe thử mua VIP", AppRoles.Listener);
+        var activeListener = await EnsureUserAsync(users, "vip@soulsignal.local", "Người nghe VIP", AppRoles.Listener);
+        var expiredListener = await EnsureUserAsync(users, "viphethan@soulsignal.local", "Người nghe VIP hết hạn", AppRoles.Listener);
         var admin = await EnsureUserAsync(users, "admin@soulsignal.local", "Quản trị Soul Signal", AppRoles.Admin);
 
         var sources = new[]
         {
-            new Distributor { Name = "DistroKite Demo", Code = "DKT-DEMO",
-                Description = "Tên hư cấu gợi nhớ DistroKid, chỉ dùng minh họa nguồn cung cấp nhạc cho đồ án." },
-            new Distributor { Name = "TuneKore Demo", Code = "TKR-DEMO",
-                Description = "Tên hư cấu gợi nhớ TuneCore, không liên kết với doanh nghiệp thật." }
+            (Name: "DistroKite Demo", Code: "DKT-DEMO", Login: "distrokite", Inspiration: "DistroKid"),
+            (Name: "TuneKore Demo", Code: "TKR-DEMO", Login: "tunekore", Inspiration: "TuneCore"),
+            (Name: "CD Babi Demo", Code: "CDB-DEMO", Login: "cdbabi", Inspiration: "CD Baby"),
+            (Name: "RouteNoot Demo", Code: "RNT-DEMO", Login: "routenoot", Inspiration: "RouteNote"),
+            (Name: "Amusee Demo", Code: "AMS-DEMO", Login: "amusee", Inspiration: "Amuse"),
+            (Name: "Dittoo Demo", Code: "DTT-DEMO", Login: "dittoo", Inspiration: "Ditto Music")
         };
         foreach (var source in sources)
-            if (!await db.Distributors.AnyAsync(x => x.Code == source.Code)) db.Distributors.Add(source);
+            if (!await db.Distributors.AnyAsync(x => x.Code == source.Code))
+                db.Distributors.Add(new Distributor
+                {
+                    Name = source.Name,
+                    Code = source.Code,
+                    Description = $"Nguồn demo hư cấu lấy cảm hứng từ {source.Inspiration} để minh họa phân phối nhạc."
+                });
         foreach (var name in new[] { "Electronic", "Ambient", "Lo-fi" })
             if (!await db.Genres.AnyAsync(x => x.Name == name)) db.Genres.Add(new Genre { Name = name });
         await db.SaveChangesAsync();
         var distributors = await db.Distributors.ToDictionaryAsync(x => x.Code, x => x.Id);
-        await EnsureDistributorAsync(users, "distrokite@soulsignal.local", "DistroKite Demo", distributors["DKT-DEMO"]);
-        await EnsureDistributorAsync(users, "tunekore@soulsignal.local", "TuneKore Demo", distributors["TKR-DEMO"]);
+        foreach (var source in sources)
+            await EnsureDistributorAsync(users, $"{source.Login}@soulsignal.local", source.Name, distributors[source.Code]);
         var genres = await db.Genres.ToDictionaryAsync(x => x.Name, x => x.Id);
         var samples = new[]
         {
@@ -67,6 +79,7 @@ public static class DemoData
             }
             // Preserve listening data and review decisions while moving old demo ownership to admin.
             song.ImportedById = admin.Id;
+            if (sample.HasFlac && song.FlacFileName == $"{sample.File}.flac") song.AllowDownload = true;
             song.DistributorId ??= distributors[sample.Source];
             song.ExternalRecordingCode ??= $"DEMO-REC-{index + 1:000}";
             song.ExternalReleaseCode ??= $"DEMO-REL-{index + 1:000}";
@@ -77,6 +90,31 @@ public static class DemoData
         if (!await db.VipPlans.AnyAsync()) db.VipPlans.Add(new VipPlan
             { Name = "Soul Signal VIP", Price = 29000, DurationDays = 30 });
         await db.SaveChangesAsync();
+
+        var plan = await db.VipPlans.Where(x => x.Price > 0 && x.DurationDays >= 1 && x.DurationDays <= 3660)
+            .OrderBy(x => x.Id).FirstOrDefaultAsync();
+        if (plan is not null)
+        {
+            var now = DateTimeOffset.UtcNow;
+            var expiredEnd = now.AddDays(-1);
+            var fixtures = new[]
+            {
+                (UserId: activeListener.Id, StartsAt: now, EndsAt: now.AddDays(plan.DurationDays)),
+                (UserId: expiredListener.Id, StartsAt: expiredEnd.AddDays(-plan.DurationDays), EndsAt: expiredEnd)
+            };
+            foreach (var fixture in fixtures)
+            {
+                if (await db.VipSubscriptions.AnyAsync(x => x.UserId == fixture.UserId)) continue;
+                db.VipSubscriptions.Add(new VipSubscription
+                {
+                    UserId = fixture.UserId,
+                    VipPlanId = plan.Id,
+                    StartsAt = fixture.StartsAt,
+                    EndsAt = fixture.EndsAt
+                });
+            }
+            await db.SaveChangesAsync();
+        }
 
         // Disable the previous demo Publisher login without destroying its historical account record.
         var legacy = await users.FindByEmailAsync("publisher@soulsignal.local");

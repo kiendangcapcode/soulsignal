@@ -1,0 +1,11 @@
+@model DemoOrderStatus
+@{
+    var (style, label) = Model switch
+    {
+        DemoOrderStatus.Pending => ("badge-pending", "Chờ chuyển khoản"),
+        DemoOrderStatus.Succeeded => ("badge-approved", "Thành công"),
+        DemoOrderStatus.Expired => ("badge-pending", "Hết hạn"),
+        _ => ("badge-rejected", "Thất bại")
+    };
+}
+<span class="badge vip-order-status @style">@label</span>

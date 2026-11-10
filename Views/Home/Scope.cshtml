@@ -17,8 +17,8 @@
     <article class="role-card">
         <svg class="icon"><use href="#i-headphones" /></svg>
         <h3>Người nghe</h3>
-        <p>Tạo tài khoản, đăng nhập, tìm bài hát và nghe MP3 trực tuyến.
-            Tài khoản người nghe không có chức năng đăng nhạc.</p>
+        <p>Tạo tài khoản, tìm bài hát và nghe MP3. Người nghe có thể kích hoạt VIP mô phỏng
+            để nghe FLAC và tải những bài có quyền tải.</p>
     </article>
     <article class="role-card">
         <svg class="icon"><use href="#i-shield" /></svg>
@@ -29,7 +29,7 @@
     <article class="role-card">
         <svg class="icon"><use href="#i-music" /></svg>
         <h3>Nhà phân phối</h3>
-        <p>DistroKite Demo và TuneKore Demo có tài khoản được cấp sẵn trên Soul Signal.
+        <p>Mỗi nhà phân phối demo có tài khoản được cấp sẵn trên Soul Signal.
             Đăng nhập để tải nhạc lên và theo dõi kết quả xét duyệt của nguồn mình.</p>
     </article>
 </div>
@@ -43,7 +43,9 @@
             <li>Xem mã theo dõi nội bộ và mã nguồn giả lập trong hồ sơ bài hát.</li>
             <li>Admin duyệt bài để bài xuất hiện trên trang khám phá.</li>
             <li>Tải FLAC gốc; hệ thống tự đọc thời lượng, tạo MP3 128/320 kbps rồi chờ admin duyệt.</li>
-            <li>Nghe MP3 bằng trình phát mặc định của trình duyệt.</li>
+            <li>Phát từ danh mục hoặc trang bài hát rồi tạm dừng, tua và chỉnh âm lượng ở thanh dưới màn hình.</li>
+            <li>Bấm trái tim để lưu bài đã duyệt vào danh sách Yêu thích của tài khoản.</li>
+            <li>Thử mua VIP mô phỏng, xem ngày hết hạn, nghe FLAC và tải bài đủ điều kiện.</li>
         </ul>
         @if (User.IsInRole("Admin"))
         {
@@ -53,10 +55,9 @@
         {
             <a class="button button-outline" asp-controller="Distributor" asp-action="Index">Đến khu vực nhà phân phối ↗</a>
         }
-        <p class="scope-note mt-4">DistroKite Demo và TuneKore Demo là tên giả lập cho đồ án, không đại diện
-            cho công ty ngoài hệ thống. Soul Signal không kết nối API hay nhận gói thật từ các công ty đó.</p>
-        <p class="scope-note">Mã SS-TRACK dùng để theo dõi nội bộ, không phải mã ISRC. Nhạc dừng khi chuyển trang.
-            VIP, tải nhạc cho người nghe và tiếp nhận phản ánh tự động vẫn nằm trong lộ trình phát triển.</p>
+        <p class="scope-note mt-4">Các đơn vị phân phối demo dùng tên hư cấu. Tài khoản và gói nhạc demo được quản lý trong Soul Signal.</p>
+        <p class="scope-note">Mã SS-TRACK dùng để theo dõi nội bộ. Nhạc dừng khi chuyển trang.
+            Quy trình tiếp nhận phản ánh tự động nằm trong lộ trình phát triển.</p>
         <a class="inline-link" asp-controller="Home" asp-action="Policy">Đọc chính sách nền tảng ↗</a>
     </div>
     <aside class="roadmap-card">
@@ -64,7 +65,7 @@
         <ol>
             <li><span>01</span><div><strong>Tài khoản & nghe nhạc</strong><small>Đã triển khai</small></div></li>
             <li><span>02</span><div><strong>Tải nhạc lên & xét duyệt</strong><small>Đã triển khai quy trình mô phỏng</small></div></li>
-            <li><span>03</span><div><strong>VIP, FLAC & tải nhạc</strong><small>Dự kiến · Thanh toán mô phỏng</small></div></li>
+            <li><span>03</span><div><strong>VIP, FLAC & tải nhạc</strong><small>Đã triển khai thanh toán mô phỏng</small></div></li>
             <li><span>04</span><div><strong>Kiểm thử & hoàn thiện</strong><small>Chuẩn bị bản nộp đồ án</small></div></li>
         </ol>
     </aside>

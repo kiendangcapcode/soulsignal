@@ -31,6 +31,7 @@ public class Song
     public string? HighQualityFileName { get; set; }
     [MaxLength(120)]
     public string? FlacFileName { get; set; }
+    public bool AllowDownload { get; set; }
     public int GenreId { get; set; }
     public Genre Genre { get; set; } = null!;
     [Required]

@@ -1,6 +1,9 @@
 @{
     var controller = ViewContext.RouteData.Values["controller"]?.ToString();
     var action = ViewContext.RouteData.Values["action"]?.ToString();
+    var isCatalog = controller == "Home" && action == "Index";
+    var isFavorites = controller == "Favorites" && action == "Index";
+    var hasPlayer = isCatalog || isFavorites || (controller == "Songs" && action == "Details");
     var name = User.FindFirst("DisplayName")?.Value ?? User.Identity?.Name?.Split('@')[0] ?? "Bạn";
     var role = User.IsInRole("Admin") ? "Quản trị viên"
         : User.IsInRole("Distributor") ? "Nhà phân phối" : "Người nghe";
@@ -28,6 +31,21 @@
         <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6m0-11v1"/></symbol>
         <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
         <symbol id="i-headphones" viewBox="0 0 24 24"><path d="M4 14v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="12" width="4" height="8" rx="2"/><rect x="17" y="12" width="4" height="8" rx="2"/></symbol>
+        <symbol id="i-heart" viewBox="0 0 24 24"><path d="M20.3 5.8a4.7 4.7 0 0 0-6.7 0L12 7.4l-1.6-1.6a4.7 4.7 0 0 0-6.7 6.7L12 21l8.3-8.5a4.7 4.7 0 0 0 0-6.7Z"/></symbol>
+        @if (hasPlayer)
+        {
+            <symbol id="i-player-play" viewBox="0 0 24 24"><path d="M8 5.8a.9.9 0 0 1 1.38-.76l10 6.2a.9.9 0 0 1 0 1.52l-10 6.2A.9.9 0 0 1 8 18.2z" fill="currentColor" stroke="none"/></symbol>
+            <symbol id="i-player-pause" viewBox="0 0 24 24"><rect x="7" y="5" width="3.6" height="14" rx="1" fill="currentColor" stroke="none"/><rect x="13.4" y="5" width="3.6" height="14" rx="1" fill="currentColor" stroke="none"/></symbol>
+            <symbol id="i-player-prev" viewBox="0 0 24 24"><path d="M6 5v14m12-13-9 6 9 6z"/></symbol>
+            <symbol id="i-player-next" viewBox="0 0 24 24"><path d="M18 5v14M6 6l9 6-9 6z"/></symbol>
+            <symbol id="i-player-volume" viewBox="0 0 24 24"><path d="M4 9h4l5-4v14l-5-4H4zm12 0a4 4 0 0 1 0 6m2-9a8 8 0 0 1 0 12"/></symbol>
+            <symbol id="i-player-muted" viewBox="0 0 24 24"><path d="M4 9h4l5-4v14l-5-4H4zm12 0 5 6m0-6-5 6"/></symbol>
+            <symbol id="i-player-close" viewBox="0 0 24 24"><path d="m6 6 12 12m0-12L6 18"/></symbol>
+            <symbol id="i-player-download" viewBox="0 0 24 24"><path d="M12 4v11m-4-4 4 4 4-4M5 16v4h14v-4"/></symbol>
+            <symbol id="i-player-chevron" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+            <symbol id="i-player-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+            <symbol id="i-player-lock" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3m-4 4v2"/></symbol>
+        }
     </svg>
     <div class="app-shell">
         <aside class="sidebar" aria-label="Điều hướng chính">
@@ -39,6 +57,11 @@
             <nav class="main-nav">
                 <a class="nav-item @(controller == "Home" && action == "Index" ? "is-active" : "")" asp-controller="Home" asp-action="Index"><svg class="icon"><use href="#i-discover" /></svg>Khám phá</a>
                 <a class="nav-item @(controller == "Songs" ? "is-active" : "")" href="@Url.Action("Index", "Home")#catalog"><svg class="icon"><use href="#i-music" /></svg>Bài hát</a>
+                @if (User.IsInRole(AppRoles.Listener) || User.Identity?.IsAuthenticated != true)
+                {
+                    <a class="nav-item @(isFavorites ? "is-active" : "")" asp-controller="Favorites" asp-action="Index" aria-current="@(isFavorites ? "page" : null)"><svg class="icon" aria-hidden="true"><use href="#i-heart" /></svg>Yêu thích</a>
+                    <a class="nav-item @(controller == "Vip" ? "is-active" : "")" asp-controller="Vip" asp-action="Index"><svg class="icon"><use href="#i-headphones" /></svg>Gói VIP</a>
+                }
                 <a class="nav-item @(controller == "Home" && action == "Scope" ? "is-active" : "")" asp-controller="Home" asp-action="Scope"><svg class="icon"><use href="#i-info" /></svg>Về Soul Signal</a>
                 @if (User.IsInRole("Admin"))
                 {
@@ -55,7 +78,7 @@
             </nav>
             <div class="sidebar-bottom">
                 <div class="sidebar-note"><svg class="icon"><use href="#i-headphones" /></svg><strong>Một chút nhạc,<br />một khoảng riêng.</strong><p>Dành thời gian cho điều<br />khiến bạn thấy dễ chịu.</p></div>
-                <a class="sidebar-about" asp-controller="Home" asp-action="Scope">Bản trải nghiệm · Tuần 01 <span>↗</span></a>
+                <a class="sidebar-about" asp-controller="Home" asp-action="Scope">Về bản trải nghiệm <span>↗</span></a>
             </div>
         </aside>
         <div class="main-shell">
@@ -80,7 +103,7 @@
                     }
                 </div>
             </header>
-            <main id="main-content" class="page-content" tabindex="-1">
+            <main id="main-content" class="page-content @(isCatalog ? "catalog-page" : null)" tabindex="-1">
                 @if (TempData["Success"] is string success)
                 {
                     <div class="notice notice-success" role="status">@success</div>
@@ -94,6 +117,11 @@
             </footer>
         </div>
     </div>
+    @if (hasPlayer)
+    {
+        <partial name="_SitePlayer" />
+        <script src="~/js/site-player.js" asp-append-version="true" defer></script>
+    }
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

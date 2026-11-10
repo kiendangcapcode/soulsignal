@@ -1,0 +1,154 @@
+{
+  "startedAt": "2026-11-10T16:13:58+07:00",
+  "finishedAt": "2026-11-10T16:14:12+07:00",
+  "environment": "ASP.NET Core MVC Development, SQL Server local, ứng dụng và CSDL kiểm thử riêng",
+  "summary": {
+    "total": 17,
+    "passed": 17,
+    "failed": 0
+  },
+  "isolatedDatabaseRemoved": true,
+  "limitations": [
+    "Kiểm tra HTTP, HTML, tệp và CSDL; chưa kiểm tra hiển thị trực quan hoặc âm thanh qua loa.",
+    "Dùng dữ liệu demo và thanh toán mô phỏng. Giả lập mốc hết hạn bằng CSDL kiểm thử riêng."
+  ],
+  "fatal": null,
+  "results": [
+    {
+      "id": "VIP-01",
+      "name": "Ứng dụng và CSDL kiểm thử riêng",
+      "status": "passed",
+      "detail": "Đã seed dữ liệu sạch, đăng nhập đúng Listener, Admin và Distributor.",
+      "timestamp": "2026-11-10T16:14:08+07:00",
+      "durationMs": 805
+    },
+    {
+      "id": "VIP-02",
+      "name": "Trang gói và phân quyền mua VIP",
+      "status": "passed",
+      "detail": "Trang hiển thị 29.000đ và 30 ngày. Khách được chuyển đăng nhập; Admin và Distributor bị chặn.",
+      "timestamp": "2026-11-10T16:14:09+07:00",
+      "durationMs": 206
+    },
+    {
+      "id": "VIP-03",
+      "name": "Khách và tài khoản thường chỉ nghe MP3",
+      "status": "passed",
+      "detail": "Khách và Listener chưa mua nghe MP3. Gọi thẳng URL FLAC/tải bị chặn.",
+      "timestamp": "2026-11-10T16:14:09+07:00",
+      "durationMs": 203
+    },
+    {
+      "id": "VIP-04",
+      "name": "Yêu cầu mua thiếu token bị từ chối",
+      "status": "passed",
+      "detail": "POST thiếu token trả 400, không ghi đơn hoặc thuê bao.",
+      "timestamp": "2026-11-10T16:14:09+07:00",
+      "durationMs": 66
+    },
+    {
+      "id": "VIP-05",
+      "name": "Không thể mua bằng mã gói giả",
+      "status": "passed",
+      "detail": "Mã gói giả trả HTTP 302, không ghi đơn hoặc thuê bao.",
+      "timestamp": "2026-11-10T16:14:09+07:00",
+      "durationMs": 120
+    },
+    {
+      "id": "VIP-06",
+      "name": "Mô phỏng thất bại và gửi lại",
+      "status": "passed",
+      "detail": "Đơn thất bại lưu một lần, không cấp VIP; gửi lại cùng mã với kết quả khác vẫn không cấp.",
+      "timestamp": "2026-11-10T16:14:09+07:00",
+      "durationMs": 209
+    },
+    {
+      "id": "VIP-07",
+      "name": "Mua thành công, giá server và hạn 30 ngày",
+      "status": "passed",
+      "detail": "Thành công cấp đúng một thuê bao 30 ngày, giá lấy từ CSDL 29.000đ. Giao diện hiện 16:14 10/12/2026.",
+      "timestamp": "2026-11-10T16:14:09+07:00",
+      "durationMs": 290
+    },
+    {
+      "id": "VIP-08",
+      "name": "Gửi lại hoặc mua khi còn hạn",
+      "status": "passed",
+      "detail": "Gửi lại cùng mã và gửi mã mới khi còn VIP đều không tạo thêm đơn hoặc kéo dài hạn.",
+      "timestamp": "2026-11-10T16:14:09+07:00",
+      "durationMs": 95
+    },
+    {
+      "id": "VIP-09",
+      "name": "Nghe FLAC theo byte range và HEAD",
+      "status": "passed",
+      "detail": "Trang bài có nguồn FLAC. GET Range trả 206 đúng 1.024 byte gốc, HEAD trả đúng kích thước.",
+      "timestamp": "2026-11-10T16:14:10+07:00",
+      "durationMs": 45
+    },
+    {
+      "id": "VIP-10",
+      "name": "Tải FLAC gốc dạng attachment",
+      "status": "passed",
+      "detail": "Tải đúng FLAC gốc dưới dạng attachment. SHA-256 5d4c1b683d97b461c496b96b658037c70489fa89abf6e88b6625ea3da0f8a509",
+      "timestamp": "2026-11-10T16:14:10+07:00",
+      "durationMs": 21
+    },
+    {
+      "id": "VIP-11",
+      "name": "Kiểm tra bài chỉ có MP3 và quyền tải",
+      "status": "passed",
+      "detail": "Bài cũ chỉ MP3 vẫn nghe được. FLAC được nghe nhưng không tải khi quyền tải tắt.",
+      "timestamp": "2026-11-10T16:14:10+07:00",
+      "durationMs": 197
+    },
+    {
+      "id": "VIP-12",
+      "name": "Bài chờ duyệt hoặc bị từ chối vẫn riêng tư",
+      "status": "passed",
+      "detail": "VIP còn hạn bị chặn cả nghe, tải và HEAD cho bài Pending hoặc Rejected, dù bài có FLAC và quyền tải.",
+      "timestamp": "2026-11-10T16:14:10+07:00",
+      "durationMs": 223
+    },
+    {
+      "id": "VIP-13",
+      "name": "Quyền VIP gắn riêng từng người nghe",
+      "status": "passed",
+      "detail": "Một Listener khác không dùng được quyền VIP của tài khoản vừa mua.",
+      "timestamp": "2026-11-10T16:14:10+07:00",
+      "durationMs": 244
+    },
+    {
+      "id": "VIP-14",
+      "name": "Khai quyền tải và duyệt qua luồng phân phối",
+      "status": "passed",
+      "detail": "Gửi FLAC thật qua form Distributor. Admin duyệt bài không cấp quyền tải; bài có quyền tải nhưng bị từ chối cũng không phát/tải.",
+      "timestamp": "2026-11-10T16:14:12+07:00",
+      "durationMs": 1734
+    },
+    {
+      "id": "VIP-15",
+      "name": "VIP hết hạn trở về MP3",
+      "status": "passed",
+      "detail": "Sau khi đưa hạn dùng về quá khứ, phiên đăng nhập cũ vẫn nghe MP3, mất quyền FLAC/tải và mua lại được.",
+      "timestamp": "2026-11-10T16:14:12+07:00",
+      "durationMs": 83
+    },
+    {
+      "id": "VIP-16",
+      "name": "VIP chưa bắt đầu không cấp tệp",
+      "status": "passed",
+      "detail": "Thuê bao chưa đến giờ bắt đầu không cấp FLAC hoặc tải.",
+      "timestamp": "2026-11-10T16:14:12+07:00",
+      "durationMs": 61
+    },
+    {
+      "id": "VIP-17",
+      "name": "Hai lần mua đồng thời chỉ cấp một lần",
+      "status": "passed",
+      "detail": "Hai yêu cầu thành công đồng thời với mã khác nhau chỉ tạo một đơn và một thuê bao.",
+      "timestamp": "2026-11-10T16:14:12+07:00",
+      "durationMs": 111
+    }
+  ]
+}

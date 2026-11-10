@@ -23,6 +23,13 @@ public class AudioProcessingService(IWebHostEnvironment environment, IConfigurat
     private static readonly TimeSpan ProbeTimeout = TimeSpan.FromSeconds(20);
     private static readonly TimeSpan EncodeTimeout = TimeSpan.FromSeconds(120);
 
+    public string? FindStoredFile(string? fileName)
+    {
+        if (string.IsNullOrEmpty(fileName) || Path.GetFileName(fileName) != fileName) return null;
+        var path = Path.Combine(environment.ContentRootPath, "Media", "Audio", fileName);
+        return File.Exists(path) ? path : null;
+    }
+
     public async Task<ProcessedAudio> ProcessAsync(string originalName, CancellationToken cancellationToken = default,
         Action<MediaProcessingProgress>? reportProgress = null)
     {

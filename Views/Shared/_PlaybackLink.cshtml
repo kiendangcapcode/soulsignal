@@ -1,0 +1,20 @@
+@model PlaybackLinkViewModel
+@{
+    var song = Model.Song;
+    var detailUrl = Url.Action("Details", "Songs", new { id = song.Id });
+    var flacUrl = Model.CanStreamFlac ? Url.Action("StreamFlac", "Songs", new { id = song.Id }) : null;
+    var downloadUrl = Model.CanDownloadFlac ? Url.Action("Download", "Songs", new { id = song.Id }) : null;
+}
+<a class="@(Model.Compact ? "cover-action song-quick-play" : "button button-primary track-play-button")"
+   href="@(Model.Compact ? detailUrl : "#track-audio")"
+   hidden="@(!Model.Compact)" aria-label="Phát @song.Title" data-track-play
+   data-track-id="@song.Id" data-track-favorite="@(Model.IsFavorite ? "true" : "false")"
+   data-track-title="@song.Title" data-track-artist="@song.Artist" data-track-cover="@song.CoverPath"
+   data-track-duration="@song.DurationSeconds" data-track-detail="@detailUrl"
+   data-track-mp3="@Url.Action("Stream", "Songs", new { id = song.Id })"
+   data-track-flac="@flacUrl" data-track-download="@downloadUrl"
+   data-track-has-flac="@(Model.HasFlac ? "true" : "false")"
+   data-track-mp3-label="@(string.IsNullOrEmpty(song.HighQualityFileName) ? "MP3" : "MP3 128 kbps")">
+    <svg class="icon" aria-hidden="true"><use href="#i-player-play" /></svg>
+    <span data-play-label>Phát</span>
+</a>

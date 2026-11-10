@@ -1,0 +1,99 @@
+@model VipIndexViewModel
+@using System.Globalization
+@{
+    ViewData["Title"] = "Soul Signal VIP";
+    var vietnamese = CultureInfo.GetCultureInfo("vi-VN");
+    var pending = Model.Orders.FirstOrDefault(order => order.Status == DemoOrderStatus.Pending);
+}
+<div class="auth-layout vip-plan-layout">
+    <section class="auth-intro" aria-labelledby="vip-title">
+        <p class="eyebrow">SOUL SIGNAL VIP</p>
+        <h1 id="vip-title">Nghe nhạc<br /><span class="accent">chất lượng FLAC.</span></h1>
+        <p>Thưởng thức bản FLAC của các bài đã duyệt và tải về những bài có quyền tải.</p>
+        <div class="auth-decoration" aria-hidden="true">
+            <span></span><span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span>
+        </div>
+    </section>
+    <section class="auth-card" aria-labelledby="vip-plan-title">
+        <p class="eyebrow">GÓI NGHE NHẠC</p>
+        <h2 id="vip-plan-title">@(Model.Plan?.Name ?? "Gói VIP")</h2>
+        @if (TempData["VipSuccess"] is string success)
+        {
+            <div class="notice notice-success" role="status">@success</div>
+        }
+        @if (TempData["VipError"] is string error)
+        {
+            <div class="validation-summary p-3 mb-3" role="alert">@error</div>
+        }
+        @if (Model.EndsAt is { } endsAt)
+        {
+            var localEndsAt = endsAt.ToOffset(TimeSpan.FromHours(7));
+            <p class="auth-subtitle">
+                <strong>VIP đang hoạt động</strong><br />
+                Hết hạn lúc <time datetime="@localEndsAt.ToString("O", CultureInfo.InvariantCulture)">@localEndsAt.ToString("HH:mm dd/MM/yyyy", CultureInfo.InvariantCulture)</time> (giờ Việt Nam).
+            </p>
+            <a class="button button-primary button-full" asp-controller="Home" asp-action="Index">
+                Khám phá bài hát <svg class="icon" aria-hidden="true"><use href="#i-arrow" /></svg>
+            </a>
+        }
+        else
+        {
+            if (Model.LastExpiredAt is { } expiredAt)
+            {
+                var localExpiredAt = expiredAt.ToOffset(TimeSpan.FromHours(7));
+                <p class="vip-expiry-note">
+                    VIP đã hết hạn lúc <time datetime="@localExpiredAt.ToString("O", CultureInfo.InvariantCulture)">@localExpiredAt.ToString("HH:mm dd/MM/yyyy", CultureInfo.InvariantCulture)</time> (giờ Việt Nam).
+                </p>
+            }
+            if (Model.Plan is { } plan)
+            {
+                <p class="vip-plan-price"><strong>@plan.Price.ToString("N0", vietnamese) đ</strong> / @plan.DurationDays ngày</p>
+            }
+            if (Model.CheckoutEnabled && pending is not null)
+            {
+                <p class="auth-subtitle">Bạn có đơn <strong>@pending.Code</strong> đang chờ chuyển khoản mô phỏng.</p>
+                <a class="button button-primary button-full" asp-action="Checkout" asp-route-id="@pending.Id">Tiếp tục đơn đang chờ</a>
+            }
+            else if (Model.CheckoutEnabled && Model.Plan is { } availablePlan)
+            {
+                <p class="auth-subtitle">Tạo đơn và thử chuyển khoản trên bản demo. Gói có hiệu lực ngay khi xác nhận giao dịch thành công.</p>
+                <form asp-controller="Vip" asp-action="Start" method="post">
+                    <input type="hidden" name="requestId" value="@Model.RequestId" />
+                    <input type="hidden" name="planId" value="@availablePlan.Id" />
+                    <button class="button button-primary button-full" type="submit">Tạo đơn đăng ký VIP</button>
+                </form>
+            }
+            else
+            {
+                <p class="auth-subtitle">Hiện chưa mở đăng ký gói VIP.</p>
+            }
+        }
+        <p class="auth-switch"><a asp-controller="Home" asp-action="Policy" asp-fragment="vip">Chính sách VIP và tải nhạc ↗</a></p>
+    </section>
+</div>
+@if (Model.Orders.Count > 0)
+{
+    <section class="vip-history panel" aria-labelledby="vip-history-title">
+        <div class="panel-heading">
+            <h2 id="vip-history-title">Đơn đăng ký gần đây</h2>
+        </div>
+        <ul class="vip-order-list">
+            @foreach (var order in Model.Orders)
+            {
+                var localCreatedAt = order.CreatedAt.ToOffset(TimeSpan.FromHours(7));
+                <li>
+                    <div class="vip-order-identity">
+                        <a asp-action="Checkout" asp-route-id="@order.Id">@order.Code</a>
+                        <span>@order.PlanName</span>
+                    </div>
+                    <div class="vip-order-history-amount">
+                        <strong>@order.Amount.ToString("N0", vietnamese) đ</strong>
+                        <time datetime="@localCreatedAt.ToString("O", CultureInfo.InvariantCulture)">@localCreatedAt.ToString("HH:mm dd/MM/yyyy", CultureInfo.InvariantCulture)</time>
+                    </div>
+                    <partial name="_OrderStatus" model="order.Status" />
+                </li>
+            }
+        </ul>
+    </section>
+}

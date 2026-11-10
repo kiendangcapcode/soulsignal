@@ -1,0 +1,54 @@
+{
+  "browser": "Chrome 156.0.8078.80",
+  "environment": "Chrome headless, ASP.NET Core Development và SQL Server kiểm thử cục bộ.",
+  "summary": {
+    "total": 8,
+    "passed": 8,
+    "failed": 0
+  },
+  "limitation": "Kiểm tra nguồn và thời gian phát trên trình duyệt ở chế độ tắt tiếng, không nghe bằng loa.",
+  "results": [
+    {
+      "name": "PL-01 Phát trực tiếp từ danh mục",
+      "status": "passed",
+      "detail": "Thanh ẩn ban đầu, phát MP3 và hiện tên/nghệ sĩ/bìa sau khi nhấn Phát."
+    },
+    {
+      "name": "PL-02 Tạm dừng, phát lại, tua và âm lượng",
+      "status": "passed",
+      "detail": "Phát/tạm dừng đồng bộ, tua tới 6 giây, đặt âm lượng 35% và tắt/bật tiếng."
+    },
+    {
+      "name": "PL-03 Bài trước, bài sau và tự sang bài",
+      "status": "passed",
+      "detail": "Duyệt đúng thứ tự danh mục, bài kết thúc tự phát bài kế nếu còn."
+    },
+    {
+      "name": "PL-04 Đóng, đổi trang và danh mục lọc",
+      "status": "passed",
+      "detail": "Đóng dừng và xóa nguồn; kết quả một bài vô hiệu hóa đổi bài; qua trang chi tiết thanh trở về ẩn."
+    },
+    {
+      "name": "PL-05 Chi tiết bài trên màn hình nhỏ",
+      "status": "passed",
+      "detail": "Viewport 390 px, thanh bám đáy khi cuộn và không tạo tràn ngang."
+    },
+    {
+      "name": "PL-06 Điều khiển dự phòng khi tắt JavaScript",
+      "status": "passed",
+      "detail": "Nút danh mục mở trang chi tiết và điều khiển audio gốc vẫn hiện."
+    },
+    {
+      "name": "PL-07 VIP phát FLAC và tải đúng bản gốc",
+      "status": "passed",
+      "detail": "Thanh ghi FLAC sau khi phát, tệp tải trùng SHA-256 của bản gốc."
+    },
+    {
+      "name": "PL-08 Tự về MP3 khi nguồn FLAC lỗi",
+      "status": "passed",
+      "detail": "Chặn request FLAC trong trình duyệt. Thanh chuyển nguồn và nhãn sang MP3."
+    }
+  ],
+  "testedAt": "2026-11-10T16:44:19+07:00",
+  "isolatedDatabaseRemoved": true
+}

@@ -75,16 +75,20 @@
             <div class="field">
                 <label asp-for="RightsEvidence">Căn cứ và phạm vi quyền sử dụng</label>
                 <textarea class="form-control" asp-for="RightsEvidence" rows="5" required minlength="10" maxlength="2000"
-                          placeholder="Mô tả căn cứ sở hữu hoặc ủy quyền cho tác phẩm, bản ghi, phần trình diễn và ảnh bìa; nêu rõ phạm vi phát trực tuyến và tải xuống."></textarea>
+                          placeholder="Mô tả căn cứ sở hữu hoặc ủy quyền để phát trực tuyến. Nêu thêm căn cứ cho phép tải xuống nếu cấp quyền này."></textarea>
                 <span asp-validation-for="RightsEvidence" class="field-validation"></span>
                 <small class="field-help">Chỉ nhà phân phối của bài và admin xem được thông tin này.</small>
             </div>
             <label class="checkbox-field checkbox-multiline">
                 <input asp-for="AcceptRights" required />
-                <span>Tôi xác nhận có quyền cung cấp nội dung và cho phép phát trực tuyến và tải xuống theo phạm vi
+                <span>Tôi xác nhận có quyền cung cấp nội dung để phát trực tuyến theo
                     <a asp-controller="Home" asp-action="Policy">chính sách Soul Signal</a>.</span>
             </label>
             <span asp-validation-for="AcceptRights" class="field-validation"></span>
+            <label class="checkbox-field checkbox-multiline">
+                <input asp-for="AllowDownload" />
+                <span>Tôi xác nhận có quyền cho phép người nghe VIP tải tệp FLAC sau khi bài được duyệt.</span>
+            </label>
             <p class="scope-note">Tải tệp xong, hệ thống tiếp tục chuyển mã và lấy ảnh bìa trước khi gửi admin.</p>
             <div class="upload-progress" data-upload-progress hidden>
                 <div class="upload-progress-heading"><strong data-upload-phase>Đang chuẩn bị</strong><span data-upload-number></span></div>

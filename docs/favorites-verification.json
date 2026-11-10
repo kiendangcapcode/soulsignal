@@ -1,0 +1,68 @@
+{
+  "passed": 12,
+  "failed": 0,
+  "results": [
+    {
+      "name": "Khách được dẫn tới đăng nhập",
+      "status": "passed",
+      "detail": "Cả hai nút dẫn tới đăng nhập và giữ đường dẫn bài hát. Máy chủ bảo vệ danh sách và thao tác lưu."
+    },
+    {
+      "name": "Người nghe thường lưu bài và danh sách được lưu qua tải lại",
+      "status": "passed",
+      "detail": "Lưu bằng trái tim, mở mục Yêu thích, tải lại vẫn còn; bỏ lưu và tải lại thì danh sách trống."
+    },
+    {
+      "name": "Đổi yêu thích từ thanh phát giữ nguyên luồng nghe",
+      "status": "passed",
+      "detail": "Hai trái tim đồng bộ. Bài tiếp tục phát sau mốc 5 giây và trang không tải lại."
+    },
+    {
+      "name": "VIP lưu và phát FLAC trong Yêu thích",
+      "status": "passed",
+      "detail": "Danh sách dùng chung thanh phát và quyền FLAC. Bỏ lưu bài đang phát không dừng nhạc."
+    },
+    {
+      "name": "Danh sách yêu thích riêng theo tài khoản",
+      "status": "passed",
+      "detail": "Tài khoản khác không thấy bài đã lưu, kể cả khi gửi thêm trường định danh vào yêu cầu."
+    },
+    {
+      "name": "Chặn bài chưa duyệt, ID sai và POST thiếu xác thực",
+      "status": "passed",
+      "detail": "Chỉ bài đã duyệt được lưu. POST thiếu token hoặc token sai bị chặn trước khi ghi dữ liệu."
+    },
+    {
+      "name": "Lưu đồng thời không nhân đôi và bỏ lưu lặp lại an toàn",
+      "status": "passed",
+      "detail": "Năm yêu cầu lưu đồng thời chỉ tạo một dòng. Bốn yêu cầu bỏ lưu đều hoàn tất."
+    },
+    {
+      "name": "Danh sách xếp bài lưu gần nhất lên trước",
+      "status": "passed",
+      "detail": "Ba bài được xếp theo thứ tự lưu, từ mới đến cũ."
+    },
+    {
+      "name": "Admin và nhà phân phối không được ghi danh sách",
+      "status": "passed",
+      "detail": "Hai vai trò quản trị và nhà phân phối không có nút yêu thích. Endpoint cũng từ chối cả đọc lẫn ghi."
+    },
+    {
+      "name": "Lỗi mạng không báo lưu nhầm",
+      "status": "passed",
+      "detail": "Có thông báo khi lưu thất bại, trái tim giữ trạng thái cũ và người dùng có thể thử lại."
+    },
+    {
+      "name": "Nút yêu thích sử dụng được ở 320 px",
+      "status": "passed",
+      "detail": "Nút trên thanh phát nằm trong màn hình. VIP hết hạn vẫn có thể lưu và bỏ lưu."
+    },
+    {
+      "name": "Tắt JavaScript vẫn lưu bằng biểu mẫu",
+      "status": "passed",
+      "detail": "Biểu mẫu chuẩn lưu và bỏ lưu đúng, kèm chuyển hướng nội bộ."
+    }
+  ],
+  "testedAt": "2026-11-10T18:18:49+07:00",
+  "isolatedDatabaseRemoved": true
+}

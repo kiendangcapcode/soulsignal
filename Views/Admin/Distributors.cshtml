@@ -10,8 +10,8 @@
     </div>
     <span class="pill pill-muted">ĐƠN VỊ GIẢ LẬP</span>
 </div>
-<p class="page-description">Hai đơn vị giả lập có tài khoản riêng để gửi nhạc vào Soul Signal.
-    Mỗi tài khoản chỉ xem danh mục của đơn vị mình; bài gửi lên cần admin duyệt trước khi công khai.</p>
+<p class="page-description">Mỗi đơn vị giả lập có tài khoản riêng để gửi nhạc và quản lý danh mục của mình.
+    Admin duyệt bài gửi lên trước khi bài xuất hiện ở trang nghe nhạc.</p>
 <div class="role-grid">
     @foreach (var distributor in Model)
     {
@@ -26,9 +26,8 @@
 <div class="notice notice-roadmap">
     <svg class="icon"><use href="#i-info" /></svg>
     <div>
-        <strong>Không có kết nối phân phối bên ngoài</strong>
-        <p>DistroKite Demo và TuneKore Demo chỉ dùng để minh họa luồng nhận gói nhạc trong đồ án.
-            Các tài khoản được tạo riêng trong Soul Signal, không dùng tài khoản hoặc API của dịch vụ thực tế.</p>
+        <strong>Nguồn phân phối dùng cho demo</strong>
+        <p>Các đơn vị và tài khoản trong danh sách mô phỏng luồng nhận gói nhạc của Soul Signal.</p>
     </div>
 </div>
 <a class="button button-primary" asp-controller="Admin" asp-action="Index">Về danh mục xét duyệt <span>↗</span></a>

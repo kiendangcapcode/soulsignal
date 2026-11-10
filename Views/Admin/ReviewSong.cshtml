@@ -62,6 +62,7 @@
             <h3 class="information-heading">Thông tin quyền sử dụng · Nội bộ</h3>
             <dl class="information-list">
                 <div><dt>Chủ thể quyền / đơn vị ủy quyền</dt><dd>@song.RightsHolder</dd></div>
+                <div><dt>Quyền tải FLAC cho VIP</dt><dd>@(song.AllowDownload ? "Đã xác nhận" : "Chưa cấp")</dd></div>
                 <div><dt>Mã theo dõi nội bộ</dt><dd>@song.ReferenceCode <small>· Không phải ISRC</small></dd></div>
                 <div><dt>Mã bản ghi nguồn giả lập</dt><dd>@(song.ExternalRecordingCode ?? "Không cung cấp")</dd></div>
                 <div><dt>Mã gói nguồn giả lập</dt><dd>@(song.ExternalReleaseCode ?? "Không cung cấp")</dd></div>
